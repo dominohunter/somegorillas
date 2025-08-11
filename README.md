@@ -79,13 +79,6 @@ Navigate to [http://localhost:3000](http://localhost:3000)
 - **State Management**: React Query, Context API
 - **Blockchain**: Somnia Testnet (EVM Compatible)
 
-## 📋 Smart Contract
-
-- **Contract Address**: `0x6D95d0879da470305Af2418E8d34C6D12d23C7ea`
-- **Network**: Somnia Testnet (Chain ID: 50312)
-- **Function**: `flipCoin(bool guess)` - Submit your prediction
-- **Event**: `CoinFlipped` - Emitted with game results
-
 ## 🏗️ Project Structure
 
 ```

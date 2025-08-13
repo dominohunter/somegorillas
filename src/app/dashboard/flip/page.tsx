@@ -401,6 +401,10 @@ export default function FlipPage() {
             queryClient.invalidateQueries({
               queryKey: queryKeys.stats.user(),
             });
+
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.achievements.user(),
+            });
           } else {
             console.error(
               "Could not find CoinFlipped event in transaction receipt",
@@ -492,6 +496,23 @@ export default function FlipPage() {
               }
             }
           }, 500);
+
+          // Invalidate related queries to refresh data
+          queryClient.invalidateQueries({
+            queryKey: queryKeys.flips.globalHistory(),
+          });
+
+          queryClient.invalidateQueries({
+            queryKey: queryKeys.flips.userLimit(),
+          });
+
+          queryClient.invalidateQueries({
+            queryKey: queryKeys.stats.user(),
+          });
+
+          queryClient.invalidateQueries({
+            queryKey: queryKeys.achievements.user(),
+          });
         }
       },
       onError: (error) => {

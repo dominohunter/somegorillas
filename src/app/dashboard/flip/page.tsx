@@ -151,7 +151,7 @@ export default function FlipPage() {
 
   const { isOnCorrectChain, switchToCorrectChain, requiredChainId } =
     useChainValidation();
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
   // ========================================
   // STATE HOOKS
   // ========================================
@@ -405,6 +405,16 @@ export default function FlipPage() {
             queryClient.invalidateQueries({
               queryKey: queryKeys.achievements.user(),
             });
+
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.quests.all,
+            });
+
+            if (address) {
+              queryClient.invalidateQueries({
+                queryKey: queryKeys.quests.byUser(address),
+              });
+            }
           } else {
             console.error(
               "Could not find CoinFlipped event in transaction receipt",
@@ -513,6 +523,16 @@ export default function FlipPage() {
           queryClient.invalidateQueries({
             queryKey: queryKeys.achievements.user(),
           });
+
+          queryClient.invalidateQueries({
+            queryKey: queryKeys.quests.all,
+          });
+
+          if (address) {
+            queryClient.invalidateQueries({
+              queryKey: queryKeys.quests.byUser(address),
+            });
+          }
         }
       },
       onError: (error) => {

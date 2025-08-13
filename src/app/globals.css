@@ -461,7 +461,15 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* Hide scrollbars for all elements */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
+  
+  *::-webkit-scrollbar {
+    display: none;
+  }
+  
   html,
   body {
     @apply bg-background text-foreground;
@@ -474,6 +482,14 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     will-change: scroll-position;
+    /* Hide scrollbars */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
   }
   
   /* Optimize fixed background performance */

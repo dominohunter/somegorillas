@@ -7,6 +7,9 @@ import type { ReactNode } from "react";
 import Header from "@/components/sections/header";
 import { Toaster } from "@/components/ui/sonner";
 import OptimizedBackground from "@/components/optimized-background";
+import { AudioProvider } from "@/contexts/audio-context";
+import AudioConsentModal from "@/components/audio/audio-consent-modal";
+import AudioControls from "@/components/audio/audio-controls";
 
 import { usePathname } from "next/navigation";
 
@@ -31,7 +34,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   // }
 
   return (
-    <html lang="en" className="">
+    <html lang="en" className="bg-black">
       <head>
         <link 
           rel="preload" 
@@ -55,16 +58,20 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <OptimizedBackground backgroundName={background} />
         <div className="relative z-10 min-h-screen w-full">
           <Providers>
-            <AuthProvider>
-              <div className="w-full max-w-[1920px] mx-auto min-h-screen flex flex-col">
-                <div className="w-full flex-shrink-0">
-                  <Header />
+            <AudioProvider>
+              <AuthProvider>
+                <div className="w-full max-w-[1920px] mx-auto min-h-screen flex flex-col">
+                  <div className="w-full flex-shrink-0">
+                    <Header />
+                  </div>
+                  <div className="flex-1">
+                    {children}
+                  </div>
                 </div>
-                <div className="flex-1">
-                  {children}
-                </div>
-              </div>
-            </AuthProvider>
+                <AudioConsentModal />
+                <AudioControls />
+              </AuthProvider>
+            </AudioProvider>
           </Providers>
         </div>
         <Toaster />

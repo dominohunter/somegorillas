@@ -11,7 +11,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-// import GlareButton from "@/components/ui/glare-button";
+import RotatingText from "@/components/rotating-text";
+
 import Wallet from "@/components/icons/wallet";
 import GlowButton from "@/components/ui/glow-button";
 import { useConnect } from "wagmi";
@@ -25,6 +26,7 @@ import CheckCircle from "../icons/check-circle";
 import Discord from "../icons/discord";
 import Metamask from "../icons/metamask";
 import Banana from "../icons/banana";
+import GameCard from "../cards/game-card";
 
 export default function HomeContent() {
   const {
@@ -80,6 +82,9 @@ export default function HomeContent() {
       // Use the login function directly with the current address
       await login(address);
 
+      // Play gorilla sound on successful sign
+      playGorillaSound();
+
       // Refresh auth context token
       refreshToken();
 
@@ -90,9 +95,10 @@ export default function HomeContent() {
         // Already fully authenticated, close modal and go to dashboard
         setShowModal(false);
         router.push("/dashboard");
+        playGorillaSound();
       }
     } catch (error) {
-      console.error("Signing failed:", error);
+      console.error("Login failed:", error);
     } finally {
       setIsLoggingIn(false);
     }
@@ -117,6 +123,15 @@ export default function HomeContent() {
     setTimeout(() => {
       setShowModal(true);
     }, 150);
+  };
+
+  const playGorillaSound = () => {
+    const audio = new Audio("/gorilla-sfx.wav");
+    audio.volume = 0.5; // Set volume to 50%
+    audio.play().catch(() => {
+      // Handle cases where autoplay is blocked
+      console.log("Audio playback failed");
+    });
   };
 
   const handleMainButtonClick = () => {
@@ -162,38 +177,6 @@ export default function HomeContent() {
       console.error("Failed to start Discord verification:", error);
     }
   };
-
-  // // Auto-login if connected but not authenticated
-  // useEffect(() => {
-  //   if (isConnected && !isAuthenticated && !isLoggingIn && address) {
-  //     setIsLoggingIn(true);
-  //     performLogin()
-  //       .catch(console.error)
-  //       .finally(() => setIsLoggingIn(false));
-  //   }
-  // }, [isConnected, isAuthenticated, isLoggingIn, address]);
-
-  // Show Discord modal when authenticated but not verified
-  // useEffect(() => {
-  //   if (token && !isDiscordVerified && discordStatus !== null) {
-  //     setShowDiscordModal(true);
-  //   }
-  // }, [token, isDiscordVerified, discordStatus]);
-
-  // Enhanced referral submission with Discord verification check
-  // useEffect(() => {
-  //   if (isAuthenticated && referralCode && !isSubmitted && !isSubmitting) {
-  //     // Check if Discord verification is required
-  //     if (!discordStatus?.verified) {
-  //       setShowDiscordModal(true);
-  //       return;
-  //     }
-
-  //     // Submit referral if Discord is verified
-  //     submitReferral(referralCode);
-  //   }
-  // }, [isAuthenticated, referralCode, isSubmitted, isSubmitting, discordStatus]);
-
   // Move to sign step when wallet is connected
   useEffect(() => {
     if (isConnected && currentStep === "wallet" && showModal) {
@@ -232,14 +215,33 @@ export default function HomeContent() {
     <div className="min-h-screen flex items-center justify-center">
       <div className="flex flex-col max-w-[1920px] items-center w-full relative z-10">
         {/* Hero Section */}
-        <div className="flex flex-col gap-4 sm:gap-6 px-4 sm:px-6 md:px-8 items-center text-center py-[80px] lg:pt-[184px]">
+        <div className="flex flex-col gap-4 sm:gap-6 px-4 sm:px-6 md:px-8 items-center text-center py-[240px]">
           <div className="text-light-primary text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-semibold font-['Clash_Display'] leading-tight sm:leading-[60px] md:leading-[80px] lg:leading-[90px] xl:leading-[100px]">
-            &quot;Ooohaahahhaah&quot;
+            <RotatingText
+              texts={[
+                "KONG MODE!",
+                "WILD WINS!",
+                "LFG!",
+                "MOON SOON!",
+                "BANANA TIME!",
+                "OOOHHHH AHHH!",
+              ]}
+              mainClassName="px-2 sm:px-2 md:px-3 text-white overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
+              staggerFrom={"last"}
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "-120%" }}
+              staggerDuration={0.025}
+              splitLevelClassName="overflow-hidden"
+              transition={{ type: "spring", damping: 30, stiffness: 400 }}
+              rotationInterval={3000}
+            />
           </div>
-          <div className="text-light-primary text-xl sm:text-2xl md:text-3xl font-semibold font-['Clash_Display'] leading-tight sm:leading-8 md:leading-10 tracking-tight">
+          <div className="text-light-primary/80 text-lg sm:text-xl md:text-2xl font-medium max-w-4xl leading-relaxed">
             - Some Gorilla
           </div>
 
+          {/* Feature highlights */}
           {/* Image and Button Section */}
           <div
             className="flex flex-col justify-center items-center"
@@ -261,15 +263,286 @@ export default function HomeContent() {
               duration={500}
             >
               <p className="text-dark-primary text-xl sm:text-2xl md:text-3xl font-semibold font-['Clash_Display']">
-                Let&apos;s Ape It!
+                Start Flipping Now!
               </p>
             </GlowButton>
           </div>
         </div>
 
+        {/* Interactive Bento Features Section */}
+        <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-16">
+          <div className="w-full py-[120px]">
+            <div className="grid grid-cols-4 gap-6">
+              {/*Banana part*/}
+              <div className="grid col-span-2 gap-6">
+                <div className=" row-span-2.5 rounded-[24px] border-2 border-translucent-light-8 p-8 backdrop-blur-[80px] gap-6">
+                  <div className="bg-translucent-light-4 rounded-2xl overflow-hidden">
+                    <img src={"/banana-pattern.png"} alt="helo" />
+                  </div>
+                  <div>
+                    <h1 className="text-white text-h1 font-[600]">
+                      $BANANA: Gorilla Fuel Supreme
+                    </h1>
+                    <p className="text-translucent-light-64 text-body-1 font-body-1-medium font-pally">
+                      Banana powers gorilla life. Stack it, spend it, farm it,
+                      watch it grow. 
+                    </p>
+                  </div>
+                </div>
+                <div className=" border-2 border-translucent-light-8 p-8 backdrop-blur-[80px] rounded-[24px]">
+                  <h1 className="text-white text-h1 font-[600]">
+                    True gorilla NFTs
+                  </h1>
+                  <p className="text-translucent-light-64 text-body-1 font-body-1-medium font-pally">
+                    Utilities drive the core of Some Gorilla NFT. Exclusive
+                    rewards, $BANANA yield boost, in-game characters, great art.
+                    What else you need from a NFT, really.
+                  </p>
+                </div>
+              </div>
+              <div className="grid col-span-2 gap-6">
+                <div className="grid row-span-1 col-span-2 h-[320px] overflow-hidden rounded-[24px] p-8 backdrop-blur-[80px]">
+                  <div className="bg-translucent-light-4 rounded-2xl overflow-hidden h-[180px]">
+                    <img src={"/gorilla-pattern.png"} alt="helo" className="" />
+                  </div>
+                  <h1 className="text-white text-h1 font-[600]">
+                    Gorillas for Gorillas
+                  </h1>
+                  <p className="text-translucent-light-64 text-body-1 font-body-1-medium font-pally">
+                    By the tribe, for the tribe. No gorilla forgotten. 
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 grid-rows-2 gap-6 col-span-2">
+                  <div className="col-span-1 row-span-2 border-2 border-translucent-light-8 overflow-hidden rounded-[24px] p-8 backdrop-blur-[80px]">
+                    <div className="bg-translucent-light-4 rounded-2xl overflow-hidden h-[180px] mb-4">
+                      <img src={"/coin-pattern.png"} alt="helo" className="" />
+                    </div>
+                    <h1 className="text-white text-h1 font-[600]">
+                      Built to last
+                    </h1>
+                    <p className="text-translucent-light-64 text-body-1 font-body-1-medium font-pally">
+                      Hype&apos;s fun, but we&apos;re in for the marathon.
+                      Transparent fees, fair mechanics, and endless games to
+                      keep the ecosystem aping strong.
+                    </p>
+                  </div>
+                  <div className="col-span-1 row-span-1 border-2 border-translucent-light-8 overflow-hidden rounded-[24px] p-8 backdrop-blur-[80px]">
+                    <h1 className="text-white text-h1 font-[600]">Supa fast</h1>
+                    <p className="text-translucent-light-64 text-body-1 font-body-1-medium font-pally">
+                      That Somnia TPS! Whoo! Whee!
+                    </p>
+                  </div>
+
+                  <div className="col-span-1 row-span-1 border-2 border-translucent-light-8 overflow-hidden rounded-[24px] p-8 backdrop-blur-[80px]">
+                    <h1 className="text-white text-h1 font-[600]">Champs</h1>
+                    <p className="text-translucent-light-64 text-body-1 font-body-1-medium font-pally">
+                      Won the 1st place in the Somnia Mini Game hackathon.
+                      Gorilla smart. Gorilla codes. 
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* NFT Ecosystem Section */}
+
+        {/* Upcoming Games Section */}
+        <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-16 mb-8">
+          <div className="text-center mb-12">
+            <h2 className="text-light-primary text-3xl sm:text-4xl md:text-5xl font-bold font-['Clash_Display'] mb-4">
+              Epic Minigames
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-8">
+            {/* Coin Flip - Current */}
+
+            <GameCard
+              name={"Coin Flip"}
+              image={"/coin/1.svg"}
+              description={
+                "Heads or Butts, the thrill never fails — every flip could change your fate."
+              }
+              onPress={handleMainButtonClick}
+              isComingSoon={false}
+            />
+            <GameCard
+              name={"Mine Sweeper"}
+              description={
+                "Step carefully, think wisely — one wrong move and it’s game over."
+              }
+              onPress={function (): void {
+                throw new Error("Function not implemented.");
+              }}
+              isComingSoon={true}
+            />
+            <GameCard
+              name={"Plinko"}
+              description={
+                "Drop the chip, chase the thrill — where will it land?"
+              }
+              onPress={function (): void {
+                throw new Error("Function not implemented.");
+              }}
+              isComingSoon={true}
+            />
+            <GameCard
+              name={"Plane"}
+              description={"Take off, soar high, and see how far you can fly."}
+              onPress={function (): void {
+                throw new Error("Function not implemented.");
+              }}
+              isComingSoon={true}
+            />
+          </div>
+        </div>
+
+        {/* Roadmap Section */}
+        <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-16 mb-8">
+          <div className="text-center mb-12">
+            <h2 className="text-light-primary text-3xl sm:text-4xl md:text-5xl font-bold font-['Clash_Display'] mb-4">
+              The Expedition
+            </h2>
+          </div>
+
+          <div className="relative">
+            {/* Timeline line */}
+            <div className="absolute left-4 md:left-1/2 md:-ml-0.5 top-0 bottom-0 w-0.5 bg-gradient-to-b from-green-400 via-yellow-400 to-purple-400"></div>
+
+            <div className="md:space-y-12">
+              {/* Phase 1 - Completed */}
+              <div className="flex items-center md:gap-0">
+                <div className="bg-translucent-dark-8 gap-8 border border-green-400/30 flex rounded-2xl p-6 flex-1 md:max-w-md backdrop-blur-3xl ">
+                  <div className="aspect-square h-[120px] w-[120px] bg-translucent-light-4 rounded-[16px] border-translucent-light-4 border-2 flex items-center justify-center">
+                    <p className="text-display-1-bold  text-accent-primary">
+                      1
+                    </p>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="text-light-primary text-h3 font-[600]">
+                        Jungle Awakens
+                      </p>
+                    </div>
+                    <ul className="text-light-primary/70 font-pally text-body-1-medium space-y-1">
+                      <li>
+                        Gorillas hit Somnia Flipping, Rolling, Dropping,
+                        Sweeping Stacking BANANAs
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Phase 2 - In Progress */}
+              <div className="flex items-center gap-6 md:gap-8 md:flex-row-reverse">
+                <div className="bg-translucent-dark-8 gap-8 border border-yellow-400/30 flex rounded-2xl p-6 flex-1 md:max-w-md backdrop-blur-3xl w-[360px]">
+                  <div className="aspect-square h-[120px] w-[120px] p-2 bg-translucent-light-4 rounded-[16px] border-translucent-light-4 border-2 flex items-center justify-center">
+                    <p className="text-display-1-bold  text-accent-primary">
+                      2
+                    </p>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="text-light-primary text-h3 font-[600]">
+                        The Rise of Gorillas
+                      </p>
+                    </div>
+                    <ul className="text-light-primary/70 font-pally text-body-1-medium space-y-1">
+                      <li>
+                        Launch of Some Gorillas NFT Train in the Gorilla Gym
+                        Gorilla Missions Enter the House
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-6 md:gap-8">
+                <div className="bg-translucent-dark-8 gap-8 border border-purple-400/30 flex rounded-2xl p-6 flex-1 md:max-w-md backdrop-blur-3xl w-[360px]">
+                  <div className="aspect-square h-[120px] w-[120px] p-2 bg-translucent-light-4 rounded-[16px] border-translucent-light-4 border-2 flex items-center justify-center">
+                    <p className="text-display-1-bold  text-accent-primary">
+                      3
+                    </p>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="text-light-primary text-h3 font-[600]">
+                        BANANA goes $BANANA
+                      </p>
+                    </div>
+                    <ul className="text-light-primary/70 font-pally text-body-1-medium space-y-1">
+                      <li>
+                        $BANANA token launch $BANANA pools go live The HOUSE of
+                        $BANANA
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Phase 4 - Future */}
+              <div className="flex items-center gap-6 md:gap-8 md:flex-row-reverse">
+                <div className="bg-translucent-dark-8 gap-8 border border-pink-400/30 flex rounded-2xl p-6 flex-1 md:max-w-md backdrop-blur-3xl w-[360px]">
+                  <div className="aspect-square h-[120px] w-[120px] p-2 bg-translucent-light-4 rounded-[16px] border-translucent-light-4 border-2 flex items-center justify-center">
+                    <p className="text-display-1-bold  text-accent-primary">
+                      4
+                    </p>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="text-light-primary text-h3 font-[600]">
+                        The Dawn of Gorillas
+                      </p>
+                    </div>
+                    <ul className="text-light-primary/70 font-pally text-body-1-medium space-y-1">
+                      <li>Gori Bankers Gori Riders Be the HOUSE</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-6 md:gap-8">
+                <div className="bg-translucent-dark-8 gap-8 border border-purple-400/30 flex rounded-2xl p-6 flex-1 md:max-w-md backdrop-blur-3xl w-[360px]">
+                  <div className="aspect-square h-[120px] w-[120px] p-2 bg-translucent-light-4 rounded-[16px] border-translucent-light-4 border-2 flex items-center justify-center">
+                    <p className="text-display-1-bold  text-accent-primary">
+                      5
+                    </p>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="text-light-primary text-h3 font-[600]">
+                        The Elders
+                      </p>
+                    </div>
+                    <ul className="text-light-primary/70 font-pally text-body-1-medium space-y-1">
+                      <li>Gorilla Governance Jungle 2.0 and BEYOND</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Enhanced Social Proof Section */}
         {/* Gorillaz Language Component */}
-        <div className="mb-[40px] px-4 sm:px-6 md:px-8">
-          <GorilakLanguage />
+        <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-16 mb-8">
+          <div className="text-center mb-12">
+            <h2 className="text-light-primary text-3xl sm:text-4xl md:text-5xl font-bold font-['Clash_Display'] mb-4">
+              Speak Like a Gorilla
+            </h2>
+            <p className="text-light-primary/70 text-lg sm:text-xl max-w-3xl mx-auto">
+              Master the ancient language of the jungle apes. Translate your
+              messages into authentic gorilla speak!
+            </p>
+          </div>
+
+          <div className=" p-8 lg:p-12 flex justify-center">
+            <GorilakLanguage />
+          </div>
         </div>
 
         {/* FAQ Section */}
@@ -501,17 +774,18 @@ export default function HomeContent() {
             )}
 
             {/* Reset Button - Only show on sign and discord steps */}
-            {!showAllSet && (currentStep === "sign" || currentStep === "discord") && (
-              <div className="flex justify-center pt-4 border-t border-translucent-light-8">
-                <button
-                  onClick={handleReset}
-                  className="text-gray-400 hover:text-white text-sm px-4 py-2 rounded transition-colors"
-                  title="Reset and start over"
-                >
-                  Reset
-                </button>
-              </div>
-            )}
+            {!showAllSet &&
+              (currentStep === "sign" || currentStep === "discord") && (
+                <div className="flex justify-center pt-4 border-t border-translucent-light-8">
+                  <button
+                    onClick={handleReset}
+                    className="text-gray-400 hover:text-white text-sm px-4 py-2 rounded transition-colors"
+                    title="Reset and start over"
+                  >
+                    Reset
+                  </button>
+                </div>
+              )}
           </DialogContent>
         </Dialog>
 

@@ -27,6 +27,7 @@ import Discord from "../icons/discord";
 import Metamask from "../icons/metamask";
 import Banana from "../icons/banana";
 import MagicBento from "@/components/bento";
+import AchievementCoin from "../icons/achievement-coin";
 
 export default function HomeContent() {
   const {
@@ -248,7 +249,7 @@ export default function HomeContent() {
             onClick={handleMainButtonClick}
           >
             <Image
-              src="/Monke.png"
+              src="/buttonmonke.svg"
               alt="Gorilla"
               width={240}
               height={240}
@@ -266,6 +267,25 @@ export default function HomeContent() {
                 Start Flipping Now!
               </p>
             </GlowButton>
+          </div>
+
+          <div className=" animate-bounce">
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="text-light-primary hover:text-light-primary transition-colors duration-100"
+            >
+              <path
+                d="M12 5V19M12 19L7 14M12 19L17 14"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </div>
         </div>
 
@@ -366,7 +386,12 @@ export default function HomeContent() {
               <div className="absolute top-3 right-3 bg-purple-500 text-white text-xs font-bold px-2 py-1 rounded-full">
                 SOON
               </div>
-              <div className="text-5xl mb-4"></div>
+              <div className="text-5xl mb-4">
+                <div className="text-5xl mb-4 flex justify-center">
+                  <AchievementCoin size={100} claimed={true} />
+                </div>
+              </div>
+
               <h3 className="text-light-primary text-xl font-bold mb-3">
                 Mine Sweeper
               </h3>
@@ -383,7 +408,11 @@ export default function HomeContent() {
               <div className="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
                 SOON
               </div>
-              <div className="text-5xl mb-4"></div>
+              <div className="text-5xl mb-4">
+                <div className="text-5xl mb-4 flex justify-center">
+                  <AchievementCoin size={100} claimed={true} />
+                </div>
+              </div>
               <h3 className="text-light-primary text-xl font-bold mb-3">
                 Tetris
               </h3>
@@ -618,8 +647,10 @@ export default function HomeContent() {
                     </span>
                   </div>
                   <p className="text-light-primary/70 text-sm leading-relaxed">
-                    Gorillas hit Somnia<br />
-                    Flipping, Rolling, Dropping, Sweeping<br />
+                    Gorillas hit Somnia
+                    <br />
+                    Flipping, Rolling, Dropping, Sweeping
+                    <br />
                     Stacking BANANAs
                   </p>
                 </div>
@@ -640,9 +671,12 @@ export default function HomeContent() {
                     </span>
                   </div>
                   <p className="text-light-primary/70 text-sm leading-relaxed">
-                    Launch of Some Gorillas NFT<br />
-                    Train in the Gorilla Gym<br />
-                    Gorilla Missions<br />
+                    Launch of Some Gorillas NFT
+                    <br />
+                    Train in the Gorilla Gym
+                    <br />
+                    Gorilla Missions
+                    <br />
                     Enter the House
                   </p>
                 </div>
@@ -663,8 +697,10 @@ export default function HomeContent() {
                     </span>
                   </div>
                   <p className="text-light-primary/70 text-sm leading-relaxed">
-                    $BANANA token launch<br />
-                    $BANANA pools go live<br />
+                    $BANANA token launch
+                    <br />
+                    $BANANA pools go live
+                    <br />
                     The HOUSE of $BANANA
                   </p>
                 </div>
@@ -685,8 +721,10 @@ export default function HomeContent() {
                     </span>
                   </div>
                   <p className="text-light-primary/70 text-sm leading-relaxed">
-                    Gori Bankers<br />
-                    Gori Riders<br />
+                    Gori Bankers
+                    <br />
+                    Gori Riders
+                    <br />
                     Be the HOUSE
                   </p>
                 </div>
@@ -707,7 +745,8 @@ export default function HomeContent() {
                     </span>
                   </div>
                   <p className="text-light-primary/70 text-sm leading-relaxed">
-                    Gorilla Governance<br />
+                    Gorilla Governance
+                    <br />
                     Jungle 2.0 and BEYOND
                   </p>
                 </div>
@@ -843,13 +882,43 @@ export default function HomeContent() {
             </p>
           </div>
 
-          <div className=" p-8 lg:p-12 flex justify-center">
+          <div className=" p-8 lg:p-12 flex justify-center ">
             <GorilakLanguage />
           </div>
         </div>
 
         {/* FAQ Section */}
         <HomeFaq />
+
+        {/* Footer Section */}
+        <div
+          className="w-full py-[200px] bg-cover mt-[400px] bg-center bg-no-repeat flex items-center justify-center relative"
+          style={{ backgroundImage: "url(/footer-bg.png)" }}
+        >
+          <div className="absolute top-0 rounded-4xl backdrop-blur-2xl bg-translucent-dark-8 border border-translucent-light-8 p-8 -mt-96 md:-mt-56 z-20">
+            <p className="text-[#FFD700] text-h5 font-[600] text-balance ">
+              Gorillaz have gud plan. But we alwayz listen to Gorillas.
+              <br /> Maybe the Some Gorillas are frens we make along the way
+            </p>
+          </div>
+          <Image
+            src="/buttonmonke.svg"
+            alt="Gorilla"
+            width={240}
+            height={240}
+            className="absolute top-0 left-1/8 w-60 h-60 -mt-46 z-20"
+            style={{ aspectRatio: "1/1" }}
+            priority
+          />
+          <Image
+            src="/logo/Logo.svg"
+            alt="Gorilla Logo"
+            width={240}
+            height={240}
+            className="w-60 h-60"
+            priority
+          />
+        </div>
 
         {/* Unified Modal with Step Transitions */}
         <Dialog open={showModal} onOpenChange={setShowModal}>

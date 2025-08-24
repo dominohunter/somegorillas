@@ -27,7 +27,7 @@ export interface BentoProps {
 
 const DEFAULT_PARTICLE_COUNT = 12;
 const DEFAULT_SPOTLIGHT_RADIUS = 300;
-const DEFAULT_GLOW_COLOR = "132, 0, 255";
+const DEFAULT_GLOW_COLOR = "255, 235, 59"; // Light yellow
 const MOBILE_BREAKPOINT = 768;
 
 const cardData: BentoCardProps[] = [
@@ -40,17 +40,17 @@ const cardData: BentoCardProps[] = [
     image: "/banana-pattern.png",
   },
   {
-    color: "rgba(168, 85, 247, 0.1)",
+    color: "rgba(255, 235, 59, 0.1)", // Changed to light yellow
     title: "True gorilla NFTs",
     description:
       "Utilities drive the core of Some Gorilla NFT. Exclusive rewards, $BANANA yield boost, in-game characters, great art. What else you need from a NFT, really.",
-    label: "🎁 NFTs",
+    label: "NFTs",
   },
   {
     color: "rgba(236, 72, 153, 0.1)",
     title: "Gorillas for Gorillas",
     description: "By the tribe, for the tribe. No gorilla forgotten.",
-    label: "👥 Community",
+    label: "Community",
     image: "/gorilla-pattern.png",
   },
   {
@@ -58,21 +58,21 @@ const cardData: BentoCardProps[] = [
     title: "Built to last",
     description:
       "Hype's fun, but we're in for the marathon. Transparent fees, fair mechanics, and endless games to keep the ecosystem aping strong.",
-    label: "🏆 Sustainability",
+    label: "Sustainability",
     image: "/coin-pattern.png",
   },
   {
     color: "rgba(59, 130, 246, 0.1)",
     title: "Supa fast",
     description: "That Somnia TPS! Whoo! Whee!",
-    label: "⚡ Speed",
+    label: "Speed",
   },
   {
     color: "rgba(34, 197, 94, 0.1)",
     title: "Champs",
     description:
       "Won the 1st place in the Somnia Mini Game hackathon. Gorilla smart. Gorilla codes.",
-    label: "🏆 Winners",
+    label: "Winners",
   },
 ];
 
@@ -590,12 +590,12 @@ const MagicBento: React.FC<BentoProps> = ({
             --glow-intensity: 0;
             --glow-radius: 200px;
             --glow-color: ${glowColor};
-            --border-color: #392e4e;
-            --background-dark: #060010;
+            --border-color: #4e4a39;
+            --background-dark: #0f0a00;
             --white: hsl(0, 0%, 100%);
-            --purple-primary: rgba(132, 0, 255, 1);
-            --purple-glow: rgba(132, 0, 255, 0.2);
-            --purple-border: rgba(132, 0, 255, 0.8);
+            --yellow-primary: rgba(255, 235, 59, 1);
+            --yellow-glow: rgba(255, 235, 59, 0.2);
+            --yellow-border: rgba(255, 235, 59, 0.8);
             padding: 2rem;
           }
 
@@ -656,7 +656,7 @@ const MagicBento: React.FC<BentoProps> = ({
           }
 
           .card--border-glow:hover {
-            box-shadow: 0 4px 20px rgba(46, 24, 78, 0.4), 0 0 30px rgba(${glowColor}, 0.2);
+            box-shadow: 0 4px 20px rgba(78, 69, 24, 0.4), 0 0 30px rgba(${glowColor}, 0.2);
           }
 
           .particle::before {
@@ -672,7 +672,7 @@ const MagicBento: React.FC<BentoProps> = ({
           }
 
           .particle-container:hover {
-            box-shadow: 0 4px 20px rgba(46, 24, 78, 0.2), 0 0 30px rgba(${glowColor}, 0.2);
+            box-shadow: 0 4px 20px rgba(78, 69, 24, 0.2), 0 0 30px rgba(${glowColor}, 0.2);
           }
 
           .text-clamp-1 {

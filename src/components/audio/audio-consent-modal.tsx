@@ -28,7 +28,7 @@ export default function AudioConsentModal() {
               onClick={() => handleAudioConsent(true)}
               className="bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors"
             >
-              🦍 Yes, Let's Groove!
+              🦍 Yes, Let&apos;s Groove!
             </button>
             <button
               onClick={() => handleAudioConsent(false)}

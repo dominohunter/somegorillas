@@ -92,11 +92,11 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({ children }) => {
       };
       
       // Add error handling
-      const handleAudioError1 = (e: any) => {
+      const handleAudioError1 = (e: Event) => {
         console.error('Audio 1 error:', e, 'Source:', audioSrc);
       };
       
-      const handleAudioError2 = (e: any) => {
+      const handleAudioError2 = (e: Event) => {
         console.error('Audio 2 error:', e, 'Source:', audioSrc);
       };
       

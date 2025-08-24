@@ -36,7 +36,7 @@ const cardData: BentoCardProps[] = [
     title: "$Banana",
     description:
       "Banana powers gorilla life. Stack it, spend it, farm it, watch it grow.",
-    label: "🍌 Tokens",
+    label: "Tokens",
     image: "/banana-pattern.png",
   },
   {

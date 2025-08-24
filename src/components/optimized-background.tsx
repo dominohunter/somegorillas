@@ -6,7 +6,9 @@ interface OptimizedBackgroundProps {
   backgroundName: string;
 }
 
-export default function OptimizedBackground({ backgroundName }: OptimizedBackgroundProps) {
+export default function OptimizedBackground({
+  backgroundName,
+}: OptimizedBackgroundProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
@@ -15,13 +17,13 @@ export default function OptimizedBackground({ backgroundName }: OptimizedBackgro
       {isLoading && (
         <div className="fixed inset-0 z-0 bg-gradient-to-br from-gray-900 to-black animate-pulse" />
       )}
-      
+
       <div className="fixed inset-0 z-0" data-background="fixed">
         <Image
           src={`/${backgroundName}.png`}
           alt="Background"
           fill
-          style={{ objectFit: 'cover' }}
+          style={{ objectFit: "cover" }}
           priority
           quality={75}
           sizes="100vw"
@@ -39,12 +41,15 @@ export default function OptimizedBackground({ backgroundName }: OptimizedBackgro
         <div className="fixed inset-0 z-0 bg-gradient-to-br from-gray-900 to-black" />
       )}
 
-      <div 
-        className="fixed inset-0 opacity-50 pointer-events-none z-[1] bg-repeat" 
+      {/* Dark overlay for better text readability */}
+      <div className="fixed inset-0 z-[1] bg-black/20 pointer-events-none" />
+
+      <div
+        className="fixed inset-0 opacity-50 pointer-events-none z-[2] bg-repeat"
         data-background="fixed"
         style={{
-          backgroundImage: 'url(/Noiselayer.svg)',
-          backgroundRepeat: 'repeat'
+          backgroundImage: "url(/Noiselayer.svg)",
+          backgroundRepeat: "repeat",
         }}
       />
     </>

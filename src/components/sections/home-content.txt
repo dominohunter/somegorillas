@@ -26,7 +26,7 @@ import CheckCircle from "../icons/check-circle";
 import Discord from "../icons/discord";
 import Metamask from "../icons/metamask";
 import Banana from "../icons/banana";
-import MagicBento from "@/components/bento";
+import GameCard from "../cards/game-card";
 
 export default function HomeContent() {
   const {
@@ -271,318 +271,131 @@ export default function HomeContent() {
 
         {/* Interactive Bento Features Section */}
         <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-16">
-          <MagicBento />
+          <div className="w-full py-[120px]">
+            <div className="grid grid-cols-4 gap-6">
+              {/*Banana part*/}
+              <div className="grid col-span-2 gap-6">
+                <div className=" row-span-2.5 rounded-[24px] border-2 border-translucent-light-8 p-8 backdrop-blur-[80px] gap-6">
+                  <div className="bg-translucent-light-4 rounded-2xl overflow-hidden">
+                    <img src={"/banana-pattern.png"} alt="helo" />
+                  </div>
+                  <div>
+                    <h1 className="text-white text-h1 font-[600]">
+                      $BANANA: Gorilla Fuel Supreme
+                    </h1>
+                    <p className="text-translucent-light-64 text-body-1 font-body-1-medium font-pally">
+                      Banana powers gorilla life. Stack it, spend it, farm it,
+                      watch it grow. 
+                    </p>
+                  </div>
+                </div>
+                <div className=" border-2 border-translucent-light-8 p-8 backdrop-blur-[80px] rounded-[24px]">
+                  <h1 className="text-white text-h1 font-[600]">
+                    True gorilla NFTs
+                  </h1>
+                  <p className="text-translucent-light-64 text-body-1 font-body-1-medium font-pally">
+                    Utilities drive the core of Some Gorilla NFT. Exclusive
+                    rewards, $BANANA yield boost, in-game characters, great art.
+                    What else you need from a NFT, really.
+                  </p>
+                </div>
+              </div>
+              <div className="grid col-span-2 gap-6">
+                <div className="grid row-span-1 col-span-2 h-[320px] overflow-hidden rounded-[24px] p-8 backdrop-blur-[80px]">
+                  <div className="bg-translucent-light-4 rounded-2xl overflow-hidden h-[180px]">
+                    <img src={"/gorilla-pattern.png"} alt="helo" className="" />
+                  </div>
+                  <h1 className="text-white text-h1 font-[600]">
+                    Gorillas for Gorillas
+                  </h1>
+                  <p className="text-translucent-light-64 text-body-1 font-body-1-medium font-pally">
+                    By the tribe, for the tribe. No gorilla forgotten. 
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 grid-rows-2 gap-6 col-span-2">
+                  <div className="col-span-1 row-span-2 border-2 border-translucent-light-8 overflow-hidden rounded-[24px] p-8 backdrop-blur-[80px]">
+                    <div className="bg-translucent-light-4 rounded-2xl overflow-hidden h-[180px] mb-4">
+                      <img src={"/coin-pattern.png"} alt="helo" className="" />
+                    </div>
+                    <h1 className="text-white text-h1 font-[600]">
+                      Built to last
+                    </h1>
+                    <p className="text-translucent-light-64 text-body-1 font-body-1-medium font-pally">
+                      Hype&apos;s fun, but we&apos;re in for the marathon.
+                      Transparent fees, fair mechanics, and endless games to
+                      keep the ecosystem aping strong.
+                    </p>
+                  </div>
+                  <div className="col-span-1 row-span-1 border-2 border-translucent-light-8 overflow-hidden rounded-[24px] p-8 backdrop-blur-[80px]">
+                    <h1 className="text-white text-h1 font-[600]">Supa fast</h1>
+                    <p className="text-translucent-light-64 text-body-1 font-body-1-medium font-pally">
+                      That Somnia TPS! Whoo! Whee!
+                    </p>
+                  </div>
+
+                  <div className="col-span-1 row-span-1 border-2 border-translucent-light-8 overflow-hidden rounded-[24px] p-8 backdrop-blur-[80px]">
+                    <h1 className="text-white text-h1 font-[600]">Champs</h1>
+                    <p className="text-translucent-light-64 text-body-1 font-body-1-medium font-pally">
+                      Won the 1st place in the Somnia Mini Game hackathon.
+                      Gorilla smart. Gorilla codes. 
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* NFT Ecosystem Section */}
-        <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-8 mb-8">
-          {/* NFT Utility */}
-          <div className="bg-translucent-dark-8 border border-translucent-light-8 backdrop-blur-3xl rounded-3xl p-8">
-            <div className="text-center mb-8">
-              <h3 className="text-light-primary text-2xl font-bold mb-3">
-                NFT Utility & Future Rewards
-              </h3>
-              <p className="text-light-primary/70">
-                Your SomeGorillas NFTs aren&apos;t just
-                collectibles—they&apos;re keys to exclusive benefits
-              </p>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="text-center">
-                <div className="text-3xl mb-3">🎮</div>
-                <h4 className="text-light-primary font-bold mb-2">
-                  Gaming Perks
-                </h4>
-                <p className="text-light-primary/70 text-sm">
-                  Special abilities, bonus multipliers, and exclusive game modes
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div className="text-3xl mb-3">🤝</div>
-                <h4 className="text-light-primary font-bold mb-2">
-                  Partner Rewards
-                </h4>
-                <p className="text-light-primary/70 text-sm">
-                  Access to airdrops, exclusive events, and partner ecosystem
-                  benefits
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div className="text-3xl mb-3">👑</div>
-                <h4 className="text-light-primary font-bold mb-2">
-                  VIP Status
-                </h4>
-                <p className="text-light-primary/70 text-sm">
-                  Priority access, early features, and community governance
-                  rights
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Minigames Section */}
+        {/* Upcoming Games Section */}
         <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-16 mb-8">
           <div className="text-center mb-12">
             <h2 className="text-light-primary text-3xl sm:text-4xl md:text-5xl font-bold font-['Clash_Display'] mb-4">
-              Minigames Coming Soon
+              Epic Minigames
             </h2>
-            <p className="text-light-primary/70 text-lg sm:text-xl max-w-3xl mx-auto">
-              We&apos;re building the ultimate web3 arcade on Somnia! Each game
-              features unique mechanics, play-to-earn rewards, and ways to boost
-              your $Banana tokens through community-driven fun.
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-8">
-            {/* Coin Flip - Live Now */}
-            <div className="bg-gradient-to-br from-green-500/20 to-yellow-500/20 border border-green-400/30 rounded-3xl p-6 text-center relative backdrop-blur-3xl">
-              <div className="absolute top-3 right-3 bg-green-500 text-black text-xs font-bold px-2 py-1 rounded-full">
-                LIVE NOW
-              </div>
-              <div className="text-5xl mb-4 flex justify-center">
-                <img
-                  src="/coin/7.svg"
-                  alt="coin"
-                  className="w-[100px] h-[100px]"
-                />
-              </div>
-              <h3 className="text-light-primary text-xl font-bold mb-3">
-                Coin Flip
-              </h3>
-              <p className="text-light-primary/70 text-sm leading-relaxed mb-4">
-                Call heads or tails—risk Somnia tokens for doubles and earn
-                $Banana every play!
-                <br />
-                The classic that kicks off the gorilla gaming revolution.
-              </p>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-8">
+            {/* Coin Flip - Current */}
 
-            {/* Mine Sweeper - Coming Soon */}
-            <div className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-400/30 rounded-3xl p-6 text-center relative backdrop-blur-3xl">
-              <div className="absolute top-3 right-3 bg-purple-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                SOON
-              </div>
-              <div className="text-5xl mb-4"></div>
-              <h3 className="text-light-primary text-xl font-bold mb-3">
-                Mine Sweeper
-              </h3>
-              <p className="text-light-primary/70 text-sm leading-relaxed mb-4">
-                Navigate the grid, avoid bombs, and uncover $Banana rewards in
-                this puzzle twist.
-                <br />
-                More exciting games coming to the jungle!
-              </p>
-            </div>
-
-            {/* Tetris - Coming Soon */}
-            <div className="bg-gradient-to-br from-red-500/20 to-orange-500/20 border border-red-400/30 rounded-3xl p-6 text-center relative backdrop-blur-3xl">
-              <div className="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                SOON
-              </div>
-              <div className="text-5xl mb-4"></div>
-              <h3 className="text-light-primary text-xl font-bold mb-3">
-                Tetris
-              </h3>
-              <p className="text-light-primary/70 text-sm leading-relaxed mb-4">
-                Stack blocks with gorilla flair—clear lines for token boosts and
-                high scores.
-                <br />
-                More exciting games coming to the jungle!
-              </p>
-            </div>
-
-            {/* Arcade Classics - Coming Soon */}
-            <div className="bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-400/30 rounded-3xl p-6 text-center relative backdrop-blur-3xl">
-              <div className="absolute top-3 right-3 bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                SOON
-              </div>
-              <div className="text-5xl mb-4"></div>
-              <h3 className="text-light-primary text-xl font-bold mb-3">
-                Arcade Classics
-              </h3>
-              <p className="text-light-primary/70 text-sm leading-relaxed mb-4">
-                Retro remakes with web3 spins—earn through challenges and
-                leaderboards.
-                <br />
-                More exciting games coming to the jungle!
-              </p>
-            </div>
-
-            {/* Puzzle Adventures - Coming Soon */}
-            <div className="bg-gradient-to-br from-yellow-500/20 to-amber-500/20 border border-yellow-400/30 rounded-3xl p-6 text-center relative backdrop-blur-3xl">
-              <div className="absolute top-3 right-3 bg-yellow-500 text-black text-xs font-bold px-2 py-1 rounded-full">
-                SOON
-              </div>
-              <div className="text-5xl mb-4"></div>
-              <h3 className="text-light-primary text-xl font-bold mb-3">
-                Puzzle Adventures
-              </h3>
-              <p className="text-light-primary/70 text-sm leading-relaxed mb-4">
-                Solve riddles and quests for exclusive NFTs and $Banana
-                airdrops.
-                <br />
-                More exciting games coming to the jungle!
-              </p>
-            </div>
-
-            {/* Mystery Game - Secret */}
-            <div className="bg-gradient-to-br from-gray-500/20 to-slate-500/20 border border-gray-400/30 rounded-3xl p-6 text-center relative backdrop-blur-3xl">
-              <div className="absolute top-3 right-3 bg-gray-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                SECRET
-              </div>
-              <div className="text-5xl mb-4"></div>
-              <h3 className="text-light-primary text-xl font-bold mb-3">
-                Mystery Game
-              </h3>
-              <p className="text-light-primary/70 text-sm leading-relaxed mb-4">
-                A hidden gem voted by the DAO—unlock surprises on Somnia&apos;s
-                fast chain.
-                <br />
-                More exciting games coming to the jungle!
-              </p>
-            </div>
-          </div>
-
-          <div className="text-center">
-            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-400/30 px-6 py-3 rounded-full">
-              <span className="text-lg">🚀</span>
-              <span className="text-light-primary text-sm font-medium">
-                Join our Discord to vote on which game launches next!
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Gaming Philosophy Section */}
-        <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-16 mb-8">
-          <div className="bg-gradient-to-br from-translucent-dark-8 to-translucent-dark-12 border border-translucent-light-8 rounded-3xl p-8 lg:p-12 backdrop-blur-3xl">
-            <div className="text-center mb-8">
-              <h2 className="text-light-primary text-3xl sm:text-4xl md:text-5xl font-bold font-['Clash_Display'] mb-4">
-                Our Gaming Philosophy
-              </h2>
-              <p className="text-light-primary/70 text-lg sm:text-xl max-w-3xl mx-auto">
-                We believe gaming should be fun, fair, and rewarding for
-                everyone. That&apos;s why we built SomeGorillas differently.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-              <div>
-                <h3 className="text-light-primary text-2xl font-bold mb-6">
-                  🎮 Player-First Design
-                </h3>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <div className="text-green-400 mt-1">✓</div>
-                    <div>
-                      <div className="text-light-primary font-medium mb-1">
-                        Always Earn Something
-                      </div>
-                      <div className="text-light-primary/70 text-sm">
-                        Win or lose, you get $Banana tokens. No completely empty
-                        hands.
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="text-green-400 mt-1">✓</div>
-                    <div>
-                      <div className="text-light-primary font-medium mb-1">
-                        Fair & Transparent
-                      </div>
-                      <div className="text-light-primary/70 text-sm">
-                        All games are provably fair with on-chain verification.
-                        No hidden algorithms.
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="text-green-400 mt-1">✓</div>
-                    <div>
-                      <div className="text-light-primary font-medium mb-1">
-                        Low Entry Barriers
-                      </div>
-                      <div className="text-light-primary/70 text-sm">
-                        Start with tiny amounts. Gaming should be accessible to
-                        all apes.
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="text-green-400 mt-1">✓</div>
-                    <div>
-                      <div className="text-light-primary font-medium mb-1">
-                        Community Driven
-                      </div>
-                      <div className="text-light-primary/70 text-sm">
-                        Players vote on new features, games, and platform
-                        direction.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-light-primary text-2xl font-bold mb-6">
-                  🍌 Sustainable Economy
-                </h3>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <div className="text-yellow-400 mt-1">🏦</div>
-                    <div>
-                      <div className="text-light-primary font-medium mb-1">
-                        Real Utility Tokens
-                      </div>
-                      <div className="text-light-primary/70 text-sm">
-                        $Banana isn&apos;t just a reward - it powers the entire
-                        ecosystem and unlocks exclusive features.
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="text-yellow-400 mt-1">🔄</div>
-                    <div>
-                      <div className="text-light-primary font-medium mb-1">
-                        Circular Token Flow
-                      </div>
-                      <div className="text-light-primary/70 text-sm">
-                        Tokens flow between games, NFT purchases, staking, and
-                        special events.
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="text-yellow-400 mt-1">📈</div>
-                    <div>
-                      <div className="text-light-primary font-medium mb-1">
-                        Deflationary Mechanics
-                      </div>
-                      <div className="text-light-primary/70 text-sm">
-                        Strategic token burns and limited NFT releases help
-                        maintain token value.
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="text-yellow-400 mt-1">🎁</div>
-                    <div>
-                      <div className="text-light-primary font-medium mb-1">
-                        Multiple Earning Paths
-                      </div>
-                      <div className="text-light-primary/70 text-sm">
-                        Gaming, staking, referrals, achievements, and seasonal
-                        events all reward players.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <GameCard
+              name={"Coin Flip"}
+              image={"/coin/1.svg"}
+              description={
+                "Heads or Butts, the thrill never fails — every flip could change your fate."
+              }
+              onPress={handleMainButtonClick}
+              isComingSoon={false}
+            />
+            <GameCard
+              name={"Mine Sweeper"}
+              description={
+                "Step carefully, think wisely — one wrong move and it’s game over."
+              }
+              onPress={function (): void {
+                throw new Error("Function not implemented.");
+              }}
+              isComingSoon={true}
+            />
+            <GameCard
+              name={"Plinko"}
+              description={
+                "Drop the chip, chase the thrill — where will it land?"
+              }
+              onPress={function (): void {
+                throw new Error("Function not implemented.");
+              }}
+              isComingSoon={true}
+            />
+            <GameCard
+              name={"Plane"}
+              description={"Take off, soar high, and see how far you can fly."}
+              onPress={function (): void {
+                throw new Error("Function not implemented.");
+              }}
+              isComingSoon={true}
+            />
           </div>
         </div>
 
@@ -590,247 +403,131 @@ export default function HomeContent() {
         <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-16 mb-8">
           <div className="text-center mb-12">
             <h2 className="text-light-primary text-3xl sm:text-4xl md:text-5xl font-bold font-['Clash_Display'] mb-4">
-              The Gorilla Roadmap
+              The Expedition
             </h2>
-            <p className="text-light-primary/70 text-lg sm:text-xl max-w-3xl mx-auto">
-              From jungle beginnings to gaming empire. Here&apos;s what
-              we&apos;re building together, step by step.
-            </p>
           </div>
 
           <div className="relative">
             {/* Timeline line */}
             <div className="absolute left-4 md:left-1/2 md:-ml-0.5 top-0 bottom-0 w-0.5 bg-gradient-to-b from-green-400 via-yellow-400 to-purple-400"></div>
 
-            <div className="space-y-8 md:space-y-12">
-              {/* Phase 1 - Jungle Awakens */}
-              <div className="flex items-center gap-6 md:gap-8">
-                <div className="flex-shrink-0 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center relative z-10">
-                  <span className="text-white text-sm font-bold">1</span>
-                </div>
-                <div className="bg-translucent-dark-8 border border-green-400/30 rounded-2xl p-6 flex-1 md:max-w-md backdrop-blur-3xl">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="text-light-primary text-lg font-bold">
-                      Jungle Awakens
-                    </h3>
-                    <span className="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                      PHASE 1
-                    </span>
+            <div className="md:space-y-12">
+              {/* Phase 1 - Completed */}
+              <div className="flex items-center md:gap-0">
+                <div className="bg-translucent-dark-8 gap-8 border border-green-400/30 flex rounded-2xl p-6 flex-1 md:max-w-md backdrop-blur-3xl ">
+                  <div className="aspect-square h-[120px] w-[120px] bg-translucent-light-4 rounded-[16px] border-translucent-light-4 border-2 flex items-center justify-center">
+                    <p className="text-display-1-bold  text-accent-primary">
+                      1
+                    </p>
                   </div>
-                  <p className="text-light-primary/70 text-sm leading-relaxed">
-                    Gorillas hit Somnia<br />
-                    Flipping, Rolling, Dropping, Sweeping<br />
-                    Stacking BANANAs
-                  </p>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="text-light-primary text-h3 font-[600]">
+                        Jungle Awakens
+                      </p>
+                    </div>
+                    <ul className="text-light-primary/70 font-pally text-body-1-medium space-y-1">
+                      <li>
+                        Gorillas hit Somnia Flipping, Rolling, Dropping,
+                        Sweeping Stacking BANANAs
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
 
-              {/* Phase 2 - The Rise of Gorillas */}
+              {/* Phase 2 - In Progress */}
               <div className="flex items-center gap-6 md:gap-8 md:flex-row-reverse">
-                <div className="flex-shrink-0 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center relative z-10">
-                  <span className="text-black text-sm font-bold">2</span>
-                </div>
-                <div className="bg-translucent-dark-8 border border-yellow-400/30 rounded-2xl p-6 flex-1 md:max-w-md backdrop-blur-3xl">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="text-light-primary text-lg font-bold">
-                      The Rise of Gorillas
-                    </h3>
-                    <span className="bg-yellow-500 text-black text-xs font-bold px-2 py-1 rounded-full">
-                      PHASE 2
-                    </span>
+                <div className="bg-translucent-dark-8 gap-8 border border-yellow-400/30 flex rounded-2xl p-6 flex-1 md:max-w-md backdrop-blur-3xl w-[360px]">
+                  <div className="aspect-square h-[120px] w-[120px] p-2 bg-translucent-light-4 rounded-[16px] border-translucent-light-4 border-2 flex items-center justify-center">
+                    <p className="text-display-1-bold  text-accent-primary">
+                      2
+                    </p>
                   </div>
-                  <p className="text-light-primary/70 text-sm leading-relaxed">
-                    Launch of Some Gorillas NFT<br />
-                    Train in the Gorilla Gym<br />
-                    Gorilla Missions<br />
-                    Enter the House
-                  </p>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="text-light-primary text-h3 font-[600]">
+                        The Rise of Gorillas
+                      </p>
+                    </div>
+                    <ul className="text-light-primary/70 font-pally text-body-1-medium space-y-1">
+                      <li>
+                        Launch of Some Gorillas NFT Train in the Gorilla Gym
+                        Gorilla Missions Enter the House
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
 
-              {/* Phase 3 - BANANA goes $Banana */}
               <div className="flex items-center gap-6 md:gap-8">
-                <div className="flex-shrink-0 w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center relative z-10">
-                  <span className="text-white text-sm font-bold">3</span>
-                </div>
-                <div className="bg-translucent-dark-8 border border-purple-400/30 rounded-2xl p-6 flex-1 md:max-w-md backdrop-blur-3xl">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="text-light-primary text-lg font-bold">
-                      BANANA goes $Banana
-                    </h3>
-                    <span className="bg-purple-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                      PHASE 3
-                    </span>
+                <div className="bg-translucent-dark-8 gap-8 border border-purple-400/30 flex rounded-2xl p-6 flex-1 md:max-w-md backdrop-blur-3xl w-[360px]">
+                  <div className="aspect-square h-[120px] w-[120px] p-2 bg-translucent-light-4 rounded-[16px] border-translucent-light-4 border-2 flex items-center justify-center">
+                    <p className="text-display-1-bold  text-accent-primary">
+                      3
+                    </p>
                   </div>
-                  <p className="text-light-primary/70 text-sm leading-relaxed">
-                    $BANANA token launch<br />
-                    $BANANA pools go live<br />
-                    The HOUSE of $BANANA
-                  </p>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="text-light-primary text-h3 font-[600]">
+                        BANANA goes $BANANA
+                      </p>
+                    </div>
+                    <ul className="text-light-primary/70 font-pally text-body-1-medium space-y-1">
+                      <li>
+                        $BANANA token launch $BANANA pools go live The HOUSE of
+                        $BANANA
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
 
-              {/* Phase 4 - The Dawn of Gorillas */}
+              {/* Phase 4 - Future */}
               <div className="flex items-center gap-6 md:gap-8 md:flex-row-reverse">
-                <div className="flex-shrink-0 w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center relative z-10">
-                  <span className="text-white text-sm font-bold">4</span>
-                </div>
-                <div className="bg-translucent-dark-8 border border-pink-400/30 rounded-2xl p-6 flex-1 md:max-w-md backdrop-blur-3xl">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="text-light-primary text-lg font-bold">
-                      The Dawn of Gorillas
-                    </h3>
-                    <span className="bg-pink-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                      PHASE 4
-                    </span>
+                <div className="bg-translucent-dark-8 gap-8 border border-pink-400/30 flex rounded-2xl p-6 flex-1 md:max-w-md backdrop-blur-3xl w-[360px]">
+                  <div className="aspect-square h-[120px] w-[120px] p-2 bg-translucent-light-4 rounded-[16px] border-translucent-light-4 border-2 flex items-center justify-center">
+                    <p className="text-display-1-bold  text-accent-primary">
+                      4
+                    </p>
                   </div>
-                  <p className="text-light-primary/70 text-sm leading-relaxed">
-                    Gori Bankers<br />
-                    Gori Riders<br />
-                    Be the HOUSE
-                  </p>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="text-light-primary text-h3 font-[600]">
+                        The Dawn of Gorillas
+                      </p>
+                    </div>
+                    <ul className="text-light-primary/70 font-pally text-body-1-medium space-y-1">
+                      <li>Gori Bankers Gori Riders Be the HOUSE</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
 
-              {/* Phase 5 - The Elders */}
               <div className="flex items-center gap-6 md:gap-8">
-                <div className="flex-shrink-0 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center relative z-10">
-                  <span className="text-white text-sm font-bold">5</span>
-                </div>
-                <div className="bg-translucent-dark-8 border border-orange-400/30 rounded-2xl p-6 flex-1 md:max-w-md backdrop-blur-3xl">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="text-light-primary text-lg font-bold">
-                      The Elders
-                    </h3>
-                    <span className="bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                      PHASE 5
-                    </span>
+                <div className="bg-translucent-dark-8 gap-8 border border-purple-400/30 flex rounded-2xl p-6 flex-1 md:max-w-md backdrop-blur-3xl w-[360px]">
+                  <div className="aspect-square h-[120px] w-[120px] p-2 bg-translucent-light-4 rounded-[16px] border-translucent-light-4 border-2 flex items-center justify-center">
+                    <p className="text-display-1-bold  text-accent-primary">
+                      5
+                    </p>
                   </div>
-                  <p className="text-light-primary/70 text-sm leading-relaxed">
-                    Gorilla Governance<br />
-                    Jungle 2.0 and BEYOND
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center mt-12">
-            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-green-500/20 to-purple-500/20 border border-green-400/30 px-6 py-3 rounded-full">
-              <span className="text-lg">🗺️</span>
-              <span className="text-light-primary text-sm font-medium">
-                This roadmap evolves based on community feedback and votes
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Enhanced Social Proof Section */}
-        <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-16 mb-8">
-          <div className="text-center mb-12">
-            <h2 className="text-light-primary text-3xl sm:text-4xl md:text-5xl font-bold font-['Clash_Display'] mb-4">
-              Join the Gorilla Army
-            </h2>
-            <p className="text-light-primary/70 text-lg sm:text-xl max-w-4xl mx-auto">
-              Get ready for the swing: Live coin flip game, upcoming NFT mint,
-              and $Banana rewards in the Somnia ecosystem. Join our
-              community-driven DAO and shape web3 gaming&apos;s!
-            </p>
-          </div>
-
-          {/* Feature Cards Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-            {/* Live Coin Flip Game */}
-            <div className="bg-translucent-dark-8 border border-translucent-light-8 rounded-2xl p-6 backdrop-blur-3xl">
-              <div className="flex items-start gap-4">
-                <div className="text-2xl">🪙</div>
-                <div>
-                  <h3 className="text-light-primary font-bold text-lg mb-2">
-                    Live Coin Flip Game
-                  </h3>
-                  <p className="text-light-primary/80 text-sm mb-3">
-                    Play now on our dApp—flip coins, earn $Banana, and climb the
-                    leaderboard with seamless Somnia transactions.
-                  </p>
-                  <p className="text-light-primary/80 text-sm mb-3 italic">
-                    &quot;The UI is clean and transactions are butter-smooth.
-                    Seamless fun on Somnia!&quot;
-                  </p>
-                  <div className="text-yellow-400 text-xs font-medium">
-                    - @CryptowithGR
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="text-light-primary text-h3 font-[600]">
+                        The Elders
+                      </p>
+                    </div>
+                    <ul className="text-light-primary/70 font-pally text-body-1-medium space-y-1">
+                      <li>Gorilla Governance Jungle 2.0 and BEYOND</li>
+                    </ul>
                   </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Upcoming NFT Mint */}
-            <div className="bg-translucent-dark-8 border border-translucent-light-8 rounded-2xl p-6 backdrop-blur-3xl">
-              <div className="flex items-start gap-4">
-                <div className="text-2xl">🎨</div>
-                <div>
-                  <h3 className="text-light-primary font-bold text-lg mb-2">
-                    Upcoming NFT Mint
-                  </h3>
-                  <p className="text-light-primary/80 text-sm mb-3">
-                    Gorillas collection launching soon—gain membership, voting
-                    rights, and exclusive utilities.
-                  </p>
-                  <p className="text-light-primary/80 text-sm mb-3 italic">
-                    &quot;Excited for the Gorillas mint on Somnia. The vision
-                    for mini-games and DAO is spot on!&quot;
-                  </p>
-                  <div className="text-yellow-400 text-xs font-medium">
-                    - @Web3ApeEnthusiast
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Recent Partnerships */}
-            <div className="bg-translucent-dark-8 border border-translucent-light-8 rounded-2xl p-6 backdrop-blur-3xl">
-              <div className="flex items-start gap-4">
-                <div className="text-2xl">🤝</div>
-                <div>
-                  <h3 className="text-light-primary font-bold text-lg mb-2">
-                    Recent Partnerships
-                  </h3>
-                  <p className="text-light-primary/80 text-sm mb-3">
-                    Teaming up with @somniameme for one-click coin launches and
-                    discoveries on Somnia.
-                  </p>
-                  <p className="text-light-primary/80 text-sm mb-3 italic">
-                    &quot;Stay tuned for what we&apos;re building
-                    together—partnerships driving ecosystem growth!&quot;
-                  </p>
-                  <div className="text-yellow-400 text-xs font-medium">
-                    - @SomniaEco
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* OG Roles Available */}
-            <div className="bg-translucent-dark-8 border border-translucent-light-8 rounded-2xl p-6 backdrop-blur-3xl">
-              <div className="flex items-start gap-4">
-                <div className="text-2xl">👑</div>
-                <div>
-                  <h3 className="text-light-primary font-bold text-lg mb-2">
-                    OG Roles Available
-                  </h3>
-                  <p className="text-light-primary/80 text-sm mb-3">
-                    Less than 50 spots left in Discord—join, complete tasks, and
-                    earn exclusive OG Gorilla role.
-                  </p>
-                  <p className="text-light-primary/80 text-sm mb-3 italic">
-                    &quot;The pre-launch hype in Discord is amazing. This could
-                    be the next big web3 gaming DAO!&quot;
-                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
+        {/* Enhanced Social Proof Section */}
         {/* Gorillaz Language Component */}
         <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-16 mb-8">
           <div className="text-center mb-12">

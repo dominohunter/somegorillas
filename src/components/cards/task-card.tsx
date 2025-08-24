@@ -52,7 +52,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
   };
 
   return (
-    <div className="border-2 border-translucent-light-4 bg-translucent-light-8 rounded-2xl p-4 flex flex-col items-center gap-4 ">
+    <div className="border-2 border-translucent-light-4 bg-translucent-light-8 rounded-2xl p-4 flex flex-col items-center gap-4 cursor-grab active:cursor-grabbing select-none">
       {/* Coin Icon */}
       <div className="flex-shrink-0 bg-translucent-light-12 border-translucent-light-4 border-2 p-10 rounded-[12px]">
         {getCoinIcon()}

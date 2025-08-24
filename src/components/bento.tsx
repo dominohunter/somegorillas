@@ -6,6 +6,7 @@ export interface BentoCardProps {
   title?: string;
   description?: string;
   label?: string;
+  image?: string;
   textAutoHide?: boolean;
   disableAnimations?: boolean;
 }
@@ -31,47 +32,54 @@ const MOBILE_BREAKPOINT = 768;
 
 const cardData: BentoCardProps[] = [
   {
-    color: "rgba(34, 197, 94, 0.1)",
-    title: "Play-to-Earn Always",
-    description: "Win or lose, earn $BANANA tokens every game",
-    label: "🎮 Gaming",
-  },
-  {
     color: "rgba(251, 191, 36, 0.1)",
-    title: "$BANANA Rewards",
-    description: "Real utility tokens with ecosystem value",
+    title: "$Banana",
+    description:
+      "Banana powers gorilla life. Stack it, spend it, farm it, watch it grow.",
     label: "🍌 Tokens",
+    image: "/banana-pattern.png",
   },
   {
     color: "rgba(168, 85, 247, 0.1)",
-    title: "NFT Magic Boxes",
-    description: "Unlock exclusive gorilla collectibles",
+    title: "True gorilla NFTs",
+    description:
+      "Utilities drive the core of Some Gorilla NFT. Exclusive rewards, $BANANA yield boost, in-game characters, great art. What else you need from a NFT, really.",
     label: "🎁 NFTs",
   },
   {
-    color: "rgba(59, 130, 246, 0.1)",
-    title: "Lightning Fast",
-    description: "Built on Somnia blockchain for instant games",
-    label: "⚡ Speed",
-  },
-  {
     color: "rgba(236, 72, 153, 0.1)",
-    title: "Community Driven",
-    description: "Discord integration with 24/7 active members",
+    title: "Gorillas for Gorillas",
+    description: "By the tribe, for the tribe. No gorilla forgotten.",
     label: "👥 Community",
+    image: "/gorilla-pattern.png",
   },
   {
     color: "rgba(34, 197, 94, 0.1)",
-    title: "Provably Fair",
-    description: "Every game outcome verified on-chain",
-    label: "🔒 Fair",
+    title: "Built to last",
+    description:
+      "Hype's fun, but we're in for the marathon. Transparent fees, fair mechanics, and endless games to keep the ecosystem aping strong.",
+    label: "🏆 Sustainability",
+    image: "/coin-pattern.png",
+  },
+  {
+    color: "rgba(59, 130, 246, 0.1)",
+    title: "Supa fast",
+    description: "That Somnia TPS! Whoo! Whee!",
+    label: "⚡ Speed",
+  },
+  {
+    color: "rgba(34, 197, 94, 0.1)",
+    title: "Champs",
+    description:
+      "Won the 1st place in the Somnia Mini Game hackathon. Gorilla smart. Gorilla codes.",
+    label: "🏆 Winners",
   },
 ];
 
 const createParticleElement = (
   x: number,
   y: number,
-  color: string = DEFAULT_GLOW_COLOR
+  color: string = DEFAULT_GLOW_COLOR,
 ): HTMLDivElement => {
   const el = document.createElement("div");
   el.className = "particle";
@@ -100,7 +108,7 @@ const updateCardGlowProperties = (
   mouseX: number,
   mouseY: number,
   glow: number,
-  radius: number
+  radius: number,
 ) => {
   const rect = card.getBoundingClientRect();
   const relativeX = ((mouseX - rect.left) / rect.width) * 100;
@@ -149,8 +157,8 @@ const ParticleCard: React.FC<{
       createParticleElement(
         Math.random() * width,
         Math.random() * height,
-        glowColor
-      )
+        glowColor,
+      ),
     );
     particlesInitialized.current = true;
   }, [particleCount, glowColor]);
@@ -192,7 +200,7 @@ const ParticleCard: React.FC<{
         gsap.fromTo(
           clone,
           { scale: 0, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(1.7)" }
+          { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(1.7)" },
         );
 
         gsap.to(clone, {
@@ -307,7 +315,7 @@ const ParticleCard: React.FC<{
         Math.hypot(x, y),
         Math.hypot(x - rect.width, y),
         Math.hypot(x, y - rect.height),
-        Math.hypot(x - rect.width, y - rect.height)
+        Math.hypot(x - rect.width, y - rect.height),
       );
 
       const ripple = document.createElement("div");
@@ -337,7 +345,7 @@ const ParticleCard: React.FC<{
           duration: 0.8,
           ease: "power2.out",
           onComplete: () => ripple.remove(),
-        }
+        },
       );
     };
 
@@ -474,7 +482,7 @@ const GlobalSpotlight: React.FC<{
           e.clientX,
           e.clientY,
           glowIntensity,
-          spotlightRadius
+          spotlightRadius,
         );
       });
 
@@ -590,40 +598,40 @@ const MagicBento: React.FC<BentoProps> = ({
             --purple-border: rgba(132, 0, 255, 0.8);
             padding: 2rem;
           }
-          
+
           .card-responsive {
             grid-template-columns: 1fr;
             width: 100%;
             padding: 0.5rem;
           }
-          
+
           @media (min-width: 600px) {
             .card-responsive {
               grid-template-columns: repeat(2, 1fr);
             }
           }
-          
+
           @media (min-width: 1024px) {
             .card-responsive {
               grid-template-columns: repeat(4, 1fr);
             }
-            
+
             .card-responsive .card:nth-child(3) {
               grid-column: span 2;
               grid-row: span 2;
             }
-            
+
             .card-responsive .card:nth-child(4) {
               grid-column: 1 / span 2;
               grid-row: 2 / span 2;
             }
-            
+
             .card-responsive .card:nth-child(6) {
               grid-column: 4;
               grid-row: 3;
             }
           }
-          
+
           .card--border-glow::after {
             content: '';
             position: absolute;
@@ -642,15 +650,15 @@ const MagicBento: React.FC<BentoProps> = ({
             transition: opacity 0.3s ease;
             z-index: 1;
           }
-          
+
           .card--border-glow:hover::after {
             opacity: 1;
           }
-          
+
           .card--border-glow:hover {
             box-shadow: 0 4px 20px rgba(46, 24, 78, 0.4), 0 0 30px rgba(${glowColor}, 0.2);
           }
-          
+
           .particle::before {
             content: '';
             position: absolute;
@@ -662,11 +670,11 @@ const MagicBento: React.FC<BentoProps> = ({
             border-radius: 50%;
             z-index: -1;
           }
-          
+
           .particle-container:hover {
             box-shadow: 0 4px 20px rgba(46, 24, 78, 0.2), 0 0 30px rgba(${glowColor}, 0.2);
           }
-          
+
           .text-clamp-1 {
             display: -webkit-box;
             -webkit-box-orient: vertical;
@@ -675,7 +683,7 @@ const MagicBento: React.FC<BentoProps> = ({
             overflow: hidden;
             text-overflow: ellipsis;
           }
-          
+
           .text-clamp-2 {
             display: -webkit-box;
             -webkit-box-orient: vertical;
@@ -684,14 +692,14 @@ const MagicBento: React.FC<BentoProps> = ({
             overflow: hidden;
             text-overflow: ellipsis;
           }
-          
+
           @media (max-width: 599px) {
             .card-responsive {
               grid-template-columns: 1fr;
               width: 100%;
               padding: 0.5rem;
             }
-            
+
             .card-responsive .card {
               width: 100%;
               min-height: 180px;
@@ -729,7 +737,8 @@ const MagicBento: React.FC<BentoProps> = ({
               WebkitBackdropFilter: "blur(10px)",
               background: `linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4))`,
               border: "1px solid rgba(255, 255, 255, 0.1)",
-              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+              boxShadow:
+                "0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
             } as React.CSSProperties;
 
             if (enableStars) {
@@ -745,8 +754,19 @@ const MagicBento: React.FC<BentoProps> = ({
                   clickEffect={clickEffect}
                   enableMagnetism={enableMagnetism}
                 >
+                  {card.image && (
+                    <div className="card__image bg-translucent-light-4 rounded-2xl overflow-hidden mb-6">
+                      <img
+                        src={card.image}
+                        alt={card.title}
+                        className="w-full h-auto"
+                      />
+                    </div>
+                  )}
                   <div className="card__header flex justify-between gap-3 relative text-white">
-                    <span className="card__label text-sm font-medium opacity-80">{card.label}</span>
+                    <span className="card__label text-sm font-medium opacity-80">
+                      {card.label}
+                    </span>
                   </div>
                   <div className="card__content flex flex-col relative text-white">
                     <h3
@@ -840,7 +860,7 @@ const MagicBento: React.FC<BentoProps> = ({
                       Math.hypot(x, y),
                       Math.hypot(x - rect.width, y),
                       Math.hypot(x, y - rect.height),
-                      Math.hypot(x - rect.width, y - rect.height)
+                      Math.hypot(x - rect.width, y - rect.height),
                     );
 
                     const ripple = document.createElement("div");
@@ -870,7 +890,7 @@ const MagicBento: React.FC<BentoProps> = ({
                         duration: 0.8,
                         ease: "power2.out",
                         onComplete: () => ripple.remove(),
-                      }
+                      },
                     );
                   };
 
@@ -879,8 +899,19 @@ const MagicBento: React.FC<BentoProps> = ({
                   el.addEventListener("click", handleClick);
                 }}
               >
+                {card.image && (
+                  <div className="card__image bg-translucent-light-4 rounded-2xl overflow-hidden mb-6">
+                    <img
+                      src={card.image}
+                      alt={card.title}
+                      className="w-full h-auto"
+                    />
+                  </div>
+                )}
                 <div className="card__header flex justify-between gap-3 relative text-white">
-                  <span className="card__label text-sm font-medium opacity-80">{card.label}</span>
+                  <span className="card__label text-sm font-medium opacity-80">
+                    {card.label}
+                  </span>
                 </div>
                 <div className="card__content flex flex-col relative text-white">
                   <h3
@@ -904,4 +935,3 @@ const MagicBento: React.FC<BentoProps> = ({
 };
 
 export default MagicBento;
-

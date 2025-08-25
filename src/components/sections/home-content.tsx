@@ -27,7 +27,6 @@ import Discord from "../icons/discord";
 import Metamask from "../icons/metamask";
 import Banana from "../icons/banana";
 import MagicBento from "@/components/bento";
-import AchievementCoin from "../icons/achievement-coin";
 
 export default function HomeContent() {
   const {

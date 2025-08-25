@@ -886,32 +886,3 @@ body {
   }
 }
 
-/* Custom monkey cursors */
-* {
-  cursor: url('/cursors/cursor-normal-48.png') 24 24, auto !important;
-}
-
-*[style*="cursor: pointer"], 
-button, 
-a, 
-input[type="button"],
-input[type="submit"],
-[role="button"],
-.cursor-pointer {
-  cursor: url('/cursors/cursor-pointer-48.png') 24 24, pointer !important;
-}
-
-*[style*="cursor: grab"],
-[draggable="true"],
-.cursor-grab,
-.draggable {
-  cursor: url('/cursors/cursor-grab-48.png') 24 24, grab !important;
-}
-
-*[style*="cursor: grabbing"],
-.grabbing,
-.cursor-grabbing,
-*:active[draggable="true"],
-*:active.draggable {
-  cursor: url('/cursors/cursor-grab-hold-48.png') 24 24, grabbing !important;
-}

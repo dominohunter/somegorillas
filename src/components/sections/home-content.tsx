@@ -213,7 +213,7 @@ export default function HomeContent() {
   }, [token, isDiscordVerified, showAllSet, showModal, router]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen min-h-[-webkit-fill-available] flex items-center justify-center">
       <div className="flex flex-col max-w-[1920px] items-center w-full relative z-10">
         {/* Hero Section */}
         <div className="flex flex-col gap-4 sm:gap-6 px-4 sm:px-6 md:px-8 items-center text-center py-[240px]">
@@ -388,7 +388,7 @@ export default function HomeContent() {
               </div>
               <div className="text-5xl mb-4">
                 <div className="text-5xl mb-4 flex justify-center">
-                  <AchievementCoin size={100} claimed={true} />
+                  {/*<AchievementCoin size={100} claimed={true} />*/}
                 </div>
               </div>
 
@@ -410,7 +410,7 @@ export default function HomeContent() {
               </div>
               <div className="text-5xl mb-4">
                 <div className="text-5xl mb-4 flex justify-center">
-                  <AchievementCoin size={100} claimed={true} />
+                  {/*<AchievementCoin size={100} claimed={true} />*/}
                 </div>
               </div>
               <h3 className="text-light-primary text-xl font-bold mb-3">

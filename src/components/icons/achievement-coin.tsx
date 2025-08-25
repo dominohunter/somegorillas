@@ -9,7 +9,8 @@ const AchievementCoin: React.FC<AchievementCoinProps> = ({
   size,
   claimed = false,
 }) => {
-  const gradientId = `paint0_linear_21572_761_${Math.random().toString(36).substr(2, 9)}`;
+  // Use a deterministic ID based on component props instead of Math.random()
+  const gradientId = `paint0_linear_21572_761_${size}_${claimed ? 'claimed' : 'unclaimed'}`;
   
   return (
     <svg

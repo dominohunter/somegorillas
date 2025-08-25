@@ -6,6 +6,11 @@
 /* Ensure full page screenshot captures black background */
 html, body {
   background-color: #000000 !important;
+  /* Fix mobile Safari white space issues */
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 * {
@@ -483,6 +488,10 @@ body {
   body {
     @apply bg-background text-foreground;
     height: 100vh;
+    /* Fix mobile Safari viewport issues */
+    height: -webkit-fill-available;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
     width: 100vw;
     margin: 0;
     padding: 0;
@@ -852,6 +861,28 @@ body {
   to {
     transform: translateX(100%);
     opacity: 0;
+  }
+}
+
+/* Mobile Safari white space fix */
+@supports (-webkit-touch-callout: none) {
+  html, body, #__next, [data-reactroot] {
+    height: -webkit-fill-available;
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* Prevent overscroll bounce on mobile */
+@media (max-width: 768px) {
+  html, body {
+    overscroll-behavior: none;
+    overflow-x: hidden;
+  }
+  
+  #__next, [data-reactroot] {
+    overflow-y: auto;
+    height: 100vh;
+    height: -webkit-fill-available;
   }
 }
 

@@ -28,7 +28,8 @@ export default function OptimizedBackground({
           quality={75}
           sizes="100vw"
           onLoad={() => setIsLoading(false)}
-          onError={() => {
+          onError={(e) => {
+            console.error('Background image failed to load:', backgroundName, e);
             setHasError(true);
             setIsLoading(false);
           }}

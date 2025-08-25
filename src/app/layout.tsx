@@ -54,7 +54,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body className="bg-black" suppressHydrationWarning={true}>
         <OptimizedBackground backgroundName={background} />
-        <div className="relative z-10 min-h-screen w-full">
+        <div className="relative z-10 min-h-screen min-h-[-webkit-fill-available] w-full">
           <Providers>
             <AudioProvider>
               <AuthProvider>
@@ -65,7 +65,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                   <div className="flex-1">{children}</div>
                 </div>
                 <div
-                  className="w-full py-[200px] bg-cover mt-[400px] bg-center bg-no-repeat flex items-center justify-center relative"
+                  className="w-full py-[200px] bg-cover mt-[200px] sm:mt-[400px] bg-center bg-no-repeat flex items-center justify-center relative"
                   style={{ backgroundImage: "url(/footer-bg.png)" }}
                 >
                   <div className="absolute top-0 rounded-4xl backdrop-blur-2xl bg-translucent-dark-8 border border-translucent-light-8 p-8 -mt-96 md:-mt-56 z-20">

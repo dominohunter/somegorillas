@@ -64,36 +64,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                   </div>
                   <div className="flex-1">{children}</div>
                 </div>
-                <div
-                  className="w-full py-[200px] bg-cover mt-[200px] sm:mt-[400px] bg-center bg-no-repeat flex items-center justify-center relative"
-                  style={{ backgroundImage: "url(/footer-bg.png)" }}
-                >
-                  <div className="absolute top-0 rounded-4xl backdrop-blur-2xl bg-translucent-dark-8 border border-translucent-light-8 p-8 -mt-96 md:-mt-56 z-20">
-                    <p className="text-[#FFD700] text-h5 font-[600] text-balance ">
-                      Gorillaz have gud plan. But we alwayz listen to Gorillas.
-                      <br /> Maybe the Some Gorillas are frens we make along the
-                      way
-                    </p>
-                  </div>
-                  <Image
-                    src="/buttonmonke.svg"
-                    alt="Gorilla"
-                    width={240}
-                    height={240}
-                    className="absolute top-0 left-1/7 w-60 h-60 -mt-46 z-20"
-                    style={{ aspectRatio: "1/1" }}
-                    priority
-                  />
-                  <Image
-                    src="/logo/Logo.svg"
-                    alt="Gorilla Logo"
-                    width={240}
-                    height={240}
-                    className="w-60 h-60"
-                    priority
-                  />
-                </div>
-
                 <AudioConsentModal />
                 <AudioControls />
               </AuthProvider>

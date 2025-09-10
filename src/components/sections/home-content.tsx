@@ -11,28 +11,21 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-import RotatingText from "@/components/rotating-text";
-
 import Wallet from "@/components/icons/wallet";
 import GlowButton from "@/components/ui/glow-button";
 import { useConnect } from "wagmi";
 import { Connector } from "wagmi";
-import Image from "next/image";
-import GorilakLanguage from "@/components/sections/gorillak-language";
 import { useLogin } from "@/hooks/use-login";
 import { useReferralCode } from "@/hooks/use-referral-code";
-import HomeFaq from "./home-faq";
 import CheckCircle from "../icons/check-circle";
 import Discord from "../icons/discord";
 import Metamask from "../icons/metamask";
 import Banana from "../icons/banana";
-import MagicBento from "@/components/bento";
 import Dashboard from "@/app/dashboard/page";
 
 export default function HomeContent() {
   const {
     isConnected,
-    isAuthenticated,
     address,
     refreshToken,
     token,
@@ -54,7 +47,6 @@ export default function HomeContent() {
     "wallet",
   );
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const [showDiscordModal, setShowDiscordModal] = useState(false);
   const [pendingReferralSubmission, setPendingReferralSubmission] =
     useState(false);
   const [showAllSet, setShowAllSet] = useState(false);
@@ -133,15 +125,6 @@ export default function HomeContent() {
       // Handle cases where autoplay is blocked
       console.log("Audio playback failed");
     });
-  };
-
-  const handleMainButtonClick = () => {
-    if (isAuthenticated) {
-      // Already authenticated, could go to dashboard or stay on home
-      router.push("/dashboard");
-    } else {
-      setShowModal(true);
-    }
   };
 
   const handleDiscordVerification = async () => {
@@ -262,9 +245,7 @@ export default function HomeContent() {
                 />
                 <div
                   className={`w-2 h-2 rounded-full ${
-                    currentStep === "discord"
-                      ? "bg-purple-500"
-                      : "bg-gray-400"
+                    currentStep === "discord" ? "bg-purple-500" : "bg-gray-400"
                   }`}
                 />
               </div>

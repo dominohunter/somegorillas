@@ -10,7 +10,6 @@ import OptimizedBackground from "@/components/optimized-background";
 import { AudioProvider } from "@/contexts/audio-context";
 import AudioConsentModal from "@/components/audio/audio-consent-modal";
 import AudioControls from "@/components/audio/audio-controls";
-import Image from "next/image";
 
 import { usePathname } from "next/navigation";
 

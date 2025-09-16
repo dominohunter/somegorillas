@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
 import CoinHead from "../icons/coin-head";
 import CoinButt from "../icons/coin-butt";
 import GlareButton from "../ui/glare-button";
@@ -64,6 +64,9 @@ const FlipResultModal: React.FC<FlipResultModalProps> = ({
               </div>
             )}
           </DialogTitle>
+          <DialogDescription className="text-light-primary/80 text-center">
+            Your coin flip results and banana rewards
+          </DialogDescription>
         </DialogHeader>
 
         <div className="flex flex-col items-center space-y-6">

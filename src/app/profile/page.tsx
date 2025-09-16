@@ -196,27 +196,6 @@ export default function Profile() {
   return (
     <div className="w-full">
       <div className="w-full px-4 sm:px-6 lg:px-8 py-2">
-        {/* Back Button */}
-        <div className="mb-4">
-          <GlareButton
-            onClick={() => router.back()}
-            background="rgba(255, 255, 255, 0.16)"
-            borderRadius="12px"
-            borderColor="rgba(255, 255, 255, 0.04)"
-            className="p-3 backdrop-blur-[40px] flex items-center gap-2 text-white"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none  ">
-              <path
-                d="M19 12H5M12 19l-7-7 7-7"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            Back
-          </GlareButton>
-        </div>
         {/* <DiscordVerificationSection /> */}
 
         {/* Profile Header */}

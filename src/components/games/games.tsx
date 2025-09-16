@@ -9,7 +9,7 @@ import AddFriend from "@/components/icons/add-friend";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
-export default function Tasks() {
+export default function Games() {
   const { address } = useAccount();
   const questsQuery = useQuests(address);
   const referralQuery = useReferral();

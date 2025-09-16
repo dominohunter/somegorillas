@@ -719,6 +719,24 @@ body {
   .font-clash {
     font-family: "Clash Display", Arial, Helvetica, sans-serif;
   }
+
+  /* Cartoon Effects */
+  .cartoon-shadow {
+    text-shadow: 4px 4px 0px var(--dark-primary);
+  }
+  .cartoon-boxshadow {
+    box-shadow: 4px 4px 0px var(--dark-primary);
+  }
+  
+  /* Light mode cartoon effects */
+  @media (prefers-color-scheme: light) {
+    .cartoon-shadow {
+      text-shadow: 4px 4px 0px var(--light-primary);
+    }
+    .cartoon-boxshadow {
+      box-shadow: 4px 4px 0px var(--light-primary);
+    }
+  }
 }
 
 /* Add this to your globals.css file */

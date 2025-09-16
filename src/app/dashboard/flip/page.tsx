@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import GlareButton from "@/components/ui/glare-button";
 import CoinFlip from "@/components/animations/coin-flip";
 import FlipResultModal from "@/components/modals/flip-result-modal";
-import Activity from "@/components/dashboard/activity";
+import { CartoonButton } from "@/components/ui/cartoon-button";
 import Head from "@/components/icons/head";
 import Butt from "@/components/icons/butt";
 import { COINFLIP_ABI, COINFLIP_ADDRESS, COINFLIP_FEE } from "@/lib/config";
@@ -275,11 +275,11 @@ export default function FlipPage() {
       } else if (errorMessage.includes("insufficient funds")) {
         toast.error("Insufficient funds", {
           description:
-            "You don't have enough ETH to complete this transaction.",
+            "You don't have enough STT to complete this transaction.",
         });
       } else if (errorMessage.includes("Insufficient flip fee")) {
         toast.error("Insufficient flip fee", {
-          description: `You need at least ${COINFLIP_FEE} ETH to flip the coin.`,
+          description: `You need at least ${COINFLIP_FEE} STT to flip the coin.`,
         });
       } else {
         toast.error("Transaction failed", {
@@ -570,7 +570,7 @@ export default function FlipPage() {
 
       console.log("Starting coin flip...");
       console.log("Contract address:", COINFLIP_ADDRESS);
-      console.log("Fee amount:", COINFLIP_FEE, "ETH");
+      console.log("Fee amount:", COINFLIP_FEE, "STT");
       console.log("User prediction:", prediction);
 
       const guessBool = prediction === "heads";
@@ -798,17 +798,11 @@ export default function FlipPage() {
 
               <div className="flex flex-col gap-5">
                 <div className="flex gap-4">
-                  <GlareButton
+                  <CartoonButton
+                    variant="primary"
+                    size="lg"
+                    shadow="cartoon"
                     onClick={() => setPrediction("heads")}
-                    background={
-                      state.prediction === "heads"
-                        ? "#F5BA31"
-                        : "rgba(255, 255, 255, 0.12)"
-                    }
-                    borderRadius="20px"
-                    borderColor="transparent"
-                    glareColor="#ffffff"
-                    glareOpacity={0.3}
                     className={`px-4 flex-1 flex-col text-center items-center text-h5 font-semibold pb-4 pt-5 ${
                       state.prediction === "heads"
                         ? "text-dark-primary"
@@ -817,8 +811,8 @@ export default function FlipPage() {
                   >
                     <Head size={64} />
                     Head
-                  </GlareButton>
-                  <GlareButton
+                  </CartoonButton>
+                  <button
                     onClick={() => setPrediction("tails")}
                     background={
                       state.prediction === "tails"
@@ -837,7 +831,7 @@ export default function FlipPage() {
                   >
                     <Butt size={64} />
                     Butt
-                  </GlareButton>
+                  </button>
                 </div>
 
                 <p className="text-center font-pally text-translucent-light-64">
@@ -854,7 +848,7 @@ export default function FlipPage() {
         </div>
 
         {/* Activity Component */}
-        <Activity />
+        {/*<Activity />*/}
 
         {/* Result Modal */}
         <FlipResultModal

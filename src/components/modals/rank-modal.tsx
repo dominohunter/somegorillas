@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
 import React from "react";
 import { useLeaderboard, useGlobalStats } from "@/lib/query-helper";
 import Head from "../icons/head";
@@ -29,6 +29,9 @@ const RankModal: React.FC<RankModalProps> = ({
           <DialogTitle className="text-h5 text-light-primary text-start leading-loose tracking-tight text-2xl font-semibold ">
             Leaderboard
           </DialogTitle>
+          <DialogDescription className="text-light-primary/80 text-start">
+            View global stats and player rankings
+          </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 flex-1 overflow-y-auto ">

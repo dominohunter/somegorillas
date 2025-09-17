@@ -2,7 +2,6 @@
 
 import { CartoonButton } from "@/components/ui/cartoon-button";
 import { useRouter } from "next/navigation";
-import GlareHover from "@/components/GlareHover";
 
 export default function Games() {
   const router = useRouter();

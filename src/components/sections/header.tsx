@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { useFlipRemaing } from "@/lib/query-helper";
 import { CartoonButton } from "../ui/cartoon-button";
 import { createPortal } from "react-dom";
 
@@ -23,15 +22,6 @@ export default function Header() {
 
   const router = useRouter();
   const pathname = usePathname();
-  const flipLimitQuery = useFlipRemaing();
-
-  const handleNavigation = () => {
-    if (pathname === "/dashboard/flip") {
-      router.push("/dashboard");
-    } else {
-      router.push("/dashboard/flip");
-    }
-  };
 
   const handleIndexClick = () => {
     router.push("/");

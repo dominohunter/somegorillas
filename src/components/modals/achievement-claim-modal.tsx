@@ -33,7 +33,7 @@ const AchievementClaimModal: React.FC<AchievementClaimModalProps> = ({
             🎉 Achievement Unlocked!
           </DialogTitle>
           <DialogDescription className="text-light-primary/80 text-center">
-            You've earned a new achievement and banana rewards
+            You&apos;ve earned a new achievement and banana rewards
           </DialogDescription>
         </DialogHeader>
 

@@ -6,6 +6,7 @@ import Image from "next/image";
 interface CoinFlipProps {
   isFlipping: boolean;
   result?: "head" | "tail" | null;
+  prediction?: "heads" | "tails" | null;
   onAnimationComplete?: () => void;
   size?: number;
 }
@@ -13,6 +14,7 @@ interface CoinFlipProps {
 const CoinFlip: React.FC<CoinFlipProps> = ({
   isFlipping,
   result,
+  prediction,
   onAnimationComplete,
   size = 200,
 }) => {
@@ -52,6 +54,12 @@ const CoinFlip: React.FC<CoinFlipProps> = ({
 
   const getCurrentImageSrc = () => {
     if (!isFlipping) {
+      // Show prediction image when not flipping
+      if (prediction === "heads") {
+        return "/coin/1.svg";
+      } else if (prediction === "tails") {
+        return "/coin/7.svg";
+      }
       return "/coin/idle.svg";
     }
 

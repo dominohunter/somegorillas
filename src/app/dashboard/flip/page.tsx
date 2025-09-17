@@ -19,6 +19,7 @@ import Butt from "@/components/icons/butt";
 import { COINFLIP_ABI, COINFLIP_ADDRESS, COINFLIP_FEE } from "@/lib/config";
 import { useApiMutation } from "@/lib/mutation-helper";
 import api from "@/lib/axios";
+import { pendingTransactionsApi } from "@/lib/api";
 import {
   CoinFlippedEvent,
   FlipAction,
@@ -298,6 +299,19 @@ export default function FlipPage() {
         description: "Your coin flip is being processed on the blockchain.",
       });
       dispatch({ type: "SET_FLIPPING", payload: true });
+      
+      // Create pending transaction record
+      const createPendingTransaction = async () => {
+        try {
+          await pendingTransactionsApi.createPendingTransaction(hash, "coinflip");
+          console.log("Pending transaction created for hash:", hash);
+        } catch (error) {
+          console.error("Failed to create pending transaction:", error);
+          // Don't fail the entire flow if pending transaction creation fails
+        }
+      };
+      
+      createPendingTransaction();
     }
   }, [hash, writeError]);
 
@@ -768,6 +782,7 @@ export default function FlipPage() {
                       | "tail")
                   : null
               }
+              prediction={state.prediction}
               onAnimationComplete={() => {}}
               size={240}
             />
@@ -775,63 +790,62 @@ export default function FlipPage() {
 
           {statsQuery.data && (
             <div className="flex flex-col justify-center">
-              <div className="flex justify-center my-10">
-                <GlareButton
-                  onClick={startCoinFlip}
-                  disabled={isButtonDisabled}
-                  background={
-                    isButtonDisabled ? "rgba(255, 255, 255, 0.08)" : "#FFD700"
-                  }
-                  borderRadius="16px"
-                  borderColor="transparent"
-                  glareColor="#ffffff"
-                  glareOpacity={0.3}
-                  className={`px-6 py-3 text-h5 font-semibold ${
-                    isButtonDisabled
-                      ? "text-gray-200 cursor-not-allowed"
-                      : "text-dark-primary"
-                  }`}
-                >
-                  {getButtonText()}
-                </GlareButton>
-              </div>
-
               <div className="flex flex-col gap-5">
-                <div className="flex gap-4">
+                <div className="flex justify-center gap-4 my-10">
                   <CartoonButton
-                    variant="primary"
-                    size="lg"
+                    variant="secondary"
+                    size="md"
                     shadow="cartoon"
                     onClick={() => setPrediction("heads")}
-                    className={`px-4 flex-1 flex-col text-center items-center text-h5 font-semibold pb-4 pt-5 ${
+                    className={`px-4 flex text-center items-center text-h5 font-semibold pb-4 pt-5 ${
                       state.prediction === "heads"
-                        ? "text-dark-primary"
-                        : "text-white"
+                        ? "!bg-accent-secondary text-[#0f1012]"
+                        : "text-[#0f1012]"
                     }`}
                   >
-                    <Head size={64} />
-                    Head
+                    <Head size={24} />
+                    Pick Head
                   </CartoonButton>
-                  <button
+
+                  <CartoonButton
+                    variant="secondary"
+                    size="md"
+                    shadow="cartoon"
                     onClick={() => setPrediction("tails")}
-                    background={
+                    className={`px-4 flex text-center items-center text-h5 font-semibold pb-4 pt-5 ${
                       state.prediction === "tails"
-                        ? "#F5BA31"
-                        : "rgba(255, 255, 255, 0.12)"
+                        ? "!bg-accent-secondary text-[#0f1012]"
+                        : "text-[#0f1012]"
+                    }`}
+                  >
+                    <Butt size={24} />
+                    Pick Butt
+                  </CartoonButton>
+                </div>
+
+                <p className="font-pally flex flex-1 text-center font-medium text-body-1 text-translucent-light-80">
+                  Choose coin side
+                </p>
+
+                <div className="flex justify-center my-10">
+                  <GlareButton
+                    onClick={startCoinFlip}
+                    disabled={isButtonDisabled}
+                    background={
+                      isButtonDisabled ? "rgba(255, 255, 255, 0.08)" : "#FFD700"
                     }
-                    borderRadius="20px"
+                    borderRadius="16px"
                     borderColor="transparent"
                     glareColor="#ffffff"
                     glareOpacity={0.3}
-                    className={`px-4 flex-1 flex-col text-h5 font-semibold pb-4 pt-5 ${
-                      state.prediction === "tails"
-                        ? "text-dark-primary"
-                        : "text-white"
+                    className={`px-6 py-3 text-h5 font-semibold ${
+                      isButtonDisabled
+                        ? "text-gray-200 cursor-not-allowed"
+                        : "text-dark-primary"
                     }`}
                   >
-                    <Butt size={64} />
-                    Butt
-                  </button>
+                    {getButtonText()}
+                  </GlareButton>
                 </div>
 
                 <p className="text-center font-pally text-translucent-light-64">

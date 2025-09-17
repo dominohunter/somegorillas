@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
 import AchievementsSection from "../sections/achievement-section";
 import { Achievement } from "@/lib/types";
 
@@ -42,6 +42,9 @@ const AchievementsModal: React.FC<AchievementsModalProps> = ({
           <DialogTitle className="text-h5 text-light-primary text-start leading-loose tracking-tight text-2xl font-semibold">
             Achievements
           </DialogTitle>
+          <DialogDescription className="text-light-primary/80 text-start">
+            View and claim your achievements
+          </DialogDescription>
         </DialogHeader>
 
         <AchievementsSection

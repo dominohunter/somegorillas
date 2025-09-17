@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
 
 interface GameCardProps {
   name: string;
@@ -76,6 +76,9 @@ const GameCard: React.FC<GameCardProps> = ({
             <DialogTitle className="text-light-primary text-xl font-bold">
               Coming Soon!
             </DialogTitle>
+            <DialogDescription className="text-light-primary/80">
+              This game is currently in development
+            </DialogDescription>
           </DialogHeader>
           <div className="text-light-primary/70">
             <p>This game is still in development and will be available soon.</p>

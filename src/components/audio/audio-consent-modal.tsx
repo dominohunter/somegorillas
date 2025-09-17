@@ -4,6 +4,7 @@ import { useAudio } from '@/contexts/audio-context';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -18,6 +19,9 @@ export default function AudioConsentModal() {
           <DialogTitle className="text-h5 text-light-primary text-center">
             🎵 Welcome to the Jungle!
           </DialogTitle>
+          <DialogDescription className="text-light-primary/80 text-center">
+            Enable background music for the full SomeGorillas experience
+          </DialogDescription>
         </DialogHeader>
         <div className="text-center py-4">
           <p className="text-light-primary/80 mb-6">

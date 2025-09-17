@@ -8,8 +8,10 @@ import AchievementsModal from "@/components/modals/achievements-modal";
 import AchievementClaimModal from "@/components/modals/achievement-claim-modal";
 import { useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/keys-helper";
+import { useAuth } from "@/contexts/auth-context";
 
 export default function Achievements() {
+  const auth = useAuth();
   const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [claimModalOpen, setClaimModalOpen] = useState(false);
@@ -21,6 +23,20 @@ export default function Achievements() {
   } | null>(null);
 
   const achievementsQuery = useAchievements();
+  
+  // Debug logging
+  console.log("Auth State:", {
+    isAuthenticated: auth.isAuthenticated,
+    token: auth.token ? "exists" : "missing",
+    user: auth.user ? "exists" : "missing",
+    isLoading: auth.isLoading
+  });
+  console.log("Achievements Query:", {
+    data: achievementsQuery.data,
+    isLoading: achievementsQuery.isLoading,
+    error: achievementsQuery.error,
+    isSuccess: achievementsQuery.isSuccess
+  });
   const claimMutation = useClaimAchievement({
     onSuccess: (data, achievementId) => {
       // Find the achievement that was claimed
@@ -85,45 +101,67 @@ export default function Achievements() {
     });
   }, [achievementsQuery.data]);
 
-  // if (achievementsQuery.isLoading) {
-  //   return (
-  //     <div className="p-4 bg-translucent-dark-12 border-2 backdrop-blur-[60px] flex flex-col gap-3 rounded-3xl border-translucent-light-4">
-  //       <div className="">
-  //         {/* Header skeleton */}
-  //         <div className="flex justify-between items-center mb-4">
-  //           <div className="h-6 bg-translucent-light-16 rounded w-24"></div>
-  //           <div className="h-4 bg-translucent-light-16 rounded w-32"></div>
-  //         </div>
+  if (achievementsQuery.isLoading) {
+    return (
+      <div className="p-4 bg-translucent-dark-12 border-2 backdrop-blur-[60px] flex flex-col gap-3 rounded-3xl border-translucent-light-4">
+        <div className="">
+          {/* Header skeleton */}
+          <div className="flex justify-between items-center mb-4">
+            <div className="h-6 bg-translucent-light-16 rounded w-24"></div>
+            <div className="h-4 bg-translucent-light-16 rounded w-32"></div>
+          </div>
 
-  //         {/* Stats skeleton */}
-  //         <div className="grid grid-cols-4 gap-2 mb-4">
-  //           {[...Array(4)].map((_, i) => (
-  //             <div
-  //               key={i}
-  //               className="text-center p-3 bg-translucent-light-8 rounded-xl"
-  //             >
-  //               <div className="h-6 bg-translucent-light-16 rounded w-8 mx-auto mb-1"></div>
-  //               <div className="h-3 bg-translucent-light-16 rounded w-12 mx-auto"></div>
-  //             </div>
-  //           ))}
-  //         </div>
+          {/* Stats skeleton */}
+          <div className="grid grid-cols-4 gap-2 mb-4">
+            {[...Array(4)].map((_, i) => (
+              <div
+                key={i}
+                className="text-center p-3 bg-translucent-light-8 rounded-xl"
+              >
+                <div className="h-6 bg-translucent-light-16 rounded w-8 mx-auto mb-1"></div>
+                <div className="h-3 bg-translucent-light-16 rounded w-12 mx-auto"></div>
+              </div>
+            ))}
+          </div>
 
-  //         {/* Achievement cards skeleton */}
-  //         <div className="flex md:grid md:grid-cols-2 gap-3 overflow-x-auto overflow-y-hidden md:overflow-y-auto">
-  //           {[...Array(4)].map((_, i) => (
-  //             <div
-  //               key={i}
-  //               className="border-2 border-translucent-light-4 bg-translucent-light-8 rounded-[24px] p-4 flex items-center justify-center aspect-square w-[180px] h-[180px] md:w-auto md:h-auto min-w-[180px]"
-  //             >
-  //               {/* Achievement coin skeleton */}
-  //               <div className="w-[120px] h-[120px] bg-translucent-light-16 rounded-full"></div>
-  //             </div>
-  //           ))}
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+          {/* Achievement cards skeleton */}
+          <div className="flex md:grid md:grid-cols-2 gap-3 overflow-x-auto overflow-y-hidden md:overflow-y-auto">
+            {[...Array(4)].map((_, i) => (
+              <div
+                key={i}
+                className="border-2 border-translucent-light-4 bg-translucent-light-8 rounded-[24px] p-4 flex items-center justify-center aspect-square w-[180px] h-[180px] md:w-auto md:h-auto min-w-[180px]"
+              >
+                {/* Achievement coin skeleton */}
+                <div className="w-[120px] h-[120px] bg-translucent-light-16 rounded-full"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!auth.isAuthenticated && !auth.isLoading) {
+    return (
+      <div className="p-4 bg-translucent-dark-12 border-2 backdrop-blur-[60px] flex flex-col gap-3 rounded-3xl border-translucent-light-4">
+        <div className="text-center text-translucent-light-64">
+          <h2 className="text-h5 font-[600] mb-2 text-light-primary">Achievements</h2>
+          <p className="text-sm">Please sign in with your wallet to view achievements</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (achievementsQuery.error) {
+    return (
+      <div className="p-4 bg-translucent-dark-12 border-2 backdrop-blur-[60px] flex flex-col gap-3 rounded-3xl border-translucent-light-4">
+        <div className="text-center text-system-error-primary">
+          <h2 className="text-h5 font-[600] mb-2">Error Loading Achievements</h2>
+          <p className="text-sm">{achievementsQuery.error?.message || "Failed to load achievements"}</p>
+        </div>
+      </div>
+    );
+  }
 
   //todo: achievement card arai deer haragddag bolgoh
   return (

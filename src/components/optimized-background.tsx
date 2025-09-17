@@ -29,7 +29,11 @@ export default function OptimizedBackground({
           sizes="100vw"
           onLoad={() => setIsLoading(false)}
           onError={(e) => {
-            console.error('Background image failed to load:', backgroundName, e);
+            console.error(
+              "Background image failed to load:",
+              backgroundName,
+              e,
+            );
             setHasError(true);
             setIsLoading(false);
           }}
@@ -43,7 +47,7 @@ export default function OptimizedBackground({
       )}
 
       {/* Dark overlay for better text readability */}
-      <div className="fixed inset-0 z-[1] bg-black/60 pointer-events-none" />
+      <div className="fixed inset-0 z-[1] bg-black/30 pointer-events-none" />
 
       <div
         className="fixed inset-0 opacity-50 pointer-events-none z-[2] bg-repeat"

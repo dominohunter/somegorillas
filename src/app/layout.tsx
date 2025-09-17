@@ -57,11 +57,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Providers>
             <AudioProvider>
               <AuthProvider>
-                <div className="w-full max-w-[1920px] mx-auto min-h-screen flex flex-col">
+                <div className="min-h-screen flex flex-col">
                   <div className="w-full flex-shrink-0">
                     <Header />
                   </div>
-                  <div className="flex-1">{children}</div>
+                  <div className="w-full max-w-[1920px] mx-auto flex-1">{children}</div>
                 </div>
                 <AudioConsentModal />
                 <AudioControls />
@@ -86,6 +86,6 @@ function findBackGroundImage(path: string) {
     case "/dashboard/flip":
       return "FlipBackground";
     default:
-      return "HomeBackground";
+      return "DashboardBackground";
   }
 }

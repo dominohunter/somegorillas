@@ -2,18 +2,20 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/auth-context";
+import { useAudio } from "@/contexts/audio-context";
 import LoadingScreen from "@/components/screens/loading-screen";
 import { useRouter } from "next/navigation";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 
 import Wallet from "@/components/icons/wallet";
 import GlowButton from "@/components/ui/glow-button";
-import { useConnect } from "wagmi";
+import { useConnect, useAccount } from "wagmi";
 import { Connector } from "wagmi";
 import { useLogin } from "@/hooks/use-login";
 import { useReferralCode } from "@/hooks/use-referral-code";
@@ -22,6 +24,11 @@ import Discord from "../icons/discord";
 import Metamask from "../icons/metamask";
 import Banana from "../icons/banana";
 import Dashboard from "@/app/dashboard/page";
+
+// Helper function to get the Metamask icon
+const getConnectorIcon = (connectorName: string, size: number = 24) => {
+  return <Metamask size={size} />;
+};
 
 export default function HomeContent() {
   const {
@@ -36,9 +43,11 @@ export default function HomeContent() {
     logout,
   } = useAuth();
   const router = useRouter();
+  const { showAudioConsent } = useAudio();
 
   // Local wallet connection state
   const { connect, connectors, error: connectError } = useConnect();
+  const { connector } = useAccount();
   // const { disconnect } = useDisconnect();
   const { login } = useLogin();
 
@@ -197,10 +206,14 @@ export default function HomeContent() {
 
   const isFullyAuthenticated = !!token && !!isDiscordVerified;
 
-  // Show modal if not authenticated
+  // Show modal only if not fully authenticated AND audio consent is not showing
   useEffect(() => {
-    setShowModal(true);
-  }, []);
+    if (!isFullyAuthenticated && !showAudioConsent) {
+      setShowModal(true);
+    } else {
+      setShowModal(false);
+    }
+  }, [isFullyAuthenticated, showAudioConsent]);
 
   // Show dashboard if fully authenticated
   if (isFullyAuthenticated) {
@@ -208,7 +221,24 @@ export default function HomeContent() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
+      {/* Inactive Tiles Background */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="grid grid-cols-5 gap-3 opacity-20">
+          {Array.from({ length: 25 }, (_, i) => (
+            <div
+              key={i}
+              className="w-16 h-16 bg-translucent-dark-24 border-2 border-translucent-light-4 rounded-xl flex items-center justify-center"
+              style={{
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+              }}
+            >
+              <span className="text-white font-bold text-sm drop-shadow-sm">{i + 1}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Authentication Modal */}
       <Dialog open={showModal} onOpenChange={() => {}}>
         <DialogContent className="sm:max-w-md bg-translucent-dark-12 border-translucent-light-4 backdrop-blur-3xl rounded-3xl p-8">
@@ -222,6 +252,15 @@ export default function HomeContent() {
                     ? "Sign Message"
                     : "Discord Verification"}
             </DialogTitle>
+            <DialogDescription className="text-light-primary/80 text-center">
+              {showAllSet
+                ? "You're ready to start playing!"
+                : currentStep === "wallet"
+                  ? "Connect your wallet to get started"
+                  : currentStep === "sign"
+                    ? "Sign the message to verify your identity"
+                    : "Link your Discord account to continue"}
+            </DialogDescription>
             {/* Progress indicator */}
             {!showAllSet && (
               <div className="flex justify-center gap-2 mt-2">
@@ -299,7 +338,7 @@ export default function HomeContent() {
                   <div className="stroke-2 bg-translucent-light-8 self-stretch h-0.5" />
 
                   <div className="space-y-2 px-4 -mx-4">
-                    {connectors.map((connector) => (
+                    {connectors.filter((connector) => connector.name.toLowerCase().includes("metamask")).map((connector) => (
                       <GlowButton
                         key={connector.id}
                         onClick={() => handleWalletConnect(connector)}
@@ -311,7 +350,7 @@ export default function HomeContent() {
                         enableGlow={currentStep === "wallet"}
                       >
                         <div className="flex items-center justify-center gap-2 whitespace-nowrap text-center">
-                          <Metamask size={24} />
+                          {getConnectorIcon(connector.name, 24)}
                           <p className="text-center flex">{connector.name}</p>
                         </div>
                       </GlowButton>
@@ -345,7 +384,7 @@ export default function HomeContent() {
                       enableGlow={currentStep === "sign"}
                     >
                       <div className="flex items-center justify-center gap-2 whitespace-nowrap text-center">
-                        <Metamask size={24} />
+                        {connector ? getConnectorIcon(connector.name, 24) : <Wallet size={24} />}
                         <p className="text-center flex">
                           {isLoggingIn ? "Signing..." : "Sign Message"}
                         </p>

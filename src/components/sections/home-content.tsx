@@ -5,13 +5,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { useAudio } from "@/contexts/audio-context";
 import LoadingScreen from "@/components/screens/loading-screen";
 import { useRouter } from "next/navigation";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 
 import Wallet from "@/components/icons/wallet";
 import GlowButton from "@/components/ui/glow-button";
@@ -230,10 +224,13 @@ export default function HomeContent() {
               key={i}
               className="w-16 h-16 bg-translucent-dark-24 border-2 border-translucent-light-4 rounded-xl flex items-center justify-center"
               style={{
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+                boxShadow:
+                  "0 4px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
               }}
             >
-              <span className="text-white font-bold text-sm drop-shadow-sm">{i + 1}</span>
+              <span className="text-white font-bold text-sm drop-shadow-sm">
+                {i + 1}
+              </span>
             </div>
           ))}
         </div>
@@ -241,18 +238,12 @@ export default function HomeContent() {
 
       {/* Authentication Modal */}
       <Dialog open={showModal} onOpenChange={() => {}}>
-        <DialogContent className="sm:max-w-md bg-translucent-dark-12 border-translucent-light-4 backdrop-blur-3xl rounded-3xl p-8">
+        <DialogContent className="sm:max-w-md bg-translucent-dark-12 border-translucent-light-4 backdrop-blur-3xl rounded-3xl p-5">
           <DialogHeader>
-            <DialogTitle className="text-h5 text-light-primary text-center">
-              {showAllSet
-                ? "All Set!"
-                : currentStep === "wallet"
-                  ? "Connect your Wallet"
-                  : currentStep === "sign"
-                    ? "Sign Message"
-                    : "Discord Verification"}
-            </DialogTitle>
-            <DialogDescription className="text-light-primary/80 text-center">
+            {/*<DialogTitle className="text-h5 text-light-primary text-center">
+
+            </DialogTitle>*/}
+            {/*<DialogDescription className="text-light-primary/80 text-center">
               {showAllSet
                 ? "You're ready to start playing!"
                 : currentStep === "wallet"
@@ -260,35 +251,7 @@ export default function HomeContent() {
                   : currentStep === "sign"
                     ? "Sign the message to verify your identity"
                     : "Link your Discord account to continue"}
-            </DialogDescription>
-            {/* Progress indicator */}
-            {!showAllSet && (
-              <div className="flex justify-center gap-2 mt-2">
-                <div
-                  className={`w-2 h-2 rounded-full ${
-                    currentStep === "wallet"
-                      ? "bg-yellow-500"
-                      : currentStep === "sign" || currentStep === "discord"
-                        ? "bg-yellow-500"
-                        : "bg-gray-400"
-                  }`}
-                />
-                <div
-                  className={`w-2 h-2 rounded-full ${
-                    currentStep === "sign"
-                      ? "bg-green-500"
-                      : currentStep === "discord"
-                        ? "bg-green-500"
-                        : "bg-gray-400"
-                  }`}
-                />
-                <div
-                  className={`w-2 h-2 rounded-full ${
-                    currentStep === "discord" ? "bg-purple-500" : "bg-gray-400"
-                  }`}
-                />
-              </div>
-            )}
+            </DialogDescription>*/}
           </DialogHeader>
 
           {/* Content container */}
@@ -329,32 +292,54 @@ export default function HomeContent() {
                     </div>
                   )}
 
-                  <div className="px-8 py-20 rounded-2xl border-translucent-light-8 bg-translucent-light-8 flex items-center justify-center">
-                    <div className="text-4xl">
-                      <Wallet size={48} />
+                  <div className="px-8 pt-12 pb-8 rounded-2xl border-translucent-light-8 gap-8 bg-translucent-light-8 flex flex-col items-center justify-center">
+                    <div className=" p-6 rounded-2xl border-2 border-translucent-light-8 bg-translucent-light-8">
+                      <img
+                        src={"/icons/logo-gradient.svg"}
+                        alt="Logo"
+                        className="drop-shadow-[0_0_20px_rgba(255,215,0,0.6)]"
+                        style={{
+                          filter:
+                            "drop-shadow(0 0 15px rgba(255, 215, 0, 0.8)) drop-shadow(0 0 30px rgba(255, 215, 0, 0.4))",
+                        }}
+                      />
+                    </div>
+                    <div className="flex items-center  justify-center flex-col gap-1">
+                      <p className="text-light-primary text-h5 font-semibold">
+                        Connect Wallet
+                      </p>
+                      <p className="text-center font-pally text-body-2-medium text-translucent-light-64">
+                        Connect your Metamask wallet to continue
+                      </p>
                     </div>
                   </div>
 
                   <div className="stroke-2 bg-translucent-light-8 self-stretch h-0.5" />
 
                   <div className="space-y-2 px-4 -mx-4">
-                    {connectors.filter((connector) => connector.name.toLowerCase().includes("metamask")).map((connector) => (
-                      <GlowButton
-                        key={connector.id}
-                        onClick={() => handleWalletConnect(connector)}
-                        background="#FAFAFA"
-                        borderRadius="12px"
-                        borderColor="transparent"
-                        width="100%"
-                        className="px-6 py-3 font-semibold text-dark-primary"
-                        enableGlow={currentStep === "wallet"}
-                      >
-                        <div className="flex items-center justify-center gap-2 whitespace-nowrap text-center">
-                          {getConnectorIcon(connector.name, 24)}
-                          <p className="text-center flex">{connector.name}</p>
-                        </div>
-                      </GlowButton>
-                    ))}
+                    {connectors
+                      .filter((connector) =>
+                        connector.name.toLowerCase().includes("metamask"),
+                      )
+                      .map((connector) => (
+                        <GlowButton
+                          key={connector.id}
+                          onClick={() => handleWalletConnect(connector)}
+                          background="#FAFAFA"
+                          borderRadius="12px"
+                          borderColor="transparent"
+                          width="100%"
+                          className="px-6 py-3 font-semibold text-dark-primary"
+                          enableGlow={currentStep === "wallet"}
+                        >
+                          <div className="flex items-center justify-center gap-2 whitespace-nowrap text-center">
+                            {getConnectorIcon(connector.name, 24)}
+                            <p className="text-center flex">
+                              Connect {connector.name}
+                            </p>
+                          </div>
+                        </GlowButton>
+                      ))}
 
                     {connectError && (
                       <p className="text-red-500 text-center mt-4">
@@ -384,7 +369,11 @@ export default function HomeContent() {
                       enableGlow={currentStep === "sign"}
                     >
                       <div className="flex items-center justify-center gap-2 whitespace-nowrap text-center">
-                        {connector ? getConnectorIcon(connector.name, 24) : <Wallet size={24} />}
+                        {connector ? (
+                          getConnectorIcon(connector.name, 24)
+                        ) : (
+                          <Wallet size={24} />
+                        )}
                         <p className="text-center flex">
                           {isLoggingIn ? "Signing..." : "Sign Message"}
                         </p>

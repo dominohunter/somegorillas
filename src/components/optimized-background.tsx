@@ -20,7 +20,8 @@ export default function OptimizedBackground({
 
       <div className="fixed inset-0 z-0" data-background="fixed">
         <Image
-          src={`/${backgroundName}.png`}
+          // src={`/${backgroundName}.png`}
+          src={`/bg-main.png`}
           alt="Background"
           fill
           style={{ objectFit: "cover" }}
@@ -47,7 +48,7 @@ export default function OptimizedBackground({
       )}
 
       {/* Dark overlay for better text readability */}
-      <div className="fixed inset-0 z-[1] bg-black/30 pointer-events-none" />
+      <div className="fixed inset-0 z-[1] bg-black/20 pointer-events-none" />
 
       <div
         className="fixed inset-0 opacity-50 pointer-events-none z-[2] bg-repeat"

@@ -1,8 +1,14 @@
 "use client";
 import React from "react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "../ui/dialog";
 import AchievementCoin from "../icons/achievement-coin";
-import GlareButton from "../ui/glare-button";
+import { GlareButton } from "../ui/glare-button";
 
 interface AchievementClaimModalProps {
   isOpen: boolean;
@@ -30,7 +36,7 @@ const AchievementClaimModal: React.FC<AchievementClaimModalProps> = ({
       >
         <DialogHeader>
           <DialogTitle className="text-h4 text-light-primary font-semibold mb-6">
-            🎉 Achievement Unlocked!
+            Achievement Unlocked!
           </DialogTitle>
           <DialogDescription className="text-light-primary/80 text-center">
             You&apos;ve earned a new achievement and banana rewards

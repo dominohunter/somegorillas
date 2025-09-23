@@ -174,7 +174,7 @@ export default function Games() {
 
                         // Dismiss loading toast and show success
                         toast.dismiss(`claim-${quest.questId}`);
-                        toast.success("Task completed! 🎉", {
+                        toast.success("Task completed!", {
                           description: `You earned ${rewardAmount} Bananas! Keep up the great work.`,
                         });
 

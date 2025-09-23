@@ -61,7 +61,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                   <div className="w-full flex-shrink-0">
                     <Header />
                   </div>
-                  <div className="w-full max-w-[1920px] mx-auto flex-1">{children}</div>
+                  <div className="w-full max-w-[1920px] mt-[120px] mx-auto flex-1">
+                    {children}
+                  </div>
                 </div>
                 <AudioConsentModal />
                 <AudioControls />

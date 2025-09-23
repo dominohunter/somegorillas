@@ -1,6 +1,6 @@
 "use client";
 
-import GlareButton from "@/components/ui/glare-button";
+import { GlareButton } from "../ui/glare-button";
 import { useAuth } from "@/contexts/auth-context";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
@@ -8,6 +8,7 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { CartoonButton } from "../ui/cartoon-button";
 import { createPortal } from "react-dom";
+import Banana from "../icons/banana";
 
 export default function Header() {
   const { isAuthenticated, logout, user } = useAuth();
@@ -100,7 +101,7 @@ export default function Header() {
   };
 
   return (
-    <div className="w-full min-w-full backdrop-blur-[80px] flex justify-center z-[100]">
+    <div className="fixed top-0 w-full min-w-full bg-translucent-light-4 backdrop-blur-[20px] flex justify-center z-[100]">
       <div className="max-w-[2500px] w-full flex justify-between items-center px-3 py-3 sm:px-6 sm:py-5">
         <div className="flex items-center gap-8 ">
           <Link href={"/dashboard"}>
@@ -115,16 +116,23 @@ export default function Header() {
             />
           </Link>
           <div className="flex items-center">
-            {/*<Link href={"/games"} className="py-3 px-5">
+            <Link href={"/games"} className="py-3 px-5">
+              <p className="text-button-48  text-light-primary font-semibold">
+                Stake
+              </p>
+            </Link>
+            <Link href={"/games"} className="py-3 px-5">
               <p className="text-button-48 text-light-primary font-semibold">
                 Games
               </p>
-            </Link>*/}
-            {/*<Link href={"/games"} className="py-3 px-5">
-            <p className="text-button-48 text-light-primary font-semibold">
-              Staking
-            </p>
-          </Link>
+            </Link>
+
+            <Link href={"/games"} className="py-3 px-5">
+              <p className="text-button-48 text-light-primary font-semibold">
+                Collection
+              </p>
+            </Link>
+            {/*
           <Link href={"/games"} className="py-3 px-5">
             <p className="text-button-48 text-light-primary font-semibold">
               Leaderboard
@@ -140,7 +148,7 @@ export default function Header() {
         <div className="flex flex-row gap-2 sm:gap-2 md:gap-3">
           {isAuthenticated ? (
             <>
-              <CartoonButton
+              {/*<CartoonButton
                 size={"md"}
                 variant={
                   pathname.startsWith("/games") ? "secondary" : "primary"
@@ -154,7 +162,21 @@ export default function Header() {
                 <p className="text-dark-primary">
                   {pathname.startsWith("/games") ? "Dashboard" : "Games"}
                 </p>
-              </CartoonButton>
+              </CartoonButton>*/}
+
+              <GlareButton
+                // onClick={handleDropdownToggle}
+                background={"rgba(255, 255, 255, 0.04)"}
+                borderRadius="12px"
+                glareColor="#ffffff"
+                borderColor="rgba(255, 255, 255, 0.04)"
+                className="backdrop-blur-[40px] w-auto h-[44px] sm:h-[56px] py-2 sm:py-4 px-3 sm:px-4 flex items-center gap-1 sm:gap-2"
+              >
+                <Banana size={24} />
+                <p className="text-light-primary font-pally text-[16px]">
+                  {user?.xp}
+                </p>
+              </GlareButton>
               {/* Profile Dropdown */}
               <div className="relative z-[200]" ref={buttonRef}>
                 <GlareButton

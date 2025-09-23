@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import GlareButton from "../ui/glare-button";
+import { GlareButton } from "../ui/glare-button";
 import ArrowRight from "../icons/arrow-right";
 import RankModal from "../modals/rank-modal";
 

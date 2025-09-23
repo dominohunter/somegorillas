@@ -1,9 +1,15 @@
 "use client";
 import React from "react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "../ui/dialog";
 import CoinHead from "../icons/coin-head";
 import CoinButt from "../icons/coin-butt";
-import GlareButton from "../ui/glare-button";
+import { GlareButton } from "../ui/glare-button";
 import { formatFlipSide } from "@/lib/utils";
 import Banana from "../icons/banana";
 
@@ -57,9 +63,9 @@ const FlipResultModal: React.FC<FlipResultModalProps> = ({
                 </p>
               </div>
             ) : (
-              <div className="bg-translucent-light-8 border border-translucent-light-4 rounded-2xl px-6 py-3">
-                <p className="text-light-primary text-h5 font-semibold text-center">
-                  Better Luck, Next time!
+              <div className="bg-system-error-quaternary border border-system-error-tertiary rounded-2xl px-6 py-3">
+                <p className="text-system-error-primary text-h5 font-semibold text-center">
+                  Better Luck Next Time!
                 </p>
               </div>
             )}
@@ -89,10 +95,18 @@ const FlipResultModal: React.FC<FlipResultModalProps> = ({
 
           <div className="w-full space-y-3">
             {/* XP Earned Display */}
-            <div className="bg-accent-primary/12 border border-accent-primary/24 rounded-2xl px-4 py-3">
+            <div
+              className={`${
+                result.isWin
+                  ? "bg-accent-primary/12 border-accent-primary/24"
+                  : "bg-translucent-light-8 border-translucent-light-4"
+              } border rounded-2xl px-4 py-3`}
+            >
               <div className="flex items-center justify-center space-x-2">
                 <Banana size={32} />
-                <span className="text-white font-semibold text-lg">
+                <span
+                  className={`${result.isWin ? "text-white" : "text-translucent-light-64"} font-semibold text-lg`}
+                >
                   +{xpEarned} Bananas
                 </span>
               </div>
@@ -138,18 +152,19 @@ const FlipResultModal: React.FC<FlipResultModalProps> = ({
             </div>
           </div>
 
-          <GlareButton
-            onClick={onClose}
-            background={"#FAFAFA"}
-            borderRadius="12px"
-            borderColor="transparent"
-            glareColor="#ffffff"
-            glareOpacity={0.3}
-            width="100%"
-            className="text-dark-primary py-3 px-6 text-button56 font-semibold"
-          >
-            Confirm
-          </GlareButton>
+          <div className="w-full flex justify-center">
+            <GlareButton
+              onClick={onClose}
+              background={result.isWin ? "#FFD700" : "#FAFAFA"}
+              borderRadius="12px"
+              borderColor="transparent"
+              glareColor="#ffffff"
+              glareOpacity={0.3}
+              className="text-dark-primary py-3 px-6 text-button56 font-semibold"
+            >
+              {result.isWin ? "Awesome!" : "Try Again"}
+            </GlareButton>
+          </div>
         </div>
       </DialogContent>
     </Dialog>

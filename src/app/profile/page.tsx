@@ -3,7 +3,7 @@
 import { useAuth } from "@/contexts/auth-context";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import GlareButton from "@/components/ui/glare-button";
+import { GlareButton } from "@/components/ui/glare-button";
 import LoadingScreen from "@/components/screens/loading-screen";
 import {
   useFlipHistory,

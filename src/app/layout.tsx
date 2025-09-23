@@ -10,6 +10,8 @@ import OptimizedBackground from "@/components/optimized-background";
 import { AudioProvider } from "@/contexts/audio-context";
 import AudioConsentModal from "@/components/audio/audio-consent-modal";
 import AudioControls from "@/components/audio/audio-controls";
+import { Analytics } from "@vercel/analytics/next"
+
 
 import { usePathname } from "next/navigation";
 
@@ -72,6 +74,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </Providers>
         </div>
         <Toaster />
+               <Analytics />
       </body>
     </html>
   );

@@ -20,8 +20,7 @@ export default function OptimizedBackground({
 
       <div className="fixed inset-0 z-0" data-background="fixed">
         <Image
-          // src={`/${backgroundName}.png`}
-          src={`/bg-main.png`}
+          src={`/${backgroundName}.png`}
           alt="Background"
           fill
           style={{ objectFit: "cover" }}

@@ -174,7 +174,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const isDiscordVerified = discordStatus?.verified ?? false;
   const isAuthenticated = !!token && !!userQuery.data;
-  const isFullyAuthenticated = isAuthenticated && isDiscordVerified;
+  const isFullyAuthenticated = isAuthenticated;
 
   const value: AuthContextType = {
     // Wallet state

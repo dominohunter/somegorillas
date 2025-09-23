@@ -20,6 +20,9 @@ export interface RevealResponse {
   gameState: string;
   tilesRevealed: number;
   revealedTiles: number[];
+  minePositions?: number[];
+  currentXP?: number;
+  actionXP?: number;
 }
 
 export interface GameStats {

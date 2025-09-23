@@ -24,6 +24,9 @@ export default function Achievements() {
     description: string;
     xpReward: number;
   } | null>(null);
+  const [claimingAchievementId, setClaimingAchievementId] = useState<
+    string | null
+  >(null);
 
   const achievementsQuery = useAchievements();
 
@@ -41,7 +44,11 @@ export default function Achievements() {
     isSuccess: achievementsQuery.isSuccess,
   });
   const claimMutation = useClaimAchievement({
+    onMutate: (achievementId) => {
+      setClaimingAchievementId(achievementId);
+    },
     onSuccess: (data, achievementId) => {
+      setClaimingAchievementId(null);
       // Find the achievement that was claimed
       const achievement = achievementsQuery.data?.find(
         (a) => a.id === achievementId,
@@ -60,25 +67,11 @@ export default function Achievements() {
         });
       }
     },
+    onError: () => {
+      setClaimingAchievementId(null);
+    },
   });
 
-  // Calculate achievement statistics
-  const achievementStats = useMemo(() => {
-    if (!achievementsQuery.data)
-      return { total: 0, completed: 0, claimed: 0, totalXP: 0 };
-
-    const total = achievementsQuery.data.length;
-    const completed = achievementsQuery.data.filter(
-      (a) => a.progress >= a.goal,
-    ).length;
-    const claimed = achievementsQuery.data.filter((a) => a.claimed).length;
-    const totalXP = achievementsQuery.data.reduce(
-      (sum, a) => sum + (a.claimed ? a.xpReward : 0),
-      0,
-    );
-
-    return { total, completed, claimed, totalXP };
-  }, [achievementsQuery.data]);
 
   // Filter and sort achievements
   const filteredAndSortedAchievements = useMemo(() => {
@@ -108,9 +101,16 @@ export default function Achievements() {
       if (aClaimable && !bClaimable) return -1;
       if (!aClaimable && bClaimable) return 1;
 
-      // Then claimed achievements
-      if (a.claimed && !b.claimed) return -1;
-      if (!a.claimed && b.claimed) return 1;
+      // Then unclaimed achievements (not completed)
+      const aUnclaimed = !a.claimed && a.progress < a.goal;
+      const bUnclaimed = !b.claimed && b.progress < b.goal;
+
+      if (aUnclaimed && !bUnclaimed) return -1;
+      if (!aUnclaimed && bUnclaimed) return 1;
+
+      // Then claimed achievements last
+      if (a.claimed && !b.claimed) return 1;
+      if (!a.claimed && b.claimed) return -1;
 
       // Then by progress percentage
       const aProgress = a.progress / a.goal;
@@ -192,7 +192,7 @@ export default function Achievements() {
 
   //todo: achievement card arai deer haragddag bolgoh
   return (
-    <div className="p-5 bg-translucent-dark-12  border-2 backdrop-blur-[60px] flex flex-col gap-5 overflow-hidden rounded-3xl border-translucent-light-4 lg:flex-1 lg:h-full">
+    <div className="p-5 bg-translucent-dark-12 border-2 backdrop-blur-[60px] flex flex-col gap-5 rounded-3xl border-translucent-light-4 lg:flex-1 lg:h-full lg:max-h-[600px]">
       {/* Header */}
       <div className="flex justify-between items-center">
         <h2 className="text-h5 font-[600] text-light-primary">Achievement</h2>
@@ -208,33 +208,33 @@ export default function Achievements() {
       <div className="flex gap-2">
         <button
           onClick={() => setActiveFilter("all")}
-          className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+          className={`px-4 py-2 rounded-xl text-button-40 transition-colors ${
             activeFilter === "all"
-              ? "bg-accent-primary text-dark-primary"
+              ? "bg-light-primary px-4 py-3 text-dark-primary"
               : "bg-translucent-light-8 text-translucent-light-64 hover:text-light-primary border border-translucent-light-4"
           }`}
         >
-          All
+          <p className="text-button-40 font-semibold">All</p>
         </button>
         <button
           onClick={() => setActiveFilter("flip")}
           className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
             activeFilter === "flip"
-              ? "bg-accent-primary text-dark-primary"
+              ? "bg-light-primary px-4 py-3 text-dark-primary"
               : "bg-translucent-light-8 text-translucent-light-64 hover:text-light-primary border border-translucent-light-4"
           }`}
         >
-          Coin Flip
+          <p className="text-button-40 font-semibold">Coin Flip</p>
         </button>
         <button
           onClick={() => setActiveFilter("mines")}
           className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
             activeFilter === "mines"
-              ? "bg-accent-primary text-dark-primary"
+              ? "bg-light-primary px-4 py-3 text-dark-primary"
               : "bg-translucent-light-8 text-translucent-light-64 hover:text-light-primary border border-translucent-light-4"
           }`}
         >
-          Mines
+          <p className="text-button-40 font-semibold">Mines</p>
         </button>
       </div>
 
@@ -275,13 +275,13 @@ export default function Achievements() {
       </div>*/}
 
       {/* Achievement Cards */}
-      <div className="flex flex-col gap-3 overflow-x-auto overflow-y-hidden lg:overflow-y-auto lg:overflow-x-visible [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <div className="flex flex-col gap-3 overflow-y-auto flex-1 min-h-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {filteredAndSortedAchievements.map((achievement) => (
           <AchievementCard
             key={achievement.id}
             achievement={achievement}
             onClaim={(id) => claimMutation.mutate(id)}
-            isClaimPending={claimMutation.isPending}
+            isClaimPending={claimingAchievementId === achievement.id}
             onClick={() => setIsModalOpen(true)}
           />
         ))}

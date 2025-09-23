@@ -38,7 +38,8 @@ export const GameHistorySection: React.FC<GameHistorySectionProps> = ({
             </div>
             <div className="text-right">
               <div className="text-white font-bold">
-                {parseFloat(formatEther(BigInt(game.betAmount))).toFixed(4)} STT
+                {parseFloat(formatEther(BigInt(game.betAmount))).toFixed(4)}{" "}
+                SOMI
               </div>
             </div>
           </div>

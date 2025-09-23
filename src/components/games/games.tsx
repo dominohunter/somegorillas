@@ -4,7 +4,7 @@ import { useQuests, useReferral } from "@/lib/query-helper";
 import { useClaimTask } from "@/lib/mutation-helper";
 import { useAccount } from "wagmi";
 import TaskCard from "@/components/cards/task-card";
-import GlareButton from "@/components/ui/glare-button";
+import { GlareButton } from "@/components/ui/glare-button";
 import AddFriend from "@/components/icons/add-friend";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";

@@ -132,6 +132,7 @@ export const useMineGameActions = (params: MineGameActionsParams) => {
   const revealTile = useCallback(async (tileIndex: number): Promise<void> => {
     if (!backendGame || flippingTiles.has(tileIndex) || !address) return;
 
+    // Show loading/pending state instead of flipping immediately
     setFlippingTiles((prev) => new Set([...prev, tileIndex]));
 
     try {
@@ -148,21 +149,35 @@ export const useMineGameActions = (params: MineGameActionsParams) => {
 
       const result: RevealResponse = response.data;
 
-      setTimeout(async () => {
-        if (!result.success) {
-          toast.error("Reveal failed", {
-            description: (result as { error?: string }).error || "Could not reveal tile",
-          });
-          setFlippingTiles((prev) => {
-            const newSet = new Set(prev);
-            newSet.delete(tileIndex);
-            return newSet;
-          });
-        } else {
-          setRevealedTiles(new Set(result.revealedTiles));
+      if (!result.success) {
+        // Handle failure case
+        toast.error("Reveal failed", {
+          description: (result as { error?: string }).error || "Could not reveal tile",
+        });
+        setFlippingTiles((prev) => {
+          const newSet = new Set(prev);
+          newSet.delete(tileIndex);
+          return newSet;
+        });
+        return;
+      }
 
-          if (result.isMine) {
-            setMineTiles((prev) => new Set([...prev, tileIndex]));
+      // Backend succeeded - set mine data but DON'T reveal yet (keep flipping state)
+      if (result.isMine) {
+        setMineTiles((prev) => new Set([...prev, tileIndex]));
+      }
+      
+      // After a brief delay, start the flip animation by revealing the tile
+      setTimeout(() => {
+        setRevealedTiles(new Set(result.revealedTiles));
+      }, 50);
+      
+      // After the flip animation completes, clean up and handle game state
+      setTimeout(async () => {
+
+          // If game is complete and we have mine positions, set all mine positions
+          if (result.gameComplete && result.minePositions) {
+            setMineTiles(new Set(result.minePositions));
           }
 
           setFlippingTiles((prev) => {
@@ -178,6 +193,7 @@ export const useMineGameActions = (params: MineGameActionsParams) => {
                   gameState: result.gameState as "WAITING" | "PLAYING" | "CASHED_OUT" | "EXPLODED" | "PERFECT",
                   tilesRevealed: result.tilesRevealed,
                   revealedTiles: result.revealedTiles,
+                  minePositions: result.minePositions || prev.minePositions,
                 }
               : null,
           );
@@ -211,7 +227,6 @@ export const useMineGameActions = (params: MineGameActionsParams) => {
               });
             }
           }
-        }
       }, ANIMATION_TIMING.TILE_FLIP);
     } catch (error: unknown) {
       console.error("Error revealing tile:", error);

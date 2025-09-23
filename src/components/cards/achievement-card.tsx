@@ -21,10 +21,8 @@ const AchievementCard: React.FC<AchievementCardProps> = ({
   achievement,
   onClaim,
   isClaimPending,
-  onClick,
 }) => {
   const { claimed, progress, goal } = achievement;
-  const progressPercentage = Math.min((progress / goal) * 100, 100);
   const isCompleted = progress >= goal;
 
   return (

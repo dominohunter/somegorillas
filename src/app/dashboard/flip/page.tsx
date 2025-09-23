@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import {
   useAccount,
@@ -17,8 +18,6 @@ import CoinFlip from "@/components/animations/coin-flip";
 import { CartoonButton } from "@/components/ui/cartoon-button";
 import Head from "@/components/icons/head";
 import Butt from "@/components/icons/butt";
-import { useFlipRemaing } from "@/lib/query-helper";
-import { useChainValidation } from "@/hooks/use-chain-validation";
 import { useLogin } from "@/hooks/use-login";
 import api from "@/lib/axios";
 import WinDetailsModal from "@/components/modals/win-details-modal";
@@ -76,10 +75,8 @@ const BET_EVENT_ABI = {
 };
 
 export default function FlipPage() {
+  const router = useRouter();
   const publicClient = usePublicClient();
-  const flipLimitQuery = useFlipRemaing();
-  const { isOnCorrectChain, switchToCorrectChain, requiredChainId } =
-    useChainValidation();
   const { address, isConnected } = useAccount();
   const { login, isLoading: isLoginLoading } = useLogin();
 
@@ -104,12 +101,7 @@ export default function FlipPage() {
     null,
   );
 
-  const {
-    data: hash,
-    error: writeError,
-    writeContract,
-    isPending: isWritePending,
-  } = useWriteContract();
+  const { data: hash, error: writeError, writeContract } = useWriteContract();
 
   const { isSuccess: isConfirmed } = useWaitForTransactionReceipt({
     hash,
@@ -175,7 +167,7 @@ export default function FlipPage() {
           console.log(decoded);
 
           if (decoded.eventName === "Bet") {
-            betId = decoded.args.betId.toString();
+            betId = (decoded.args as unknown as { betId: bigint }).betId.toString();
             break;
           }
         } catch (error) {
@@ -683,7 +675,39 @@ export default function FlipPage() {
   return (
     <div className="w-full">
       <div className="max-w-[600px] mx-auto space-y-6 p-4">
-        {isConnected && !isOnCorrectChain && (
+        {/* Back Button */}
+        <div className="flex justify-start">
+          <GlareButton
+            onClick={() => router.back()}
+            background="rgba(255, 255, 255, 0.04)"
+            borderRadius="12px"
+            glareColor="#ffffff"
+            borderColor="rgba(255, 255, 255, 0.04)"
+            className="backdrop-blur-[40px] h-[44px] py-2 px-4 flex items-center gap-2"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M19 12H5"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M12 19l-7-7 7-7"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <span className="text-light-primary font-semibold text-button-48">
+              Back
+            </span>
+          </GlareButton>
+        </div>
+
+        {/*{isConnected && !isOnCorrectChain && (
           <div className="backdrop-blur-[60px] bg-red-500/20 border-2 rounded-3xl border-red-500/40 px-6 py-4">
             <div className="flex items-center justify-between">
               <div>
@@ -700,59 +724,7 @@ export default function FlipPage() {
               </button>
             </div>
           </div>
-        )}
-
-        {flipLimitQuery.data && (
-          <div className="backdrop-blur-[60px] bg-translucent-dark-12 border-2 rounded-3xl border-translucent-light-4 px-6 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <span className="text-h5 font-semibold text-white">
-                  Daily Flips
-                </span>
-                <span
-                  className={`text-translucent-light-64 text-${flipLimitQuery.data.count > 10 ? "sm" : "body"}`}
-                >
-                  (Only {flipLimitQuery.data.maxFlip} count towards stats)
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span
-                  className={`font-bold text-white text-${flipLimitQuery.data.count > 10 ? "sm" : "h5"}`}
-                >
-                  {flipLimitQuery.data.count}
-                </span>
-                <span
-                  className={`text-translucent-light-64 text-${flipLimitQuery.data.count > 10 ? "sm" : "h5"}`}
-                >
-                  / {flipLimitQuery.data.maxFlip}
-                </span>
-                {flipLimitQuery.data.count >= flipLimitQuery.data.maxFlip && (
-                  <span className="text-yellow-400 text-sm ml-2">
-                    ⚠️ Limit reached
-                  </span>
-                )}
-              </div>
-            </div>
-
-            {/* Progress bar */}
-            <div className="mt-3 w-full bg-translucent-light-4 rounded-full h-2">
-              <div
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  flipLimitQuery.data.count >= flipLimitQuery.data.maxFlip
-                    ? "bg-yellow-400"
-                    : "bg-[#F5BA31]"
-                }`}
-                style={{
-                  width: `${Math.min(
-                    (flipLimitQuery.data.count / flipLimitQuery.data.maxFlip) *
-                      100,
-                    100,
-                  )}%`,
-                }}
-              />
-            </div>
-          </div>
-        )}
+        )}*/}
 
         {/* Main Betting Interface */}
         <div className="backdrop-blur-[60px] bg-translucent-dark-12 border-2 rounded-3xl border-translucent-light-4 px-6 pb-6 pt-10">
@@ -798,7 +770,7 @@ export default function FlipPage() {
             {/* Bet Amount Selection */}
             <div className="flex flex-col gap-6">
               <div className="grid grid-cols-3 gap-3">
-                {["0.1", "0.5", "1", "1.5", "2", "3"].map((amount) => (
+                {["0.1", "0.3", "0.5", "1", "1.5", "2"].map((amount) => (
                   <CartoonButton
                     key={amount}
                     variant={betAmount === amount ? "primary" : "secondary"}
@@ -811,7 +783,7 @@ export default function FlipPage() {
                         : "!text-black !border-translucent-light-4 hover:bg-accent-primary hover:text-light-primary scale-100"
                     }`}
                   >
-                    {amount} STT
+                    {amount} SOMI
                   </CartoonButton>
                 ))}
               </div>
@@ -899,13 +871,13 @@ export default function FlipPage() {
                     <p className="text-white font-medium font-pally">
                       {bet.userChoice.charAt(0).toUpperCase() +
                         bet.userChoice.slice(1)}{" "}
-                      - {ethers.formatEther(bet.amount)} STT
+                      - {ethers.formatEther(bet.amount)} SOMI
                     </p>
-                    <p className="text-translucent-light-64 text-sm font-pally">
+                    {/*<p className="text-translucent-light-64 text-sm font-pally">
                       Multiplier: {bet.winBp / 10000}x
-                    </p>
+                    </p>*/}
                   </div>
-                  <div className="text-right">
+                  <div className="text-right flex items-center gap-2">
                     <p
                       className={`font-bold font-pally ${
                         bet.isWin ? "text-green-400" : "text-red-400"
@@ -915,7 +887,7 @@ export default function FlipPage() {
                     </p>
                     {bet.isWin && bet.winAmount && (
                       <p className="text-green-400 text-sm font-pally">
-                        +{ethers.formatEther(bet.winAmount)} STT
+                        +{ethers.formatEther(bet.winAmount)} SOMI
                       </p>
                     )}
                   </div>

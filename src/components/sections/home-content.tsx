@@ -14,7 +14,6 @@ import { Connector } from "wagmi";
 import { useLogin } from "@/hooks/use-login";
 import { useReferralCode } from "@/hooks/use-referral-code";
 import CheckCircle from "../icons/check-circle";
-import Discord from "../icons/discord";
 import Metamask from "../icons/metamask";
 import Banana from "../icons/banana";
 import Dashboard from "@/app/dashboard/page";
@@ -30,10 +29,6 @@ export default function HomeContent() {
     address,
     refreshToken,
     token,
-    discordStatus,
-    isDiscordVerified,
-    checkDiscordStatus,
-    getDiscordAuthUrl,
     logout,
   } = useAuth();
   const router = useRouter();
@@ -46,17 +41,13 @@ export default function HomeContent() {
   const { login } = useLogin();
 
   const [showModal, setShowModal] = useState(false);
-  const [currentStep, setCurrentStep] = useState<"wallet" | "sign" | "discord">(
+  const [currentStep, setCurrentStep] = useState<"wallet" | "sign">(
     "wallet",
   );
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const [pendingReferralSubmission, setPendingReferralSubmission] =
-    useState(false);
   const [showAllSet, setShowAllSet] = useState(false);
-  const [manualReferralCode, setManualReferralCode] = useState("");
-  const [isResetting, setIsResetting] = useState(false);
 
-  const { referralCode, submitReferral, isSubmitted } = useReferralCode();
+  const { referralCode, isSubmitted } = useReferralCode();
 
   const handleWalletConnect = async (connector: Connector) => {
     try {
@@ -84,15 +75,10 @@ export default function HomeContent() {
       // Refresh auth context token
       refreshToken();
 
-      // Check if Discord verification is needed
-      if (token && !isDiscordVerified) {
-        setCurrentStep("discord");
-      } else if (token && isDiscordVerified) {
-        // Already fully authenticated, close modal and go to dashboard
-        setShowModal(false);
-        router.push("/dashboard");
-        playGorillaSound();
-      }
+      // Go directly to dashboard after successful login
+      setShowModal(false);
+      router.push("/dashboard");
+      playGorillaSound();
     } catch (error) {
       console.error("Login failed:", error);
     } finally {
@@ -111,9 +97,6 @@ export default function HomeContent() {
     setCurrentStep("wallet");
     setIsLoggingIn(false);
     setShowAllSet(false);
-    setManualReferralCode("");
-    setPendingReferralSubmission(false);
-    setIsResetting(false);
 
     // Reopen modal on wallet step after a small delay
     setTimeout(() => {
@@ -130,40 +113,6 @@ export default function HomeContent() {
     });
   };
 
-  const handleDiscordVerification = async () => {
-    try {
-      const authUrl = await getDiscordAuthUrl();
-      // Open Discord auth in popup
-      const popup = window.open(
-        authUrl,
-        "discord-auth",
-        "width=500,height=700,scrollbars=yes,resizable=yes",
-      );
-
-      // Listen for popup close or message
-      const checkClosed = setInterval(() => {
-        if (popup?.closed) {
-          clearInterval(checkClosed);
-          // Check Discord status after popup closes
-          setTimeout(() => {
-            checkDiscordStatus().then(() => {
-              if (
-                pendingReferralSubmission &&
-                (referralCode || manualReferralCode)
-              ) {
-                const codeToSubmit = referralCode || manualReferralCode;
-                submitReferral(codeToSubmit);
-                setPendingReferralSubmission(false);
-                setManualReferralCode("");
-              }
-            });
-          }, 1000);
-        }
-      }, 1000);
-    } catch (error) {
-      console.error("Failed to start Discord verification:", error);
-    }
-  };
   // Move to sign step when wallet is connected
   useEffect(() => {
     if (isConnected && currentStep === "wallet" && showModal) {
@@ -171,34 +120,9 @@ export default function HomeContent() {
     }
   }, [isConnected, currentStep, showModal]);
 
-  // Show Discord step when user has token but not verified (unless resetting)
-  useEffect(() => {
-    if (
-      token &&
-      !isDiscordVerified &&
-      discordStatus !== null &&
-      showModal &&
-      !isResetting
-    ) {
-      setCurrentStep("discord");
-    }
-  }, [token, isDiscordVerified, discordStatus, showModal, isResetting]);
 
-  // Show "All Set!" when fully authenticated during modal flow, then close modal and redirect
-  useEffect(() => {
-    if (token && isDiscordVerified && !showAllSet && showModal) {
-      setShowAllSet(true);
 
-      // Auto-close after 2 seconds and navigate to dashboard
-      setTimeout(() => {
-        setShowModal(false);
-        setShowAllSet(false);
-        router.push("/dashboard");
-      }, 2000);
-    }
-  }, [token, isDiscordVerified, showAllSet, showModal, router]);
-
-  const isFullyAuthenticated = !!token && !!isDiscordVerified;
+  const isFullyAuthenticated = !!token;
 
   // Show modal only if not fully authenticated AND audio consent is not showing
   useEffect(() => {
@@ -275,14 +199,12 @@ export default function HomeContent() {
                 className={`flex transition-transform duration-300 ease-out ${
                   currentStep === "wallet"
                     ? "translate-x-0"
-                    : currentStep === "sign"
-                      ? "-translate-x-1/3"
-                      : "-translate-x-2/3"
+                    : "-translate-x-1/2"
                 }`}
-                style={{ width: "300%" }}
+                style={{ width: "200%" }}
               >
                 {/* Step 1: Wallet Connection */}
-                <div className="w-1/3 space-y-4 flex-shrink-0 px-2">
+                <div className="w-1/2 space-y-4 flex-shrink-0 px-2">
                   {referralCode && (
                     <div className="bg-translucent-light-8 rounded-lg p-3 text-center">
                       <p className="text-light-primary text-sm">
@@ -350,7 +272,7 @@ export default function HomeContent() {
                 </div>
 
                 {/* Step 2: Sign Message */}
-                <div className="w-1/3 space-y-4 flex-shrink-0 px-2">
+                <div className="w-1/2 space-y-4 flex-shrink-0 px-2">
                   <div className="px-8 py-20 rounded-2xl border-translucent-light-8 bg-translucent-light-8 flex items-center justify-center">
                     <Banana size={48} />
                   </div>
@@ -390,79 +312,12 @@ export default function HomeContent() {
                   </div>
                 </div>
 
-                {/* Step 3: Discord Verification */}
-                <div className="w-1/3 space-y-4 flex-shrink-0 px-2">
-                  <div className="text-center">
-                    <div className="flex justify-center text-center mb-4">
-                      <Discord size={64} />
-                    </div>
-                    <p className="text-light-primary text-sm mb-4">
-                      Discord verification is required to access the platform
-                      and prevent spam accounts.
-                    </p>
-                  </div>
-
-                  {/* Optional Referral Code Input */}
-                  {!referralCode && (
-                    <div className="space-y-2">
-                      <label className="text-light-primary text-xs font-medium text-start block">
-                        Referral Code (Optional)
-                      </label>
-                      <input
-                        type="text"
-                        value={manualReferralCode}
-                        onChange={(e) =>
-                          setManualReferralCode(e.target.value.trim())
-                        }
-                        placeholder="Enter referral code..."
-                        className="w-full px-3 py-2 bg-translucent-dark-8 border border-translucent-light-8 rounded-lg text-light-primary placeholder-gray-400 text-sm focus:outline-none focus:border-blue-500 transition-colors"
-                      />
-                    </div>
-                  )}
-
-                  <div className="space-y-3 px-4 -mx-4">
-                    <GlowButton
-                      onClick={handleDiscordVerification}
-                      background="#5865F2"
-                      borderRadius="12px"
-                      borderColor="transparent"
-                      width="100%"
-                      className="px-6 py-3 font-semibold text-white"
-                      enableGlow={currentStep === "discord"}
-                    >
-                      <div className="flex items-center justify-center gap-2">
-                        Verify with Discord
-                      </div>
-                    </GlowButton>
-
-                    {/* Back button */}
-                    <button
-                      onClick={() => setCurrentStep("sign")}
-                      className="w-full text-gray-400 text-sm hover:text-white transition-colors"
-                    >
-                      ← Back to Sign
-                    </button>
-                  </div>
-
-                  <div className="text-center">
-                    <p className="text-gray-400 text-xs">
-                      Discord verification helps us prevent bot accounts and
-                      ensures a fair gaming experience for everyone.
-                    </p>
-                    {token && !isDiscordVerified && (
-                      <p className="text-yellow-400 text-xs mt-2 font-semibold">
-                        This verification is required to proceed.
-                      </p>
-                    )}
-                  </div>
-                </div>
               </div>
             </div>
           )}
 
-          {/* Reset Button - Only show on sign and discord steps */}
-          {!showAllSet &&
-            (currentStep === "sign" || currentStep === "discord") && (
+          {/* Reset Button - Only show on sign step */}
+          {!showAllSet && currentStep === "sign" && (
               <div className="flex justify-center pt-4 border-t border-translucent-light-8">
                 <button
                   onClick={handleReset}

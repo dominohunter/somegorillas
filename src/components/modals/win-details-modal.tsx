@@ -107,7 +107,7 @@ const WinDetailsModal: React.FC<WinDetailsModalProps> = ({
                 </p>
                 <div className="space-y-2">
                   <p className="text-system-success-primary text-h3 font-bold font-pally">
-                    {formatAmount(winDetails.winAmount)} STT
+                    {formatAmount(winDetails.winAmount)} SOMI
                   </p>
                   <div className="flex items-center justify-center space-x-2 bg-accent-primary/12 border border-accent-primary/24 rounded-xl px-3 py-2">
                     <Banana size={20} />
@@ -135,7 +135,7 @@ const WinDetailsModal: React.FC<WinDetailsModalProps> = ({
                   Original Bet
                 </span>
                 <span className="text-white font-medium">
-                  {formatAmount(winDetails.betAmount)} STT
+                  {formatAmount(winDetails.betAmount)} SOMI
                 </span>
               </div>
 
@@ -154,7 +154,7 @@ const WinDetailsModal: React.FC<WinDetailsModalProps> = ({
                     Profit
                   </span>
                   <span className="text-system-success-primary font-bold">
-                    +{profit.toFixed(4)} STT
+                    +{profit.toFixed(4)} SOMI
                   </span>
                 </div>
               </div>

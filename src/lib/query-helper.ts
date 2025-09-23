@@ -70,7 +70,26 @@ export const usePublicQuery = <T>(
 
 // Specific query hooks
 export const useStats = () => {
-  return useAuthQuery<UserStats>(queryKeys.stats.user(), "/stats/me");
+  const query = useAuthQuery<UserStats>(queryKeys.stats.user(), "/stats/me");
+
+  // Handle auth errors
+  useEffect(() => {
+    if (query.isError && query.error) {
+      const error = query.error as unknown as { response?: { status?: number } };
+      if (
+        error?.response?.status === 401 ||
+        error?.response?.status === 403 ||
+        error?.response?.status === 404
+      ) {
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("gorillaz_token");
+          window.location.href = "/";
+        }
+      }
+    }
+  }, [query.isError, query.error]);
+
+  return query;
 };
 
 export const useGlobalStats = () => {
@@ -124,6 +143,19 @@ export const useLeaderboard = () => {
     queryKeys.leaderboard.global(),
     "/leaderboard",
   );
+};
+
+// API function to submit referral code
+export const submitReferralCode = async (
+  referralCode: string,
+): Promise<{
+  referralCode: string;
+  referredUsers: string[];
+  referralCount: number;
+  usedReferralCode: string;
+}> => {
+  const response = await api.post("/referrals", { referralCode });
+  return response.data;
 };
 
 export function useSystemHealth() {

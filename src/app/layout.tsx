@@ -80,14 +80,20 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 function findBackGroundImage(path: string) {
   switch (path) {
     case "/":
-      return "HomeBackground";
+      return "bg-main";
     case "/dashboard":
-      return "DashboardBackground";
+      return "bg-main";
     case "/profile":
-      return "ProfileBackground";
-    case "/dashboard/flip":
-      return "FlipBackground";
+      return "bg-3";
+    case "/games":
+      return "bg-main";
+    case "/stake":
+      return "bg-4";
+    case "/whitelist":
+      return "bg-3";
     default:
-      return "DashboardBackground";
+      return "bg-main";
   }
 }
+
+//bg-2 for stake

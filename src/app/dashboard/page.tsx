@@ -25,7 +25,7 @@ export default function Dashboard() {
     <div className="w-full  flex flex-col overflow-hidden lg:overflow-visible">
       {isConnected && (
         <div className="w-full  px-4 sm:px-6 lg:px-8 py-2 flex-1 min-h-0 overflow-y-auto lg:overflow-visible">
-          <div className="grid grid-cols-1 h-[928px] lg:grid-cols-12 gap-4  lg:h-auto">
+          <div className="grid grid-cols-1  h-[928px] lg:grid-cols-12 gap-4  lg:h-auto">
             <div className="lg:col-span-4 space-y-3 lg:flex lg:flex-col lg:h-full">
               <Rank />
               <div className="lg:flex-1  lg:max-h-[756px]  lg:flex lg:flex-col lg:justify-end">

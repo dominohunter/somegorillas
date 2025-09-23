@@ -16,6 +16,7 @@ interface ExplosionDialogProps {
   onOpenChange: (open: boolean) => void;
   backendGame: Game | null;
   onStartNewGame: () => void;
+  onSeeMines: () => void;
 }
 
 export const ExplosionDialog: React.FC<ExplosionDialogProps> = ({
@@ -23,6 +24,7 @@ export const ExplosionDialog: React.FC<ExplosionDialogProps> = ({
   onOpenChange,
   backendGame,
   onStartNewGame,
+  onSeeMines,
 }) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -64,10 +66,18 @@ export const ExplosionDialog: React.FC<ExplosionDialogProps> = ({
           </div>
         )}
 
-        <DialogFooter>
+        <DialogFooter className="flex flex-col gap-2 sm:flex-row">
+          <Button
+            onClick={onSeeMines}
+            variant="outline"
+            className="flex-1 border-translucent-light-4 text-dark-primary hover:bg-translucent-light-80"
+            size="lg"
+          >
+            See Mines
+          </Button>
           <Button
             onClick={onStartNewGame}
-            className="w-full bg-[#F5BA31] text-dark-primary hover:bg-[#E0A429] font-semibold"
+            className="flex-1 bg-[#F5BA31] text-dark-primary hover:bg-[#E0A429] font-semibold"
             size="lg"
           >
             Start New Game

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import api from "@/lib/axios";
 import axios from "axios";
 import { API_BASE_URL } from "@/lib/config";
-import GlareButton from "@/components/ui/glare-button";
+import { GlareButton } from "@/components/ui/glare-button";
 
 interface DiscordStatus {
   verified: boolean;
@@ -34,7 +34,7 @@ export default function DiscordVerificationSection() {
       setIsLoading(true);
       const response = await axios.get(`${API_BASE_URL}/discord/status`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("gorillaz_token")}`,
         },
       });
       setDiscordStatus(response.data);
@@ -53,7 +53,7 @@ export default function DiscordVerificationSection() {
 
       const response = await api.get(`/discord/auth-url`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("gorillaz_token")}`,
         },
       });
 
@@ -103,7 +103,7 @@ export default function DiscordVerificationSection() {
 
       await axios.delete(`${API_BASE_URL}/discord/unlink`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("gorillaz_token")}`,
         },
       });
 
@@ -142,7 +142,8 @@ export default function DiscordVerificationSection() {
             <div>
               <h3 className="font-semibold text-white">Discord Verification</h3>
               <p className="text-sm text-gray-400">
-                Required for referral system and anti-spam protection
+                {/* Required for referral system and anti-spam protection */}
+                Enhanced features and community access
               </p>
               {discordStatus?.verified && discordStatus.discordUser && (
                 <div className="flex items-center gap-2 mt-2">
@@ -236,7 +237,7 @@ export default function DiscordVerificationSection() {
             <p className="text-sm text-gray-400">
               {discordStatus?.verified
                 ? "You can now use and share referral codes"
-                : "Discord verification required to use referrals"}
+                : /* "Discord verification required to use referrals" */ "Connect Discord to unlock referral features"}
             </p>
           </div>
         </div>
@@ -260,14 +261,14 @@ export default function DiscordVerificationSection() {
           </div>
         </div>
 
-        {!discordStatus?.verified && (
+        {/* {!discordStatus?.verified && (
           <div className="mt-4 p-3 bg-yellow-500/20 border border-yellow-500/30 rounded-lg">
             <p className="text-yellow-400 text-sm">
               ⚠️ Complete Discord verification to access the referral system and
               protect against spam.
             </p>
           </div>
-        )}
+        )} */}
       </div>
 
       {/* Benefits Section */}

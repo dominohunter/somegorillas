@@ -121,6 +121,7 @@ export interface UserStats {
   winRate: number; // Calculated field
   referralCode: string;
   referredBy: string | null;
+  usedReferralCode: string | null;
 }
 
 export interface Achievement {
@@ -170,6 +171,8 @@ export interface Referral {
   referredUsers: string[];
   totalRewards: number;
   referralCode: string;
+  referralCount: number;
+  usedReferralCode: string | null;
   // Add other referral properties as needed
 }
 

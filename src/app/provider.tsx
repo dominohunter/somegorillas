@@ -8,26 +8,26 @@ import { metaMask } from "wagmi/connectors";
 
 import { defineChain } from "viem";
 
-export const somniaTestnet = defineChain({
-  id: 50312,
-  name: "Somnia Shannon Testnet",
-  nativeCurrency: { name: "STT", symbol: "STT", decimals: 18 },
+export const somniaMainnet = defineChain({
+  id: 5031,
+  name: "Somnia Mainnet",
+  nativeCurrency: { name: "SOMI", symbol: "SOMI", decimals: 18 },
   rpcUrls: {
-    default: { http: ["https://dream-rpc.somnia.network"] },
+    default: { http: ["https://api.infra.mainnet.somnia.network"] },
   },
   blockExplorers: {
     default: {
       name: "Blockscout",
-      url: "https://shannon-explorer.somnia.network/",
+      url: "https://explorer.somnia.network/",
     },
   },
 });
 
 const config = createConfig({
-  chains: [somniaTestnet],
+  chains: [somniaMainnet],
   connectors: [metaMask()],
   transports: {
-    [somniaTestnet.id]: http(),
+    [somniaMainnet.id]: http(),
   },
 });
 

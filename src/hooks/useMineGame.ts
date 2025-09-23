@@ -82,16 +82,8 @@ export const useMineGame = () => {
         setRevealedTiles(new Set(data.game.revealedTiles || []));
 
         if (data.game.gameState !== "PLAYING" && data.game.minePositions) {
-          setMineTiles((prev) => {
-            const existingMines = Array.from(prev);
-            const allMines = [...existingMines, ...data.game.minePositions];
-            return new Set(allMines);
-          });
-          const allRevealedTiles = new Set([
-            ...(data.game.revealedTiles || []),
-            ...(data.game.minePositions || []),
-          ]);
-          setRevealedTiles(allRevealedTiles);
+          // Directly set mine positions from backend
+          setMineTiles(new Set(data.game.minePositions));
         } else {
           setMineTiles(new Set());
         }

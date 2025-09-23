@@ -1,6 +1,7 @@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
 import React from "react";
 import { useLeaderboard, useGlobalStats } from "@/lib/query-helper";
+import { useAuth } from "@/contexts/auth-context";
 import Head from "../icons/head";
 import Banana from "../icons/banana";
 import LeaderboardCard from "../cards/leaderboard-card";
@@ -16,8 +17,20 @@ const RankModal: React.FC<RankModalProps> = ({
   isModalOpen,
   setIsModalOpen,
 }) => {
+  const { address } = useAuth();
   const leaderboardQuery = useLeaderboard();
   const globalStatsQuery = useGlobalStats();
+
+  // Find current user's position and prepare display data
+  const currentUserIndex = leaderboardQuery.data?.findIndex(
+    user => user.walletAddress.toLowerCase() === address?.toLowerCase()
+  ) ?? -1;
+  const currentUserRank = currentUserIndex >= 0 ? currentUserIndex + 1 : -1;
+  const isUserInTop25 = currentUserRank > 0 && currentUserRank <= 25;
+  
+  // Get top 25 users for display
+  const top25Users = leaderboardQuery.data?.slice(0, 25) || [];
+  const currentUser = currentUserIndex >= 0 ? leaderboardQuery.data?.[currentUserIndex] : null;
 
   return (
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
@@ -91,13 +104,31 @@ const RankModal: React.FC<RankModalProps> = ({
               </div>
             ) : leaderboardQuery.data ? (
               <div className="space-y-2 max-h-64 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                {leaderboardQuery.data.map((user, index) => (
+                {top25Users.map((user, index) => (
                   <LeaderboardCard
                     key={user.walletAddress}
                     user={user}
-                    rank={index + 1} // This ensures 1-based ranking
+                    rank={index + 1}
+                    isCurrentUser={user.walletAddress.toLowerCase() === address?.toLowerCase()}
                   />
                 ))}
+                
+                {/* Show current user's position if they're outside top 25 */}
+                {!isUserInTop25 && currentUser && currentUserRank > 0 && (
+                  <>
+                    <div className="flex items-center justify-center py-2">
+                      <span className="text-translucent-light-64 text-caption-1 font-pally">
+                        ⋯
+                      </span>
+                    </div>
+                    <LeaderboardCard
+                      key={`current-user-${currentUser.walletAddress}`}
+                      user={currentUser}
+                      rank={currentUserRank}
+                      isCurrentUser={true}
+                    />
+                  </>
+                )}
               </div>
             ) : (
               <div className="text-center p-4">

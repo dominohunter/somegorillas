@@ -3,30 +3,17 @@
 import { useAuth } from "@/contexts/auth-context";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import GlareButton from "@/components/ui/glare-button";
+import { GlareButton } from "@/components/ui/glare-button";
 import LoadingScreen from "@/components/screens/loading-screen";
-import {
-  useFlipHistory,
-  useFlipRemaing,
-  useReferral,
-} from "@/lib/query-helper";
-import { formatFlipSide, getGuessFromFlip } from "@/lib/utils";
-import Target from "@/components/icons/target";
-import Trophy from "@/components/icons/trophy";
-import HeartBroken from "@/components/icons/heart-broken";
-import Lightning from "@/components/icons/lightning";
+import { useReferral, submitReferralCode } from "@/lib/query-helper";
+import { useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "@/lib/keys-helper";
 import CheckCircle from "@/components/icons/check-circle";
-import XCircle from "@/components/icons/x-circle";
 import Globe from "@/components/icons/globe";
-import Users from "@/components/icons/users";
 import Twitter from "@/components/icons/twitter";
-import Chart from "@/components/icons/chart";
-import Coin from "@/components/icons/coin";
-import Butt from "@/components/icons/butt";
-import Head from "@/components/icons/head";
-import AddFriend from "@/components/icons/add-friend";
 import { toast } from "sonner";
 import Discord from "@/components/icons/discord";
+import { CartoonButton } from "@/components/ui/cartoon-button";
 
 export default function Profile() {
   const {
@@ -37,16 +24,19 @@ export default function Profile() {
     isDiscordVerified,
     isDiscordLoading,
     unlinkDiscord,
+    getDiscordAuthUrl,
+    checkDiscordStatus,
   } = useAuth();
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [isClient, setIsClient] = useState(false);
 
-  const [isCopied, setIsCopied] = useState(false);
-  const [activeTab, setActiveTab] = useState<"overview" | "social">("overview");
+  const [activeTab, setActiveTab] = useState<"social">("social");
+  const [referralCode, setReferralCode] = useState("");
+  const [isSubmittingReferral, setIsSubmittingReferral] = useState(false);
+  const [hasSubmittedReferral, setHasSubmittedReferral] = useState(false);
 
-  const flipsHistoryQuery = useFlipHistory();
   const referralQuery = useReferral();
-  const flipLimitQuery = useFlipRemaing();
 
   // Sort achievements: claimable first, then completed, then in progress
 
@@ -68,21 +58,64 @@ export default function Profile() {
     return null;
   }
 
-  const handleCopyReferralLink = async () => {
-    if (referralQuery.data?.referralCode) {
-      const referralLink = `${window.location.origin}?ref=${referralQuery.data.referralCode}`;
-      try {
-        await navigator.clipboard.writeText(referralLink);
-        setIsCopied(true);
-        // Success feedback for copying referral link
-        toast.success("Referral link copied!", {
-          description: "Share this link with friends to earn rewards.",
-        });
+  const handleCopyReferralCode = async () => {
+    console.log("Referral data:", referralQuery.data);
+    
+    // Try both possible property names
+    const codeToBytes = referralQuery.data?.referralCode || referralQuery.data?.code;
+    
+    if (!codeToBytes) {
+      console.error("No referral code found in data:", referralQuery.data);
+      toast.error("No referral code available");
+      return;
+    }
 
-        setTimeout(() => setIsCopied(false), 2000); // Reset after 2 seconds
-      } catch (err) {
-        console.error("Failed to copy: ", err);
+    console.log("Copying referral code:", codeToBytes);
+
+    let copySuccessful = false;
+
+    try {
+      // Try modern clipboard API first
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(codeToBytes);
+        copySuccessful = true;
+        console.log("Copied using modern clipboard API");
       }
+    } catch (err) {
+      console.log("Modern clipboard API failed, trying fallback:", err);
+    }
+
+    if (!copySuccessful) {
+      try {
+        // Fallback for older browsers or when modern API fails
+        const textArea = document.createElement("textarea");
+        textArea.value = codeToBytes;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        const successful = document.execCommand('copy');
+        textArea.remove();
+        
+        if (successful) {
+          copySuccessful = true;
+          console.log("Copied using fallback method");
+        }
+      } catch (err) {
+        console.error("Fallback copy method failed:", err);
+      }
+    }
+
+    if (copySuccessful) {
+      toast.success("Referral code copied!", {
+        description: "Share this code with friends to earn rewards.",
+      });
+    } else {
+      console.error("All copy methods failed");
+      toast.error("Failed to copy referral code. Please copy manually.");
     }
   };
 
@@ -125,6 +158,70 @@ export default function Profile() {
     }
   };
 
+  const handleDiscordVerification = async () => {
+    try {
+      const authUrl = await getDiscordAuthUrl();
+      // Open Discord auth in popup
+      const popup = window.open(
+        authUrl,
+        "discord-auth",
+        "width=500,height=700,scrollbars=yes,resizable=yes",
+      );
+
+      // Listen for popup close
+      const checkClosed = setInterval(() => {
+        if (popup?.closed) {
+          clearInterval(checkClosed);
+          // Check Discord status after popup closes
+          setTimeout(() => {
+            checkDiscordStatus();
+          }, 1000);
+        }
+      }, 1000);
+    } catch (error) {
+      console.error("Failed to start Discord verification:", error);
+      toast.error("Failed to start Discord verification");
+    }
+  };
+
+  const handleSubmitReferralCode = async () => {
+    if (!referralCode.trim()) {
+      toast.error("Please enter a referral code");
+      return;
+    }
+
+    setIsSubmittingReferral(true);
+    try {
+      const response = await submitReferralCode(referralCode.trim());
+      
+      // Success - the API returned referral data
+      if (response.usedReferralCode) {
+        toast.success("Referral code submitted successfully!");
+        setReferralCode("");
+        setHasSubmittedReferral(true);
+        
+        // Invalidate and refetch user data to show updated referral info
+        queryClient.invalidateQueries({ queryKey: queryKeys.referrals.user() });
+        queryClient.invalidateQueries({ queryKey: queryKeys.stats.user() });
+      } else {
+        toast.error("Failed to apply referral code");
+      }
+    } catch (error: unknown) {
+      console.error("Failed to submit referral code:", error);
+      
+      // Handle specific error messages from the API
+      let errorMessage = "Failed to submit referral code. Please try again.";
+      if (error && typeof error === 'object' && 'response' in error) {
+        const errorResponse = error.response as { data?: { message?: string; error?: string } };
+        errorMessage = errorResponse.data?.message || errorResponse.data?.error || errorMessage;
+      }
+      
+      toast.error(errorMessage);
+    } finally {
+      setIsSubmittingReferral(false);
+    }
+  };
+
   //todo : social achievement implementation. Bi eniig achievement bolgoj oruulhar holbono. Odoohondo coming soon bolgono social achievment hesgiig
   //todo: discord verified gdgiig haruulahda odoo zger l haruulj bga. Evteihneer verified ntr gsn yum haruulah heregtei bga. Ugaasa bugd metamask r orj irehdee discord holbotson orj ireh bolhor
 
@@ -150,7 +247,7 @@ export default function Profile() {
     {
       id: "twitter_follow",
       title: "Follow on Twitter",
-      description: "Follow @SomeGorillas on Twitter",
+      description: "Follow @somegorillas on Twitter",
       icon: <Twitter size={24} />,
       platform: "twitter",
       xpReward: 25,
@@ -167,10 +264,7 @@ export default function Profile() {
     },
   ];
 
-  const tabs = [
-    { id: "overview", label: "Overview", icon: <Chart size={20} /> },
-    { id: "social", label: "Social", icon: <Globe size={20} /> },
-  ];
+  const tabs = [{ id: "social", label: "Social", icon: <Globe size={20} /> }];
 
   if (!isClient || isLoading) {
     return <LoadingScreen />;
@@ -179,23 +273,42 @@ export default function Profile() {
   if (!isAuthenticated || !user) {
     return null;
   }
-  const getWinRate = () => {
-    if (flipsHistoryQuery.data && flipsHistoryQuery.data.length > 0) {
-      const wins = flipsHistoryQuery.data.filter((flip) => flip.isWin).length;
-      return ((wins / flipsHistoryQuery.data.length) * 100).toFixed(1);
-    }
-    return user.totalFlips > 0
-      ? (((user.totalHeads + user.totalTails) / user.totalFlips) * 100).toFixed(
-          1,
-        )
-      : "0";
-  };
-
-  const winRate = getWinRate();
 
   return (
     <div className="w-full">
-      <div className="w-full px-4 sm:px-6 lg:px-8 py-2">
+      <div className="max-w-[720px] mx-auto space-y-6 p-4">
+        {/* Back Button */}
+        <div className="flex justify-start">
+          <GlareButton
+            onClick={() => router.back()}
+            background="rgba(255, 255, 255, 0.04)"
+            borderRadius="12px"
+            glareColor="#ffffff"
+            borderColor="rgba(255, 255, 255, 0.04)"
+            className="backdrop-blur-[40px] h-[44px] py-2 px-4 flex items-center gap-2"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M19 12H5"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M12 19l-7-7 7-7"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <span className="text-light-primary font-semibold text-button-48">
+              Back
+            </span>
+          </GlareButton>
+        </div>
+
         {/* <DiscordVerificationSection /> */}
 
         {/* Profile Header */}
@@ -251,31 +364,6 @@ export default function Profile() {
             </div>
 
             {/* Quick Stats */}
-            <div className="grid grid-cols-3 gap-2 sm:gap-4">
-              <div className="text-center bg-translucent-light-4 pb-3 pt-4 rounded-2xl outline-1 outline-translucent-light-8">
-                <div className="text-lg sm:text-2xl font-bold text-light-primary">
-                  {user.xp.toLocaleString()}
-                </div>
-                <div className="text-xs text-translucent-light-64">Bananas</div>
-              </div>
-
-              <div className="text-center bg-translucent-light-4 pb-3 pt-4 rounded-2xl outline-1 outline-translucent-light-8">
-                <div className="text-lg sm:text-2xl font-bold text-light-primary">
-                  {winRate}%
-                </div>
-                <div className="text-xs text-translucent-light-64">
-                  Win Rate
-                </div>
-              </div>
-              <div className="text-center bg-translucent-light-4 pb-3 pt-4 rounded-2xl outline-1 outline-translucent-light-8">
-                <div className="text-lg sm:text-2xl font-bold text-light-primary">
-                  {user.totalFlips}
-                </div>
-                <div className="text-xs text-translucent-light-64">
-                  Total Flips
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -301,203 +389,6 @@ export default function Profile() {
         </div>
 
         {/* Tab Content */}
-        {activeTab === "overview" && (
-          <div className="space-y-4">
-            {/* Stats Grid - FIXED: Added missing closing div and moved Daily Flips inside */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-2">
-              <div className="bg-translucent-light-4 backdrop-blur-[40px] rounded-xl border border-white/10 p-3 sm:p-4 text-start ">
-                <div className="text-xs sm:text-sm  text-translucent-light-64">
-                  Total Flips
-                </div>
-                <div className="flex items-center gap-1">
-                  <div className="text-xl sm:text-2xl  flex justify-center text-red-400">
-                    <Target size={16} />
-                  </div>
-                  <div className="text-lg sm:text-2xl font-bold text-light-primary ">
-                    {user.totalFlips}
-                  </div>
-                </div>
-              </div>
-              <div className="bg-translucent-light-4 backdrop-blur-[40px] rounded-xl border border-white/10 p-3 sm:p-4 text-start">
-                <div className="text-xs sm:text-sm text-translucent-light-64">
-                  Total Wins
-                </div>
-                <div className="flex items-center gap-1">
-                  <div className="text-xl sm:text-2xl flex justify-center text-accent-primary">
-                    <Trophy size={16} />
-                  </div>
-                  <div className="text-lg sm:text-2xl font-bold text-light-primary">
-                    {flipsHistoryQuery.data
-                      ? flipsHistoryQuery.data.filter((flip) => flip.isWin)
-                          .length
-                      : user.totalHeads + user.totalTails}
-                  </div>
-                </div>
-              </div>
-              <div className="bg-translucent-light-4 backdrop-blur-[40px] rounded-xl border border-white/10 p-3 sm:p-4 text-start">
-                <div className="text-xs sm:text-sm text-translucent-light-64">
-                  Total Losses
-                </div>
-                <div className="flex items-center gap-1">
-                  <div className="text-xl sm:text-2xl flex justify-center text-red-500">
-                    <HeartBroken size={16} />
-                  </div>
-                  <div className="text-lg sm:text-2xl font-bold text-light-primary">
-                    {flipsHistoryQuery.data
-                      ? flipsHistoryQuery.data.filter((flip) => !flip.isWin)
-                          .length
-                      : Math.max(
-                          0,
-                          user.totalFlips - (user.totalHeads + user.totalTails),
-                        )}
-                  </div>
-                </div>
-              </div>
-              <div className="bg-translucent-light-4 backdrop-blur-[40px] rounded-xl border border-white/10 p-3 sm:p-4 text-start">
-                <div className="text-xs sm:text-sm text-translucent-light-64">
-                  Heads Won
-                </div>
-                <div className="flex items-center gap-1">
-                  <div className="text-xl sm:text-2xl flex justify-center text-light-primary">
-                    <Head size={16} />
-                  </div>
-                  <div className="text-lg sm:text-2xl font-bold text-light-primary">
-                    {user.totalHeads}
-                  </div>
-                </div>
-              </div>
-              <div className="bg-translucent-light-4 backdrop-blur-[40px] rounded-xl border border-white/10 p-3 sm:p-4 text-start">
-                <div className="text-xs sm:text-sm text-translucent-light-64">
-                  Butt Won
-                </div>
-                <div className="flex items-center gap-1">
-                  <div className="text-xl sm:text-2xl flex justify-center text-light-primary">
-                    <Butt size={16} />
-                  </div>
-                  <div className="text-lg sm:text-2xl font-bold text-light-primary">
-                    {user.totalTails}
-                  </div>
-                </div>
-              </div>
-              {/* FIXED: Moved Daily Flips card inside the grid */}
-              <div className="bg-translucent-light-4 backdrop-blur-[40px] rounded-xl border border-white/10 p-3 sm:p-4 text-start">
-                <div className="text-xs sm:text-sm text-translucent-light-64">
-                  Daily Flips
-                </div>
-                <div className="flex items-center gap-1">
-                  <div className="text-xl sm:text-2xl flex justify-center text-accent-primary">
-                    <Lightning size={16} />
-                  </div>
-                  <div className="text-lg sm:text-2xl font-bold text-light-primary">
-                    {flipLimitQuery.data
-                      ? `${flipLimitQuery.data.count}/${flipLimitQuery.data.maxFlip}`
-                      : "0/10"}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Recent Activity & Referral */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Recent Flips */}
-              <div className="bg-translucent-dark-12 backdrop-blur-[40px] rounded-2xl border border-white/10 p-4 sm:p-6">
-                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                  <Coin size={20} /> Recent Flips
-                </h3>
-                {flipsHistoryQuery.data && flipsHistoryQuery.data.length > 0 ? (
-                  <div className="space-y-2 max-h-48 overflow-y-auto">
-                    {flipsHistoryQuery.data.slice(0, 10).map((flip) => {
-                      const userGuess = getGuessFromFlip(flip);
-                      return (
-                        <div
-                          key={flip.id}
-                          className="flex justify-between items-center p-2 bg-translucent-dark-12 rounded-lg"
-                        >
-                          <div className="flex items-center gap-2">
-                            <span
-                              className={`font-medium flex items-center gap-1 ${flip.isWin ? "text-green-400" : "text-red-400"}`}
-                            >
-                              {flip.isWin ? (
-                                <>
-                                  <CheckCircle size={16} /> WIN
-                                </>
-                              ) : (
-                                <>
-                                  <XCircle size={16} /> LOSS
-                                </>
-                              )}
-                            </span>
-                            <span className="text-gray-300 text-sm">
-                              {formatFlipSide(userGuess)} →{" "}
-                              {formatFlipSide(flip.result)}
-                            </span>
-                          </div>
-                          <span className="text-xs text-translucent-light-64">
-                            {new Date(flip.createdAt).toLocaleDateString()}
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                ) : (
-                  <p className="text-translucent-light-64 text-center py-4">
-                    No flips yet
-                  </p>
-                )}
-              </div>
-
-              {/* Referral System */}
-              <div className="bg-translucent-dark-12 backdrop-blur-[40px] rounded-2xl border border-white/10 p-4 sm:p-6">
-                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                  <Users size={20} /> Referral System
-                </h3>
-                {referralQuery.data && (
-                  <div className="flex flex-col gap-4">
-                    <div className="space-y-3">
-                      {/* Horizontal Referral Card */}
-                      <div className="flex flex-col sm:flex-row items-center gap-4 p-4 bg-translucent-light-8 border-2 border-translucent-light-4 rounded-2xl">
-                        {/* Add Friend Icon in Square Container */}
-                        <div className="flex-shrink-0 bg-translucent-light-12 border-translucent-light-4 border-2 p-2 rounded-[12px] w-16 h-16 flex items-center justify-center">
-                          <AddFriend size={48} />
-                        </div>
-
-                        {/* Middle Text */}
-                        <div className="flex-1 text-center sm:text-start">
-                          <p className="text-light-primary text-body1 font-semibold">
-                            Get 50 bananas for free
-                          </p>
-                          <p className="text-translucent-light-64 text-body2-medium font-pally">
-                            Invite your friend and get 50 bananas
-                          </p>
-                        </div>
-
-                        {/* Copy Button */}
-                        <GlareButton
-                          onClick={handleCopyReferralLink}
-                          background={isCopied ? "#22C55E" : "#EAB308"}
-                          borderRadius="12px"
-                          borderColor="transparent"
-                          glareColor="#ffffff"
-                          glareOpacity={0.3}
-                          className="text-white py-3 px-4 sm:px-6 text-body-2-semibold font-pally font-semibold w-full sm:w-auto"
-                          disabled={isCopied}
-                        >
-                          {isCopied ? "Copied!" : "Copy Link"}
-                        </GlareButton>
-                      </div>
-                    </div>
-                    <div className="text-sm text-translucent-light-64 flex gap-2">
-                      Referred Users:{" "}
-                      <span className="text-white font-medium">
-                        {referralQuery.data.referredUsers.length}
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
 
         {activeTab === "social" && (
           <div className="bg-translucent-dark-12 backdrop-blur-[40px] rounded-2xl border border-white/10 p-6">
@@ -530,11 +421,18 @@ export default function Profile() {
                         <CheckCircle size={16} /> Connected
                       </span>
                     ) : social.platform === "twitter" ? (
-                      <span className="text-gray-400 font-medium px-4 py-2 rounded-lg bg-translucent-dark-8 border border-translucent-light-8">
+                      // <span className="text-gray-400 font-medium px-4 py-2 rounded-lg bg-translucent-dark-8 border border-translucent-light-8">
+                      <CartoonButton
+                        size={"sm"}
+                        className="bg-translucent-light-24"
+                        disabled={true}
+                      >
                         Coming Soon
-                      </span>
+                      </CartoonButton>
                     ) : (
-                      <GlareButton
+                      // </span>
+                      <CartoonButton
+                        size={"sm"}
                         onClick={() => {
                           if (social.platform === "discord") {
                             if (social.id === "discord_join") {
@@ -543,21 +441,19 @@ export default function Profile() {
                                 "_blank",
                               );
                             } else if (social.id === "discord_connect") {
-                              // Handle Discord account connection
-                              window.open(
-                                "https://discord.gg/3uGRW3kJd3",
-                                "_blank",
-                              );
+                              handleDiscordVerification();
                             }
                           }
                         }}
-                        background="rgba(88, 101, 242, 0.9)"
-                        borderRadius="8px"
-                        borderColor="rgba(88, 101, 242, 0.3)"
-                        className="px-4 py-2 text-indigo-100"
+                        className="px-4 bg-[#5865F2]  py-2 text-indigo-100 "
+                        disabled={isDiscordLoading}
                       >
-                        {social.id === "discord_join" ? "Join" : "Connect"}
-                      </GlareButton>
+                        {social.id === "discord_join"
+                          ? "Join"
+                          : isDiscordLoading
+                            ? "Connecting..."
+                            : "Verify with Discord"}
+                      </CartoonButton>
                     )}
                   </div>
                 </div>
@@ -579,7 +475,7 @@ export default function Profile() {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-white font-bold">
+                      <div className=" h-full flex items-center justify-center text-white font-bold">
                         {discordStatus.discordUser.username
                           .slice(0, 2)
                           .toUpperCase()}
@@ -602,18 +498,101 @@ export default function Profile() {
                       ).toLocaleDateString()}
                     </div>
                   </div>
-                  {process.env.NODE_ENV === "development" && (
-                    <GlareButton
-                      onClick={handleUnlinkDiscord}
-                      background="rgba(239, 68, 68, 0.9)"
-                      borderRadius="8px"
-                      borderColor="rgba(239, 68, 68, 0.3)"
-                      className="px-4 py-2 text-light-primary hover:bg-red-500 transition-colors"
-                      disabled={isDiscordLoading}
+                  {/*{process.env.NODE_ENV === "development" && (*/}
+                  <CartoonButton
+                    size={"sm"}
+                    onClick={handleUnlinkDiscord}
+                    className="px-4 py-2 text-light-primary bg-system-error-primary "
+                    disabled={isDiscordLoading}
+                  >
+                    {isDiscordLoading ? "Unlinking..." : "Unlink"}
+                  </CartoonButton>
+                  {/*)}*/}
+                </div>
+              </div>
+            )}
+
+            {/* Referral Code Input Section */}
+            {!referralQuery.data?.usedReferralCode && !hasSubmittedReferral ? (
+              <div className="mt-6 pt-6 border-t border-white/10">
+                <h3 className="text-lg font-semibold text-white mb-4">
+                  Enter Referral Code
+                </h3>
+                <div className="p-4 bg-translucent-dark-12 rounded-xl border border-white/10">
+                  <p className="text-sm text-translucent-light-64 mb-4">
+                    Have a referral code from a friend? Enter it here to claim your bonus!
+                  </p>
+                  <div className="flex gap-3">
+                    <input
+                      type="text"
+                      value={referralCode}
+                      onChange={(e) => setReferralCode(e.target.value)}
+                      onKeyPress={(e) => {
+                        if (e.key === 'Enter' && referralCode.trim() && !isSubmittingReferral) {
+                          handleSubmitReferralCode();
+                        }
+                      }}
+                      placeholder="Enter referral code"
+                      className="flex-1 px-4 py-3 bg-translucent-dark-24 border border-white/20 rounded-lg text-white placeholder-translucent-light-64 focus:outline-none focus:border-purple-400 transition-colors"
+                      disabled={isSubmittingReferral}
+                      maxLength={20}
+                    />
+                    <CartoonButton
+                      onClick={handleSubmitReferralCode}
+                      disabled={isSubmittingReferral || !referralCode.trim()}
+                      className="px-6 py-3 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 disabled:cursor-not-allowed"
                     >
-                      {isDiscordLoading ? "Unlinking..." : "Unlink"}
-                    </GlareButton>
-                  )}
+                      {isSubmittingReferral ? "Submitting..." : "Submit"}
+                    </CartoonButton>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="mt-6 pt-6 border-t border-white/10">
+                <h3 className="text-lg font-semibold text-white mb-4">
+                  Referral Status
+                </h3>
+                <div className="p-4 bg-translucent-dark-12 rounded-xl border border-white/10">
+                  <div className="flex items-center gap-2 text-green-400">
+                    <CheckCircle size={20} />
+                    <span className="font-medium">
+                      {hasSubmittedReferral 
+                        ? "Referral code submitted successfully!" 
+                        : "You were referred by someone!"
+                      }
+                    </span>
+                  </div>
+                  <p className="text-sm text-translucent-light-64 mt-2">
+                    You have successfully used a referral code and received your bonus.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Share Your Referral Code Section */}
+            {(referralQuery.data?.referralCode || referralQuery.data?.code) && (
+              <div className="mt-6 pt-6 border-t border-white/10">
+                <h3 className="text-lg font-semibold text-white mb-4">
+                  Share Your Referral Code
+                </h3>
+                <div className="p-4 bg-translucent-dark-12 rounded-xl border border-white/10">
+                  <p className="text-sm text-translucent-light-64 mb-4">
+                    Share your referral code with friends to earn rewards when they join!
+                  </p>
+                  <div className="flex gap-3">
+                    <input
+                      type="text"
+                      value={referralQuery.data?.referralCode || referralQuery.data?.code || ""}
+                      readOnly
+                      className="flex-1 px-4 py-3 bg-translucent-dark-24 border border-white/20 rounded-lg text-white focus:outline-none cursor-default"
+                    />
+                    <CartoonButton
+                      onClick={handleCopyReferralCode}
+                      className="px-6 py-3 bg-green-600 hover:bg-green-700"
+                    >
+                      Copy Code
+                    </CartoonButton>
+                  </div>
                 </div>
               </div>
             )}

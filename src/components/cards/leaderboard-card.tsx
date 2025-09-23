@@ -7,9 +7,10 @@ interface LeaderboardCardProps {
     xp: number;
   };
   rank: number;
+  isCurrentUser?: boolean;
 }
 
-const LeaderboardCard: React.FC<LeaderboardCardProps> = ({ user, rank }) => {
+const LeaderboardCard: React.FC<LeaderboardCardProps> = ({ user, rank, isCurrentUser = false }) => {
   const isTopThree = rank <= 3;
 
   const getRankColor = (rank: number) => {
@@ -27,7 +28,9 @@ const LeaderboardCard: React.FC<LeaderboardCardProps> = ({ user, rank }) => {
   return (
     <div
       className={`flex justify-between items-center p-3 rounded-xl transition-colors border-2 ${
-        isTopThree
+        isCurrentUser
+          ? "bg-gradient-to-r from-accent-primary/20 to-accent-primary/10 border-accent-primary"
+          : isTopThree
           ? "bg-gradient-to-r from-translucent-light-8 to-translucent-light-4 border-translucent-light-8"
           : "bg-translucent-light-4 border-translucent-light-8"
       }`}
@@ -38,10 +41,17 @@ const LeaderboardCard: React.FC<LeaderboardCardProps> = ({ user, rank }) => {
         >
           {rank}
         </span>
-        <span className="text-light-primary text-body-2 font-pally truncate max-w-32">
-          {user.walletAddress.slice(0, 6)}...
-          {user.walletAddress.slice(-4)}
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="text-light-primary text-body-2 font-pally truncate max-w-32">
+            {user.walletAddress.slice(0, 6)}...
+            {user.walletAddress.slice(-4)}
+          </span>
+          {isCurrentUser && (
+            <span className="text-accent-primary text-caption-1-medium font-pally font-semibold bg-accent-primary/20 px-2 py-1 rounded-md">
+              You
+            </span>
+          )}
+        </div>
       </div>
       <div className="flex items-center">
         <Banana size={24} />

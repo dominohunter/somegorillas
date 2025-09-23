@@ -296,7 +296,7 @@ export default function Home() {
             onClick={startCoinFlip}
             className="px-3 py-1 mt-3 text-white bg-green-600 rounded"
           >
-            🎲 Flip Coin (${COINFLIP_FEE} STT)
+            🎲 Flip Coin (${COINFLIP_FEE} SOMI)
           </button>
         </div>
       )}

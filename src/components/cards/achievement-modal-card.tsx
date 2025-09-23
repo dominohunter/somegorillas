@@ -1,6 +1,6 @@
 import React from "react";
 import AchievementCoin from "../icons/achievement-coin";
-import GlareButton from "../ui/glare-button";
+import { GlareButton } from "../ui/glare-button";
 
 interface AchievementModalCardProps {
   achievement: {

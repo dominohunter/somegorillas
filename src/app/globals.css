@@ -4,7 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 /* Ensure full page screenshot captures black background */
-html, body {
+html,
+body {
   background-color: #000000 !important;
   /* Fix mobile Safari white space issues */
   min-height: 100vh;
@@ -228,6 +229,10 @@ html, body {
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+}
+
+.gradient-dark-vertical {
+  background: linear-gradient(180deg, rgba(15, 16, 18, 0.01) 0%, #0f1012 100%);
 }
 
 @theme inline {
@@ -479,11 +484,11 @@ body {
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
-  
+
   *::-webkit-scrollbar {
     display: none;
   }
-  
+
   html,
   body {
     @apply bg-background text-foreground;
@@ -504,12 +509,12 @@ body {
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
-  
+
   html::-webkit-scrollbar,
   body::-webkit-scrollbar {
     display: none;
   }
-  
+
   /* Optimize fixed background performance */
   [data-background="fixed"] {
     transform: translateZ(0);
@@ -727,7 +732,7 @@ body {
   .cartoon-boxshadow {
     box-shadow: 4px 4px 0px var(--dark-primary);
   }
-  
+
   /* Light mode cartoon effects */
   @media (prefers-color-scheme: light) {
     .cartoon-shadow {
@@ -884,7 +889,10 @@ body {
 
 /* Mobile Safari white space fix */
 @supports (-webkit-touch-callout: none) {
-  html, body, #__next, [data-reactroot] {
+  html,
+  body,
+  #__next,
+  [data-reactroot] {
     height: -webkit-fill-available;
     min-height: -webkit-fill-available;
   }
@@ -892,15 +900,16 @@ body {
 
 /* Prevent overscroll bounce on mobile */
 @media (max-width: 768px) {
-  html, body {
+  html,
+  body {
     overscroll-behavior: none;
     overflow-x: hidden;
   }
-  
-  #__next, [data-reactroot] {
+
+  #__next,
+  [data-reactroot] {
     overflow-y: auto;
     height: 100vh;
     height: -webkit-fill-available;
   }
 }
-

@@ -3,7 +3,7 @@
 import { useReferral } from "@/lib/query-helper";
 import { useSubmitReferral } from "@/lib/mutation-helper";
 import { useState } from "react";
-import GlareButton from "@/components/ui/glare-button";
+import { GlareButton } from "@/components/ui/glare-button";
 
 export default function Referral() {
   const [referralCode, setReferralCode] = useState("");

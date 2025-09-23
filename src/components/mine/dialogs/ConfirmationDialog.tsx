@@ -46,7 +46,7 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
           </div>
           <div className="flex justify-between items-center">
             <span className="text-translucent-light-64">Bet Amount:</span>
-            <span className="font-semibold text-white">{gameFee} STT</span>
+            <span className="font-semibold text-white">{gameFee} SOMI</span>
           </div>
           <div className="flex justify-between items-center">
             <span className="text-translucent-light-64">Board Size:</span>

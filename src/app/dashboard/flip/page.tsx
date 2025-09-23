@@ -487,18 +487,12 @@ export default function FlipPage() {
         return;
       }
 
-      const response = await fetch(
-        "http://localhost:3001/api/game/bet/history",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        },
+      const response = await api.get(
+        "game/bet/history"
       );
 
-      if (response.ok) {
-        const betHistoryResponse: BetHistoryResponse = await response.json();
+      if (response.data.bets) {
+        const betHistoryResponse: BetHistoryResponse = await response.data
         setGameHistory(betHistoryResponse.bets);
       } else if (response.status === 401 || response.status === 403) {
         console.log("Authentication failed - user needs to login");

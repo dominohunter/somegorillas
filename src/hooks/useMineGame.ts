@@ -1,11 +1,22 @@
 import { useState, useEffect, useCallback } from "react";
-import { useAccount, useWaitForTransactionReceipt, useWriteContract, useReadContract } from "wagmi";
+import {
+  useAccount,
+  useWaitForTransactionReceipt,
+  useWriteContract,
+  useReadContract,
+} from "wagmi";
 import { formatEther } from "viem";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import axiosClient from "@/lib/axios";
 import { MINEGAME_ABI } from "@/lib/mine-abi";
-import { Game, GameStats, GameHistory, XPCalculation, TransactionType } from "@/types/mine";
+import {
+  Game,
+  GameStats,
+  GameHistory,
+  XPCalculation,
+  TransactionType,
+} from "@/types/mine";
 import { CONTRACT_ADDRESS, DEFAULT_GAME_FEE } from "@/constants/mine";
 
 export const useMineGame = () => {
@@ -25,8 +36,10 @@ export const useMineGame = () => {
 
   // Dialog states
   const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
-  const [showExplosionDialog, setShowExplosionDialog] = useState<boolean>(false);
-  const [showTransactionLoading, setShowTransactionLoading] = useState<boolean>(false);
+  const [showExplosionDialog, setShowExplosionDialog] =
+    useState<boolean>(false);
+  const [showTransactionLoading, setShowTransactionLoading] =
+    useState<boolean>(false);
   const [showXPDialog, setShowXPDialog] = useState<boolean>(false);
   const [xpData, setXpData] = useState<XPCalculation | null>(null);
 
@@ -42,10 +55,11 @@ export const useMineGame = () => {
     isPending: isWritePending,
   } = useWriteContract();
 
-  const { isSuccess: isConfirmed, data: receipt } = useWaitForTransactionReceipt({
-    hash,
-    confirmations: 1,
-  });
+  const { isSuccess: isConfirmed, data: receipt } =
+    useWaitForTransactionReceipt({
+      hash,
+      confirmations: 1,
+    });
 
   // Read game fee
   const { data: gameFeeData } = useReadContract({
@@ -72,79 +86,91 @@ export const useMineGame = () => {
     }
   }, [address]);
 
-  const loadActiveGame = useCallback(async (userAddress: string): Promise<void> => {
-    try {
-      const response = await axiosClient.get(`mine/active/${userAddress}`);
-      const data = response.data;
-
-      if (data.success && data.game) {
-        setBackendGame(data.game);
-        setRevealedTiles(new Set(data.game.revealedTiles || []));
-
-        if (data.game.gameState !== "PLAYING" && data.game.minePositions) {
-          // Directly set mine positions from backend
-          setMineTiles(new Set(data.game.minePositions));
-        } else {
-          setMineTiles(new Set());
-        }
-      }
-    } catch (err) {
-      console.error("Failed to load active game:", err);
-    }
-  }, []);
-
-  const loadUserStats = useCallback(async (userAddress: string): Promise<void> => {
-    try {
-      const response = await axiosClient.get(`mine/stats/${userAddress}`);
-      const data = response.data;
-
-      if (data.success) {
-        setUserStats(data.stats);
-      }
-    } catch (err) {
-      console.error("Failed to load user stats:", err);
-    }
-  }, []);
-
-  const loadGameHistory = useCallback(async (userAddress: string, page: number = 1): Promise<void> => {
-    try {
-      const response = await axiosClient.get(
-        `mine/history/${userAddress}?page=${page}&limit=10`,
-      );
-      const data = response.data;
-
-      if (data.success) {
-        setGameHistory(data);
-      }
-    } catch (err) {
-      console.error("Failed to load game history:", err);
-    }
-  }, []);
-
-  const getXPCalculation = useCallback(async (gameId: string): Promise<void> => {
-    try {
-      let response;
+  const loadActiveGame = useCallback(
+    async (userAddress: string): Promise<void> => {
       try {
-        response = await axiosClient.get(`mine/xp/${gameId}`);
-      } catch {
-        try {
-          response = await axiosClient.post(`mine/xp/${gameId}`);
-        } catch {
-          response = await axiosClient.get(`mine/${gameId}`);
+        const response = await axiosClient.get(`mine/active/${userAddress}`);
+        const data = response.data;
+
+        if (data.success && data.game) {
+          setBackendGame(data.game);
+          setRevealedTiles(new Set(data.game.revealedTiles || []));
+
+          if (data.game.gameState !== "PLAYING" && data.game.minePositions) {
+            // Directly set mine positions from backend
+            setMineTiles(new Set(data.game.minePositions));
+          } else {
+            setMineTiles(new Set());
+          }
         }
+      } catch (err) {
+        console.error("Failed to load active game:", err);
       }
+    },
+    [],
+  );
 
-      const data = response.data;
+  const loadUserStats = useCallback(
+    async (userAddress: string): Promise<void> => {
+      try {
+        const response = await axiosClient.get(`mine/stats/${userAddress}`);
+        const data = response.data;
 
-      if (data.success) {
-        setXpData(data);
-        setShowXPDialog(true);
-        queryClient.invalidateQueries({ queryKey: ["stats", "user"] });
+        if (data.success) {
+          setUserStats(data.stats);
+        }
+      } catch (err) {
+        console.error("Failed to load user stats:", err);
       }
-    } catch (err) {
-      console.error("Failed to get XP calculation:", err);
-    }
-  }, [queryClient]);
+    },
+    [],
+  );
+
+  const loadGameHistory = useCallback(
+    async (userAddress: string, page: number = 1): Promise<void> => {
+      try {
+        const response = await axiosClient.get(
+          `mine/history/${userAddress}?page=${page}&limit=10`,
+        );
+        const data = response.data;
+
+        if (data.success) {
+          setGameHistory(data);
+        }
+      } catch (err) {
+        console.error("Failed to load game history:", err);
+      }
+    },
+    [],
+  );
+
+  const getXPCalculation = useCallback(
+    async (gameId: string): Promise<void> => {
+      try {
+        let response;
+        try {
+          response = await axiosClient.get(`mine/xp/${gameId}`);
+        } catch {
+          try {
+            response = await axiosClient.post(`mine/xp/${gameId}`);
+          } catch {
+            response = await axiosClient.get(`mine/${gameId}`);
+          }
+        }
+
+        const data = response.data;
+
+        if (data.success) {
+          setXpData(data);
+          setShowXPDialog(true);
+          queryClient.invalidateQueries({ queryKey: ["stats", "user"] });
+        }
+      } catch (err) {
+        console.error("Failed to get XP calculation:", err);
+      }
+    },
+    [queryClient],
+  );
 
   const resetGame = useCallback(() => {
     setBackendGame(null);
@@ -185,7 +211,8 @@ export const useMineGame = () => {
         });
       } else if (errorMessage.includes("insufficient funds")) {
         toast.error("Insufficient funds", {
-          description: "You don't have enough ETH to complete this transaction.",
+          description:
+            "You don't have enough SOMI to complete this transaction.",
         });
       } else {
         toast.error("Transaction failed", {

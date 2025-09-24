@@ -22,6 +22,9 @@ import { useLogin } from "@/hooks/use-login";
 import api from "@/lib/axios";
 import WinDetailsModal from "@/components/modals/win-details-modal";
 import FlipResultModal from "@/components/modals/flip-result-modal";
+import { useChainValidation } from "@/hooks/use-chain-validation";
+import { REQUIRED_CHAIN_ID } from "@/lib/config";
+import { useChainId } from "wagmi";
 
 // Types
 interface FlipGameBet {
@@ -79,6 +82,10 @@ export default function FlipPage() {
   const publicClient = usePublicClient();
   const { address, isConnected } = useAccount();
   const { login, isLoading: isLoginLoading } = useLogin();
+  const chainId = useChainId();
+
+  // Chain validation
+  const { isOnCorrectChain, switchToCorrectChain } = useChainValidation();
 
   const [betAmount, setBetAmount] = useState("0.1");
   const [multiplier] = useState(20000); // 2x
@@ -167,7 +174,9 @@ export default function FlipPage() {
           console.log(decoded);
 
           if (decoded.eventName === "Bet") {
-            betId = (decoded.args as unknown as { betId: bigint }).betId.toString();
+            betId = (
+              decoded.args as unknown as { betId: bigint }
+            ).betId.toString();
             break;
           }
         } catch (error) {
@@ -281,7 +290,7 @@ export default function FlipPage() {
           if (bet.isWin) {
             toast.success("You won!", {
               description: bet.winAmount
-                ? `Congratulations! You won ${ethers.formatEther(bet.winAmount)} STT!`
+                ? `Congratulations! You won ${ethers.formatEther(bet.winAmount)} SOMI!`
                 : "Congratulations on your win!",
             });
           } else {
@@ -354,6 +363,12 @@ export default function FlipPage() {
   const placeBet = async () => {
     if (!isConnected) {
       toast.error("Please connect your wallet");
+      return;
+    }
+
+    // Check if user is on correct network
+    if (chainId !== REQUIRED_CHAIN_ID) {
+      toast.error("Please switch to Somnia network to place bets");
       return;
     }
 
@@ -487,12 +502,10 @@ export default function FlipPage() {
         return;
       }
 
-      const response = await api.get(
-        "game/bet/history"
-      );
+      const response = await api.get("game/bet/history");
 
       if (response.data.bets) {
-        const betHistoryResponse: BetHistoryResponse = await response.data
+        const betHistoryResponse: BetHistoryResponse = await response.data;
         setGameHistory(betHistoryResponse.bets);
       } else if (response.status === 401 || response.status === 403) {
         console.log("Authentication failed - user needs to login");
@@ -592,7 +605,7 @@ export default function FlipPage() {
           setShowResult(true);
 
           toast.success("You won!", {
-            description: `Congratulations! You won ${ethers.formatEther(amount)} STT!`,
+            description: `Congratulations! You won ${ethers.formatEther(amount)} SOMI!`,
           });
 
           loadGameHistory();
@@ -794,7 +807,7 @@ export default function FlipPage() {
             {/* Potential Win Display */}
             <div className="flex justify-center mb-6">
               <CartoonButton
-                onClick={placeBet}
+                onClick={!isOnCorrectChain ? switchToCorrectChain : placeBet}
                 disabled={loading || isFlipping}
                 size={"md"}
                 variant={"secondary"}
@@ -804,6 +817,8 @@ export default function FlipPage() {
                   ? "Processing..."
                   : isFlipping
                     ? "Flipping..."
+                    : !isOnCorrectChain
+                    ? "Switch to Somnia"
                     : "Flip"}
               </CartoonButton>
             </div>
@@ -817,7 +832,7 @@ export default function FlipPage() {
           <h2 className="text-h4 font-bold text-white mb-6 font-pally text-center">
             Bet History
           </h2>
-          <div className="space-y-3">
+          <div className="space-y-3 max-h-80 overflow-y-auto">
             {gameHistory.length === 0 ? (
               <div className="text-center py-8">
                 <p className="text-translucent-light-64 font-pally mb-2">

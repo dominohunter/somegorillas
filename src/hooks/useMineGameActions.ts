@@ -368,6 +368,8 @@ export const useMineGameActions = (params: MineGameActionsParams) => {
             toast.success("Game started!", {
               description: "Your mine game has been created successfully.",
             });
+            // Refresh user data to update stats and history
+            await loadUserData();
           } else {
             throw new Error(linkResult.error || "Failed to link game");
           }

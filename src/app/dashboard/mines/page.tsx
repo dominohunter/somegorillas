@@ -153,8 +153,8 @@ export default function EnhancedMineGameApp() {
   }
 
   return (
-    <div className="w-full min-h-screen p-4">
-      <div className="max-w-7xl mx-auto flex flex-col items-center">
+    <div className="w-full lg:h-screen lg:overflow-hidden p-4">
+      <div className="max-w-7xl mx-auto flex flex-col items-center lg:h-full">
         {/* Back Button */}
         <div className="flex flex-col lg:flex-row gap-6 w-full justify-center">
           <div className="flex-1 lg:max-w-2xl">
@@ -230,9 +230,9 @@ export default function EnhancedMineGameApp() {
 
         {/* Main Layout */}
         {mineGame.isConnected && (
-          <div className="flex flex-col lg:flex-row gap-6 w-full justify-center">
+          <div className="flex flex-col lg:flex-row gap-6 w-full justify-center lg:flex-1 lg:overflow-hidden">
             {/* Game Section - Left side */}
-            <div className="flex-1 lg:max-w-2xl">
+            <div className="flex-1 lg:max-w-2xl lg:overflow-y-auto">
               <div className="backdrop-blur-[60px] bg-translucent-dark-12 border-2 rounded-2xl lg:rounded-3xl border-translucent-light-4 p-6">
                 <h2 className="text-2xl font-bold text-white mb-6">Mines</h2>
 
@@ -288,7 +288,7 @@ export default function EnhancedMineGameApp() {
             </div>
 
             {/* Sidebar - Stats and History - Right side */}
-            <div className="lg:w-80 xl:w-96 space-y-6">
+            <div className="lg:w-80 xl:w-96 space-y-6 lg:overflow-y-auto">
               <StatsSection
                 userStats={mineGame.userStats}
                 totalXP={userStatsQuery.data?.xp}

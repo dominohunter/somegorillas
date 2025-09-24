@@ -28,7 +28,7 @@ export default function Dashboard() {
           <div className="grid grid-cols-1  h-[928px] lg:grid-cols-12 gap-4  lg:h-auto">
             <div className="lg:col-span-4 space-y-3 lg:flex lg:flex-col lg:h-full">
               <Rank />
-              <div className="lg:flex-1  lg:max-h-[756px]  lg:flex lg:flex-col lg:justify-end">
+              <div className="lg:flex-1  lg:max-h-[756px]  lg:flex lg:flex-col">
                 <Achievements />
               </div>
             </div>

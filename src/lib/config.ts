@@ -7,7 +7,7 @@ export const API_BASE_URL =
 export const COINFLIP_ADDRESS = "0x6D95d0879da470305Af2418E8d34C6D12d23C7ea";
 export const COINFLIP_BETTING_ADDRESS =
   "0xeb0E90f886E33Db7413DAb5FBED8BD96a9E28fB3";
-export const REQUIRED_CHAIN_ID = 50312;
+export const REQUIRED_CHAIN_ID = 5031;
 //heeeloooo
 export const COINFLIP_FEE = "0.0001";
 export const COINFLIP_ABI = [

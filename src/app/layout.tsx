@@ -12,7 +12,6 @@ import AudioConsentModal from "@/components/audio/audio-consent-modal";
 import AudioControls from "@/components/audio/audio-controls";
 // import { Analytics } from "@vercel/analytics/next"
 
-
 import { usePathname } from "next/navigation";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -60,10 +59,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <AudioProvider>
               <AuthProvider>
                 <div className="min-h-screen flex flex-col">
-                  <div className="w-full flex-shrink-0">
+                  <div className="w-full flex-shrink-0 mb-[80px] md:mb-[120px]">
                     <Header />
                   </div>
-                  <div className="w-full max-w-[1920px] mt-[120px] mx-auto flex-1">
+                  <div className="w-full max-w-[1920px] mx-auto flex-1">
                     {children}
                   </div>
                 </div>
@@ -74,7 +73,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </Providers>
         </div>
         <Toaster />
-               {/* <Analytics /> */}
+        {/* <Analytics /> */}
       </body>
     </html>
   );

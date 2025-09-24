@@ -13,10 +13,12 @@ import { useConnect, useAccount } from "wagmi";
 import { Connector } from "wagmi";
 import { useLogin } from "@/hooks/use-login";
 import { useReferralCode } from "@/hooks/use-referral-code";
+import { useChainValidation } from "@/hooks/use-chain-validation";
 import CheckCircle from "../icons/check-circle";
 import Metamask from "../icons/metamask";
 import Banana from "../icons/banana";
 import Dashboard from "@/app/dashboard/page";
+import { REQUIRED_CHAIN_ID } from "@/lib/config";
 
 // Helper function to get the Metamask icon
 const getConnectorIcon = (connectorName: string, size: number = 24) => {
@@ -40,6 +42,9 @@ export default function HomeContent() {
   // const { disconnect } = useDisconnect();
   const { login } = useLogin();
 
+  // Chain validation
+  useChainValidation();
+
   const [showModal, setShowModal] = useState(false);
   const [currentStep, setCurrentStep] = useState<"wallet" | "sign">(
     "wallet",
@@ -51,8 +56,11 @@ export default function HomeContent() {
 
   const handleWalletConnect = async (connector: Connector) => {
     try {
-      // Just connect the wallet
-      connect({ connector });
+      // Connect the wallet first
+      connect({ 
+        connector,
+        chainId: REQUIRED_CHAIN_ID // Force connection to Somnia network
+      });
     } catch (error) {
       console.error("Connection failed:", error);
     }

@@ -7,6 +7,7 @@ import { useMineGame } from "@/hooks/useMineGame";
 import { useMineGameActions } from "@/hooks/useMineGameActions";
 import { useStats } from "@/lib/query-helper";
 import { pendingTransactionsApi } from "@/lib/api";
+import { useChainValidation } from "@/hooks/use-chain-validation";
 
 import { ConnectionStatus } from "@/components/mine/ConnectionStatus";
 import { GameControls } from "@/components/mine/GameControls";
@@ -28,6 +29,9 @@ export default function EnhancedMineGameApp() {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
   const [showMines, setShowMines] = useState(false);
+
+  // Chain validation
+  const { isOnCorrectChain, switchToCorrectChain } = useChainValidation();
   const mineGame = useMineGame();
   const mineGameActions = useMineGameActions({
     address: mineGame.address,
@@ -109,6 +113,7 @@ export default function EnhancedMineGameApp() {
   // Helper functions
   const getStartButtonText = () => {
     if (!mineGame.isConnected) return "Connect Wallet to Play";
+    if (!isOnCorrectChain) return "Switch to Somnia Network";
     if (mineGame.isWritePending) return "Waiting for wallet...";
     if (mineGame.loading) return "Starting...";
     return `Start Game (${mineGame.gameFee} SOMI)`;
@@ -146,7 +151,7 @@ export default function EnhancedMineGameApp() {
   };
 
   const isGameDisabled =
-    !mineGame.isConnected || mineGame.loading || mineGame.isWritePending;
+    !mineGame.isConnected || mineGame.loading || mineGame.isWritePending || !isOnCorrectChain;
 
   if (!isClient) {
     return <div>Loading...</div>;
@@ -241,7 +246,7 @@ export default function EnhancedMineGameApp() {
                   onMineCountChange={mineGame.setMineCount}
                   backendGame={mineGame.backendGame}
                   isGameDisabled={isGameDisabled}
-                  onStartGame={mineGameActions.showGameConfirmation}
+                  onStartGame={!isOnCorrectChain ? switchToCorrectChain : mineGameActions.showGameConfirmation}
                   getStartButtonText={getStartButtonText}
                 />
 

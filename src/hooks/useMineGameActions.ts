@@ -5,6 +5,8 @@ import axiosClient from "@/lib/axios";
 import { MINEGAME_ABI } from "@/lib/mine-abi";
 import { RevealResponse, Game, TransactionType } from "@/types/mine";
 import { CONTRACT_ADDRESS, ANIMATION_TIMING } from "@/constants/mine";
+import { REQUIRED_CHAIN_ID } from "@/lib/config";
+import { useChainId } from "wagmi";
 
 interface MineGameActionsParams {
   address?: string;
@@ -61,6 +63,8 @@ export const useMineGameActions = (params: MineGameActionsParams) => {
     getXPCalculation,
   } = params;
 
+  const chainId = useChainId();
+
   const showGameConfirmation = useCallback((): void => {
     if (!address || !isConnected) {
       toast.error("Wallet not connected", {
@@ -75,6 +79,14 @@ export const useMineGameActions = (params: MineGameActionsParams) => {
     setShowConfirmation(false);
     setShowTransactionLoading(true);
     setLoading(true);
+
+    // Check if user is on correct network
+    if (chainId !== REQUIRED_CHAIN_ID) {
+      toast.error("Please switch to Somnia network to play mines");
+      setShowTransactionLoading(false);
+      setLoading(false);
+      return;
+    }
 
     try {
       setRevealedTiles(new Set());
@@ -118,6 +130,7 @@ export const useMineGameActions = (params: MineGameActionsParams) => {
     address,
     mineCount,
     gameFee,
+    chainId,
     writeContract,
     setShowConfirmation,
     setShowTransactionLoading,
@@ -264,6 +277,12 @@ export const useMineGameActions = (params: MineGameActionsParams) => {
   const cashOut = useCallback(async (): Promise<void> => {
     if (!backendGame || loading || !address) return;
 
+    // Check if user is on correct network
+    if (chainId !== REQUIRED_CHAIN_ID) {
+      toast.error("Please switch to Somnia network to cash out");
+      return;
+    }
+
     setLoading(true);
     setMessage("Extracting your rewards...");
 
@@ -300,7 +319,7 @@ export const useMineGameActions = (params: MineGameActionsParams) => {
       setLoading(false);
       setPendingTxType(null);
     }
-  }, [backendGame, loading, address, setLoading, setMessage, setPendingTxType, writeContract]);
+  }, [backendGame, loading, address, chainId, setLoading, setMessage, setPendingTxType, writeContract]);
 
   const processGameStart = useCallback(async (): Promise<void> => {
     if (!receipt || !hash) return;

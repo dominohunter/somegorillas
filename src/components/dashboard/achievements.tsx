@@ -275,7 +275,7 @@ export default function Achievements() {
       </div>*/}
 
       {/* Achievement Cards */}
-      <div className="flex flex-col gap-3 overflow-y-auto flex-1 min-h-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <div className="flex flex-col gap-3 overflow-y-auto flex-1 min-h-0 max-h-[400px] lg:max-h-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {filteredAndSortedAchievements.map((achievement) => (
           <AchievementCard
             key={achievement.id}

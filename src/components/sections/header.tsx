@@ -8,6 +8,7 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { createPortal } from "react-dom";
 import Banana from "../icons/banana";
+import { ChainSwitcher } from "../chain-switcher";
 
 export const getAvatarColor = (address: string) => {
   const colors = [
@@ -185,6 +186,10 @@ export default function Header() {
                   {user?.xp}
                 </p>
               </GlareButton>
+              
+              {/* Chain Switcher */}
+              <ChainSwitcher />
+              
               {/* Profile Dropdown */}
               <div className="relative z-[200]" ref={buttonRef}>
                 <GlareButton

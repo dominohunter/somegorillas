@@ -60,10 +60,11 @@ export default function Profile() {
 
   const handleCopyReferralCode = async () => {
     console.log("Referral data:", referralQuery.data);
-    
+
     // Try both possible property names
-    const codeToBytes = referralQuery.data?.referralCode || referralQuery.data?.code;
-    
+    const codeToBytes =
+      referralQuery.data?.referralCode || referralQuery.data?.code;
+
     if (!codeToBytes) {
       console.error("No referral code found in data:", referralQuery.data);
       toast.error("No referral code available");
@@ -97,9 +98,9 @@ export default function Profile() {
         document.body.appendChild(textArea);
         textArea.focus();
         textArea.select();
-        const successful = document.execCommand('copy');
+        const successful = document.execCommand("copy");
         textArea.remove();
-        
+
         if (successful) {
           copySuccessful = true;
           console.log("Copied using fallback method");
@@ -145,7 +146,7 @@ export default function Profile() {
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
-    // Add toast notification here if you have one
+    toast.success("Copied to clipboard!");
   };
 
   const handleUnlinkDiscord = async () => {
@@ -193,13 +194,13 @@ export default function Profile() {
     setIsSubmittingReferral(true);
     try {
       const response = await submitReferralCode(referralCode.trim());
-      
+
       // Success - the API returned referral data
       if (response.usedReferralCode) {
         toast.success("Referral code submitted successfully!");
         setReferralCode("");
         setHasSubmittedReferral(true);
-        
+
         // Invalidate and refetch user data to show updated referral info
         queryClient.invalidateQueries({ queryKey: queryKeys.referrals.user() });
         queryClient.invalidateQueries({ queryKey: queryKeys.stats.user() });
@@ -208,14 +209,19 @@ export default function Profile() {
       }
     } catch (error: unknown) {
       console.error("Failed to submit referral code:", error);
-      
+
       // Handle specific error messages from the API
       let errorMessage = "Failed to submit referral code. Please try again.";
-      if (error && typeof error === 'object' && 'response' in error) {
-        const errorResponse = error.response as { data?: { message?: string; error?: string } };
-        errorMessage = errorResponse.data?.message || errorResponse.data?.error || errorMessage;
+      if (error && typeof error === "object" && "response" in error) {
+        const errorResponse = error.response as {
+          data?: { message?: string; error?: string };
+        };
+        errorMessage =
+          errorResponse.data?.message ||
+          errorResponse.data?.error ||
+          errorMessage;
       }
-      
+
       toast.error(errorMessage);
     } finally {
       setIsSubmittingReferral(false);
@@ -325,15 +331,10 @@ export default function Profile() {
 
               <div className="text-center sm:text-left flex-1">
                 <h1 className="text-xl sm:text-2xl font-bold text-white mb-2">
-                  Profile
-                </h1>
-                <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-2">
-                  <span className="text-gray-300 font-mono text-xs sm:text-sm">
-                    {formatAddress(user.walletAddress)}
-                  </span>
+                  {formatAddress(user.walletAddress)}
                   <button
                     onClick={() => copyToClipboard(user.walletAddress)}
-                    className="text-translucent-light-64 hover:text-white transition-colors"
+                    className="text-translucent-light-64 hover:text-white ml-2 transition-colors"
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                       <rect
@@ -353,6 +354,11 @@ export default function Profile() {
                       />
                     </svg>
                   </button>
+                </h1>
+                <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-2">
+                  {/*<span className="text-gray-300 font-mono text-xs sm:text-sm">
+                    {formatAddress(user.walletAddress)}
+                  </span>*/}
                 </div>
                 {/* {globalStatsQuery.data && (
                   <div className="text-xs sm:text-sm text-translucent-light-64">
@@ -399,15 +405,17 @@ export default function Profile() {
               {socialAchievements.map((social) => (
                 <div
                   key={social.id}
-                  className="flex items-center justify-between p-4 bg-translucent-dark-12 rounded-xl border border-white/10"
+                  className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-translucent-dark-12 rounded-xl border border-white/10 gap-3 sm:gap-4"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="text-2xl">{social.icon}</div>
-                    <div>
-                      <h3 className="font-semibold text-white">
+                  <div className="flex items-center gap-3 sm:gap-4 flex-1">
+                    <div className="text-xl sm:text-2xl flex-shrink-0">
+                      {social.icon}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-white text-sm sm:text-base">
                         {social.title}
                       </h3>
-                      <p className="text-sm text-translucent-light-64">
+                      <p className="text-xs sm:text-sm text-translucent-light-64 break-words">
                         {social.description}
                       </p>
                       {/* <div className="text-xs text-purple-400 mt-1">
@@ -415,22 +423,20 @@ export default function Profile() {
                       </div> */}
                     </div>
                   </div>
-                  <div>
+                  <div className="flex-shrink-0 w-full sm:w-auto">
                     {social.completed ? (
-                      <span className="text-green-400 font-medium flex items-center gap-1">
-                        <CheckCircle size={16} /> Connected
+                      <span className="text-green-400 font-medium flex items-center gap-1 text-xs sm:text-sm">
+                        <CheckCircle size={14} /> Connected
                       </span>
                     ) : social.platform === "twitter" ? (
-                      // <span className="text-gray-400 font-medium px-4 py-2 rounded-lg bg-translucent-dark-8 border border-translucent-light-8">
                       <CartoonButton
                         size={"sm"}
-                        className="bg-translucent-light-24"
+                        className="bg-translucent-light-24 w-full sm:w-auto text-xs sm:text-sm px-3 sm:px-4"
                         disabled={true}
                       >
                         Coming Soon
                       </CartoonButton>
                     ) : (
-                      // </span>
                       <CartoonButton
                         size={"sm"}
                         onClick={() => {
@@ -445,14 +451,14 @@ export default function Profile() {
                             }
                           }
                         }}
-                        className="px-4 bg-[#5865F2]  py-2 text-indigo-100 "
+                        className="px-3 sm:px-4 bg-[#5865F2] py-2 text-indigo-100 w-full sm:w-auto text-xs sm:text-sm"
                         disabled={isDiscordLoading}
                       >
                         {social.id === "discord_join"
                           ? "Join"
                           : isDiscordLoading
                             ? "Connecting..."
-                            : "Verify with Discord"}
+                            : "Verify Discord"}
                       </CartoonButton>
                     )}
                   </div>
@@ -466,7 +472,7 @@ export default function Profile() {
                 <h3 className="text-lg font-semibold text-white mb-4">
                   Discord Status
                 </h3>
-                <div className="flex items-center gap-4 p-4 bg-translucent-dark-12 rounded-xl border border-white/10">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-4 bg-translucent-dark-12 rounded-xl border border-white/10">
                   <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-600 flex-shrink-0">
                     {discordStatus.discordUser.avatar ? (
                       <img
@@ -482,16 +488,16 @@ export default function Profile() {
                       </div>
                     )}
                   </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-white font-semibold">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                      <span className="text-white font-semibold text-sm sm:text-base break-all">
                         {discordStatus.discordUser.username}
                       </span>
-                      <span className="text-green-400 flex items-center gap-1 text-sm">
-                        <CheckCircle size={16} /> Verified
+                      <span className="text-green-400 flex items-center gap-1 text-xs sm:text-sm">
+                        <CheckCircle size={14} /> Verified
                       </span>
                     </div>
-                    <div className="text-sm text-translucent-light-64">
+                    <div className="text-xs sm:text-sm text-translucent-light-64">
                       Connected on{" "}
                       {new Date(
                         discordStatus.discordUser.verifiedAt,
@@ -502,7 +508,7 @@ export default function Profile() {
                   <CartoonButton
                     size={"sm"}
                     onClick={handleUnlinkDiscord}
-                    className="px-4 py-2 text-light-primary bg-system-error-primary "
+                    className="px-3 sm:px-4 py-2 text-light-primary bg-system-error-primary text-xs sm:text-sm whitespace-nowrap"
                     disabled={isDiscordLoading}
                   >
                     {isDiscordLoading ? "Unlinking..." : "Unlink"}
@@ -520,27 +526,32 @@ export default function Profile() {
                 </h3>
                 <div className="p-4 bg-translucent-dark-12 rounded-xl border border-white/10">
                   <p className="text-sm text-translucent-light-64 mb-4">
-                    Have a referral code from a friend? Enter it here to claim your bonus!
+                    Have a referral code from a friend? Enter it here to claim
+                    your bonus!
                   </p>
-                  <div className="flex gap-3">
+                  <div className="flex flex-col sm:flex-row gap-3">
                     <input
                       type="text"
                       value={referralCode}
                       onChange={(e) => setReferralCode(e.target.value)}
                       onKeyPress={(e) => {
-                        if (e.key === 'Enter' && referralCode.trim() && !isSubmittingReferral) {
+                        if (
+                          e.key === "Enter" &&
+                          referralCode.trim() &&
+                          !isSubmittingReferral
+                        ) {
                           handleSubmitReferralCode();
                         }
                       }}
                       placeholder="Enter referral code"
-                      className="flex-1 px-4 py-3 bg-translucent-dark-24 border border-white/20 rounded-lg text-white placeholder-translucent-light-64 focus:outline-none focus:border-purple-400 transition-colors"
+                      className="flex-1 px-3 sm:px-4 py-2 sm:py-3 bg-translucent-dark-24 border border-white/20 rounded-lg text-white text-sm sm:text-base placeholder-translucent-light-64 focus:outline-none focus:border-purple-400 transition-colors"
                       disabled={isSubmittingReferral}
                       maxLength={20}
                     />
                     <CartoonButton
                       onClick={handleSubmitReferralCode}
                       disabled={isSubmittingReferral || !referralCode.trim()}
-                      className="px-6 py-3 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 disabled:cursor-not-allowed"
+                      className="px-4 sm:px-6 py-2 sm:py-3 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-sm sm:text-base whitespace-nowrap"
                     >
                       {isSubmittingReferral ? "Submitting..." : "Submit"}
                     </CartoonButton>
@@ -556,14 +567,14 @@ export default function Profile() {
                   <div className="flex items-center gap-2 text-green-400">
                     <CheckCircle size={20} />
                     <span className="font-medium">
-                      {hasSubmittedReferral 
-                        ? "Referral code submitted successfully!" 
-                        : "You were referred by someone!"
-                      }
+                      {hasSubmittedReferral
+                        ? "Referral code submitted successfully!"
+                        : "You were referred by someone!"}
                     </span>
                   </div>
                   <p className="text-sm text-translucent-light-64 mt-2">
-                    You have successfully used a referral code and received your bonus.
+                    You have successfully used a referral code and received your
+                    bonus.
                   </p>
                 </div>
               </div>
@@ -577,18 +588,23 @@ export default function Profile() {
                 </h3>
                 <div className="p-4 bg-translucent-dark-12 rounded-xl border border-white/10">
                   <p className="text-sm text-translucent-light-64 mb-4">
-                    Share your referral code with friends to earn rewards when they join!
+                    Share your referral code with friends to earn rewards when
+                    they join!
                   </p>
-                  <div className="flex gap-3">
+                  <div className="flex flex-col sm:flex-row gap-3">
                     <input
                       type="text"
-                      value={referralQuery.data?.referralCode || referralQuery.data?.code || ""}
+                      value={
+                        referralQuery.data?.referralCode ||
+                        referralQuery.data?.code ||
+                        ""
+                      }
                       readOnly
-                      className="flex-1 px-4 py-3 bg-translucent-dark-24 border border-white/20 rounded-lg text-white focus:outline-none cursor-default"
+                      className="flex-1 px-3 sm:px-4 py-2 sm:py-3 bg-translucent-dark-24 border border-white/20 rounded-lg text-white text-sm sm:text-base focus:outline-none cursor-default"
                     />
                     <CartoonButton
                       onClick={handleCopyReferralCode}
-                      className="px-6 py-3 bg-green-600 hover:bg-green-700"
+                      className="px-4 sm:px-6 py-2 sm:py-3 bg-green-600 hover:bg-green-700 text-sm sm:text-base whitespace-nowrap"
                     >
                       Copy Code
                     </CartoonButton>

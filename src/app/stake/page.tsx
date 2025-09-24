@@ -7,7 +7,7 @@ import { ArrowRight } from "lucide-react";
 
 export default function Stake() {
   return (
-    <section className="w-full flex items-center mt-[120px] justify-center overflow-y-hidden px-4">
+    <section className="w-full flex items-center justify-center overflow-y-hidden px-4">
       <div className="grid md:grid-cols-2 backdrop-blur-3xl grid-cols-1 gap-4 p-4 rounded-[20px] border-2 border-translucent-light-4 max-w-[880px] w-full h-auto">
         {/* Left content */}
         <div className="p-4 grid gap-3 rounded-2xl border-translucent-light-4 bg-translucent-light-4">

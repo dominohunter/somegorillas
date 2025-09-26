@@ -14,6 +14,7 @@ import Twitter from "@/components/icons/twitter";
 import { toast } from "sonner";
 import Discord from "@/components/icons/discord";
 import { CartoonButton } from "@/components/ui/cartoon-button";
+import ReferralSuccessModal from "@/components/modals/referral-success-modal";
 
 export default function Profile() {
   const {
@@ -35,6 +36,7 @@ export default function Profile() {
   const [referralCode, setReferralCode] = useState("");
   const [isSubmittingReferral, setIsSubmittingReferral] = useState(false);
   const [hasSubmittedReferral, setHasSubmittedReferral] = useState(false);
+  const [showReferralSuccessModal, setShowReferralSuccessModal] = useState(false);
 
   const referralQuery = useReferral();
 
@@ -197,9 +199,9 @@ export default function Profile() {
 
       // Success - the API returned referral data
       if (response.usedReferralCode) {
-        toast.success("Referral code submitted successfully!");
         setReferralCode("");
         setHasSubmittedReferral(true);
+        setShowReferralSuccessModal(true);
 
         // Invalidate and refetch user data to show updated referral info
         queryClient.invalidateQueries({ queryKey: queryKeys.referrals.user() });
@@ -619,6 +621,12 @@ export default function Profile() {
 
         {/* Action Buttons */}
       </div>
+
+      {/* Referral Success Modal */}
+      <ReferralSuccessModal
+        isOpen={showReferralSuccessModal}
+        onClose={() => setShowReferralSuccessModal(false)}
+      />
     </div>
   );
 }

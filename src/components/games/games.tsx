@@ -239,10 +239,10 @@ export default function Games() {
                 {/* Middle Text */}
                 <div className="flex-1 text-center sm:text-start">
                   <p className="text-light-primary text-body1 font-semibold">
-                    Get 50 bananas for free
+                    Get 100 bananas for free
                   </p>
                   <p className="text-translucent-light-64 text-body2-medium font-pally">
-                    Invite your friend and get 50 bananas
+                    Invite your friend and get 100 bananas
                   </p>
                 </div>
 

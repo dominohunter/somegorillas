@@ -4,6 +4,15 @@ import React from "react";
 import Image from "next/image";
 import { GlareButton } from "@/components/ui/glare-button";
 import { ArrowRight } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import StakingDialog from "@/components/staking/staking-dialog";
 
 export default function Stake() {
   return (
@@ -28,20 +37,31 @@ export default function Stake() {
                 className="w-12 h-12 object-cover drop-shadow-[0_0_15px_rgba(255,255,255,0.6)] glow"
               />
             </span>
-            {/*<p className="text-translucent-light-80 text-body-2-medium text-center">
-              Looks like you are not staking any gorilla
-            </p>*/}
-            <GlareButton
-              background="rgba(255, 255, 255, 1)"
-              borderRadius="8px"
-              disabled={true}
-              className="pr-4 pl-5 py-3 flex items-center justify-center gap-[10px] border border-translucent-light-4"
-            >
-              <span className="text-button-48 font-semibold text-dark-primary">
-                Coming soon...
-              </span>
-              <ArrowRight className="h-5 w-5" />
-            </GlareButton>
+            <Dialog>
+              <DialogTrigger>
+                <GlareButton
+                  background="rgba(255, 255, 255, 1)"
+                  borderRadius="8px"
+                  className="pr-4 pl-5 py-3 flex items-center justify-center gap-[10px] border border-translucent-light-4"
+                >
+                  <span className="text-button-48 font-semibold text-dark-primary">
+                    Stake Gorilla
+                  </span>
+                  <ArrowRight className="h-5 w-5" />
+                </GlareButton>
+              </DialogTrigger>
+
+              <DialogContent className="h-auto min-w-[960px] overflow-y-hidden border border-translucent-light-4 bg-translucent-light-4 backdrop-blur-[80px] rounded-[20px] p-6">
+                <DialogHeader className="grid gap-5">
+                  <DialogTitle className="text-h3 font-semibold text-light-primary">
+                    Choose Staking Type
+                  </DialogTitle>
+                  <DialogDescription>
+                    <StakingDialog />
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
 

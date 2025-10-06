@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { GlareButton } from "@/components/ui/glare-button";
 import { ArrowRight } from "lucide-react";
@@ -13,8 +13,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import StakingDialog from "@/components/staking/staking-dialog";
+import GymDialog from "@/components/staking/gym-dialog";
+import AdventureDialog from "@/components/staking/adventure-dialog";
 
 export default function Stake() {
+  const [selected, setSelected] = useState<
+    "staking" | "gym" | "adventure" | null
+  >("staking");
+
   return (
     <section className="w-full flex items-center justify-center overflow-y-hidden px-4">
       <div className="grid md:grid-cols-2 backdrop-blur-3xl grid-cols-1 gap-4 p-4 rounded-[20px] border-2 border-translucent-light-4 max-w-[880px] w-full h-auto">
@@ -37,31 +43,37 @@ export default function Stake() {
                 className="w-12 h-12 object-cover drop-shadow-[0_0_15px_rgba(255,255,255,0.6)] glow"
               />
             </span>
-            <Dialog>
-              <DialogTrigger>
-                <GlareButton
-                  background="rgba(255, 255, 255, 1)"
-                  borderRadius="8px"
-                  className="pr-4 pl-5 py-3 flex items-center justify-center gap-[10px] border border-translucent-light-4"
-                >
-                  <span className="text-button-48 font-semibold text-dark-primary">
-                    Stake Gorilla
-                  </span>
-                  <ArrowRight className="h-5 w-5" />
-                </GlareButton>
-              </DialogTrigger>
 
-              <DialogContent className="h-auto min-w-[960px] overflow-y-hidden border border-translucent-light-4 bg-translucent-light-4 backdrop-blur-[80px] rounded-[20px] p-6">
-                <DialogHeader className="grid gap-5">
-                  <DialogTitle className="text-h3 font-semibold text-light-primary">
-                    Choose Staking Type
-                  </DialogTitle>
-                  <DialogDescription>
-                    <StakingDialog />
-                  </DialogDescription>
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
+            {selected === "staking" && (
+              <Dialog>
+                <DialogTrigger>
+                  <GlareButton
+                    background="rgba(255, 255, 255, 1)"
+                    borderRadius="8px"
+                    className="pr-4 pl-5 py-3 flex items-center justify-center gap-[10px] border border-translucent-light-4"
+                  >
+                    <span className="text-button-48 font-semibold text-dark-primary">
+                      Stake Gorilla
+                    </span>
+                    <ArrowRight className="h-5 w-5" />
+                  </GlareButton>
+                </DialogTrigger>
+
+                <DialogContent className="h-auto min-w-[960px] overflow-y-hidden border border-translucent-light-4 bg-translucent-light-4 backdrop-blur-[80px] rounded-[20px] p-6">
+                  <DialogHeader className="grid gap-5">
+                    <DialogTitle className="text-h3 font-semibold text-light-primary">
+                      Choose Staking Type
+                    </DialogTitle>
+                    <DialogDescription>
+                      <StakingDialog onChoose={(type) => setSelected(type)} />
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+            )}
+
+            {selected === "gym" && <GymDialog />}
+            {selected === "adventure" && <AdventureDialog />}
           </div>
         </div>
 

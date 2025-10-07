@@ -9,6 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 interface Gorilla {
   id: number;
@@ -26,16 +27,29 @@ const gorillas: Gorilla[] = [
   { id: 3923, image: "/gorillas/g8.svg" },
 ];
 
-export default function AdventureDialog() {
+interface AdventureDialogProps {
+  onClose?: () => void;
+}
+
+export default function AdventureDialog({ onClose }: AdventureDialogProps) {
   const [selected, setSelected] = useState<Gorilla | null>(null);
   const [stakeDays, setStakeDays] = useState<number | null>(30);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
+  const [mainDialogOpen, setMainDialogOpen] = useState(true);
+  const router = useRouter();
+
+  const handleMainDialogChange = (open: boolean) => {
+    setMainDialogOpen(open);
+    if (!open && onClose) {
+      onClose();
+    }
+  };
 
   return (
     <>
       {/* Main Select Dialog */}
-      <Dialog open={!confirmOpen && !successOpen}>
+      <Dialog open={mainDialogOpen && !confirmOpen && !successOpen} onOpenChange={handleMainDialogChange}>
         <DialogContent className="bg-translucent-light-4 max-w-[95vw] sm:max-w-[90vw] lg:max-w-[1000px] border-[2px] border-translucent-light-4 rounded-[20px] backdrop-blur-[80px] p-6 gap-5">
           <DialogHeader>
             <DialogTitle className="text-h3 font-semibold text-light-primary">
@@ -121,7 +135,7 @@ export default function AdventureDialog() {
       </Dialog>
 
       {/* Confirm Dialog */}
-      <Dialog open={confirmOpen && !successOpen}>
+      <Dialog open={confirmOpen && !successOpen} onOpenChange={setConfirmOpen}>
         <DialogContent className="max-w-[420px] bg-translucent-light-4 border-[2px] border-translucent-light-4 rounded-2xl backdrop-blur-[80px]">
           <DialogHeader>
             <DialogTitle className="text-h5 text-center font-semibold text-light-primary">
@@ -171,7 +185,7 @@ export default function AdventureDialog() {
       </Dialog>
 
       {/* Success Dialog */}
-      <Dialog open={successOpen}>
+      <Dialog open={successOpen} onOpenChange={setSuccessOpen}>
         <DialogContent className="max-w-[420px] bg-translucent-light-4 border-[2px] border-translucent-light-4 rounded-2xl backdrop-blur-[80px] text-white text-center">
           <DialogHeader>
             <div className="flex flex-col items-center pt-4 pb-2 gap-5">
@@ -211,7 +225,7 @@ export default function AdventureDialog() {
 
           <Button
             className="w-full border-[2px] border-translucent-light-4 text-button-48 font-semibold text-dark-primary bg-light-primary px-5 py-3 h-12 hover:bg-light-primary"
-            onClick={() => setSuccessOpen(false)}
+              onClick={() => router.push('/stake/gym-adventure')}
           >
             Okay
           </Button>

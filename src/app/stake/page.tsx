@@ -71,9 +71,12 @@ export default function Stake() {
                 </DialogContent>
               </Dialog>
             )}
-
-            {selected === "gym" && <GymDialog />}
-            {selected === "adventure" && <AdventureDialog />}
+            {selected === "gym" && (
+              <GymDialog onClose={() => setSelected("staking")} />
+            )}
+            {selected === "adventure" && (
+              <AdventureDialog onClose={() => setSelected("staking")} />
+            )}
           </div>
         </div>
 

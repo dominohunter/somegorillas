@@ -8,6 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 interface Gorilla {
   id: number;
@@ -25,13 +26,36 @@ const gorillas: Gorilla[] = [
   { id: 2740, image: "/gorillas/g8.svg" },
 ];
 
-export default function GymDialog() {
+interface GymDialogProps {
+  onClose?: () => void;
+}
+
+export default function GymDialog({ onClose }: GymDialogProps) {
   const [selected, setSelected] = useState<Gorilla | null>(null);
   const [step, setStep] = useState<"select" | "confirm" | "success">("select");
+  const router = useRouter();
+
+  const handleSelectDialogChange = (open: boolean) => {
+    if (!open && onClose) {
+      onClose();
+    }
+  };
+
+  const handleConfirmDialogChange = (open: boolean) => {
+    if (!open) {
+      setStep("select");
+    }
+  };
+
+  const handleSuccessDialogChange = (open: boolean) => {
+    if (!open && onClose) {
+      onClose();
+    }
+  };
 
   return (
     <>
-      <Dialog open={step === "select"}>
+      <Dialog open={step === "select"} onOpenChange={handleSelectDialogChange}>
         <DialogContent className="bg-translucent-light-4 max-w-[95vw] sm:max-w-[90vw] lg:max-w-[1000px] border-[2px] border-translucent-light-4 rounded-[20px] backdrop-blur-[80px] p-6 gap-5">
           <DialogHeader>
             <DialogTitle className="text-h3 font-semibold text-light-primary">
@@ -95,7 +119,7 @@ export default function GymDialog() {
       </Dialog>
 
       {/* === CONFIRM DIALOG === */}
-      <Dialog open={step === "confirm"}>
+      <Dialog open={step === "confirm"} onOpenChange={handleConfirmDialogChange}>
         <DialogContent className="max-w-[420px] bg-translucent-light-4 border-[2px] border-translucent-light-4 rounded-2xl backdrop-blur-[80px]">
           <DialogHeader>
             <DialogTitle className="text-h5 text-center font-semibold text-light-primary">
@@ -142,7 +166,7 @@ export default function GymDialog() {
       </Dialog>
 
       {/* === SUCCESS DIALOG === */}
-      <Dialog open={step === "success"}>
+      <Dialog open={step === "success"} onOpenChange={handleSuccessDialogChange}>
         <DialogContent className="max-w-[420px] bg-translucent-light-4 border-[2px] border-translucent-light-4 rounded-2xl backdrop-blur-[80px] text-white text-center">
           <DialogHeader>
             <div className="flex flex-col items-center pt-4 pb-2 gap-5">
@@ -179,7 +203,7 @@ export default function GymDialog() {
             </div>
           )}
           <Button
-            onClick={() => setStep("select")}
+            onClick={() => router.push("/stake/gym-adventure")}
             className="w-full border-[2px] border-translucent-light-4 text-button-48 font-semibold text-dark-primary bg-light-primary px-5 py-3 h-12 hover:bg-light-primary"
           >
             Okay

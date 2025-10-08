@@ -33,8 +33,6 @@ export default function SlotMachine() {
     setStep("initial");
     setDialogOpen(false);
   };
-
-  // Pay button 3 секундийн дараа идэвхжих logic
   useEffect(() => {
     if (selectedGorilla && step === "initial") {
       const timer = setTimeout(() => setIsPayButtonEnabled(true), 3000);

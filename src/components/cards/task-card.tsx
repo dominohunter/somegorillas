@@ -97,62 +97,61 @@ const TaskCard: React.FC<TaskCardProps> = ({
   };
 
   return (
-    <div className="flex gap-4 p-4 border-2 justify-between border-translucent-light-4 bg-translucent-light-4 rounded-[12px] cursor-grab active:cursor-grabbing select-none min-w-[280px]">
+    <div className="flex gap-3 sm:gap-4 p-3 sm:p-4 border-2 items-center border-translucent-light-4 bg-translucent-light-4 rounded-[12px] cursor-grab active:cursor-grabbing select-none">
       {/* Task Icon */}
-
-      <div className="flex items-center gap-5">
-        <div className="flex justify-center">
-          <div className="p-3 flex justify-center rounded-[8px] bg-translucent-light-8 border-2 border-translucent-light-8">
-            {getTaskIcon()}
-          </div>
-        </div>
-
-        {/* Task Info */}
-        <div className="flex flex-col gap-1">
-          <p className="font-pally text-body-1 font-semibold text-light-primary">
-            {getQuestDescription()}
-          </p>
-          <p className="font-pally text-translucent-light-80 text-body-2">
-            {getSubtitleDescription()}
-          </p>
+      <div className="flex justify-center flex-shrink-0">
+        <div className="p-2 sm:p-3 flex justify-center rounded-[8px] bg-translucent-light-8 border-2 border-translucent-light-8">
+          {getTaskIcon()}
         </div>
       </div>
-      {task.claimed ? (
-        <div className="flex justify-center py-3 px-5 rounded-[8px] bg-translucent-light-4 border-2 border-translucent-light-4">
-          <span className="text-translucent-light-64 text-button-48 font-semibold">
-            Completed
-          </span>
-        </div>
-      ) : task.completed ? (
-        <CartoonButton
-          onClick={() => onClaim?.(task.questId)}
-          disabled={isClaimPending}
-          variant="primary"
-          size="sm"
-          shadow="cartoon"
-          className="text-sm font-semibold"
-        >
-          {isClaimPending
-            ? "Claiming..."
-            : `Claim ${task.quest.rewardXp} Bananas`}
-        </CartoonButton>
-      ) : (
-        <div className="px-5 py-3 rounded-[8px] bg-translucent-light-8 flex items-center justify-center border-2 border-translucent-light-8">
-          {/*<div className="flex justify-center items-center">*/}
-          <span
-            className="text-button-48 font-semibold "
-            style={{
-              background: "linear-gradient(180deg, #FFEE61 0%, #FFCE3C 100%)",
-              backgroundClip: "text",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
+
+      {/* Task Info */}
+      <div className="flex flex-col gap-1 flex-1 min-w-0">
+        <p className="font-pally text-sm sm:text-body-1 font-semibold text-light-primary truncate">
+          {getQuestDescription()}
+        </p>
+        <p className="font-pally text-translucent-light-80 text-xs sm:text-body-2 truncate">
+          {getSubtitleDescription()}
+        </p>
+      </div>
+      
+      {/* Action Button/Status */}
+      <div className="flex-shrink-0 flex items-center">
+        {task.claimed ? (
+          <div className="flex justify-center items-center py-2 px-3 sm:py-3 sm:px-4 rounded-[8px] bg-translucent-light-4 border-2 border-translucent-light-4">
+            <span className="text-translucent-light-64 text-xs sm:text-sm font-semibold">
+              Completed
+            </span>
+          </div>
+        ) : task.completed ? (
+          <CartoonButton
+            onClick={() => onClaim?.(task.questId)}
+            disabled={isClaimPending}
+            variant="primary"
+            size="sm"
+            shadow="cartoon"
+            className="text-xs sm:text-sm font-semibold"
           >
-            + {task.quest.rewardXp} Bananas
-          </span>
-          {/*</div>*/}
-        </div>
-      )}
+            {isClaimPending
+              ? "Claiming..."
+              : `Claim ${task.quest.rewardXp} Bananas`}
+          </CartoonButton>
+        ) : (
+          <div className="px-3 py-2 sm:px-4 sm:py-3 rounded-[8px] bg-translucent-light-8 flex items-center justify-center border-2 border-translucent-light-8">
+            <span
+              className="text-xs sm:text-sm font-semibold"
+              style={{
+                background: "linear-gradient(180deg, #FFEE61 0%, #FFCE3C 100%)",
+                backgroundClip: "text",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              + {task.quest.rewardXp} Bananas
+            </span>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

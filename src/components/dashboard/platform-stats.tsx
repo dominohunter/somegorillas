@@ -76,89 +76,69 @@ const PlatformStats = () => {
 
   if (isLoading) {
     return (
-      <div className="flex flex-col gap-4">
-        <div className="flex gap-4">
-          {[...Array(3)].map((_, i) => (
-            <div
-              key={i}
-              className="flex gap-5 p-4 flex-1 bg-translucent-light-4 rounded-2xl backdrop-blur-xl border-2 border-translucent-light-4 animate-pulse"
-            >
-              <div className="flex rounded-[12px] justify-center border-2 border-translucent-light-4 bg-translucent-light-8 items-center p-4 w-[56px] h-[56px]" />
-              <div className="flex flex-col gap-1">
-                <div className="h-4 bg-translucent-light-8 rounded w-24" />
-                <div className="h-6 bg-translucent-light-8 rounded w-16" />
-              </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {[...Array(6)].map((_, i) => (
+          <div
+            key={i}
+            className="flex gap-5 p-4 bg-translucent-light-4 rounded-2xl backdrop-blur-xl border-2 border-translucent-light-4 animate-pulse"
+          >
+            <div className="flex rounded-[12px] justify-center border-2 border-translucent-light-4 bg-translucent-light-8 items-center p-4 w-[56px] h-[56px]" />
+            <div className="flex flex-col gap-1">
+              <div className="h-4 bg-translucent-light-8 rounded w-24" />
+              <div className="h-6 bg-translucent-light-8 rounded w-16" />
             </div>
-          ))}
-        </div>
-        <div className="flex gap-4">
-          {[...Array(3)].map((_, i) => (
-            <div
-              key={i}
-              className="flex gap-5 p-4 flex-1 bg-translucent-light-4 rounded-2xl backdrop-blur-xl border-2 border-translucent-light-4 animate-pulse"
-            >
-              <div className="flex rounded-[12px] justify-center border-2 border-translucent-light-4 bg-translucent-light-8 items-center p-4 w-[56px] h-[56px]" />
-              <div className="flex flex-col gap-1">
-                <div className="h-4 bg-translucent-light-8 rounded w-24" />
-                <div className="h-6 bg-translucent-light-8 rounded w-16" />
-              </div>
-            </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex gap-4 ">
-        <GlobalStatCard
-          icon={<Switch size={24} />}
-          title="Total Transactions"
-          value={transactions?.totalTransactions ?? "Loading..."}
-        />
-        <GlobalStatCard
-          icon={<PieChart size={24} />}
-          title="Pool Size"
-          value={
-            poolSize?.poolSize ? formatVolume(poolSize.poolSize) : "Loading..."
-          }
-        />
-        <GlobalStatCard
-          icon={<Stats size={24} />}
-          title="Total Volume"
-          value={
-            randomness?.actualOutcomes?.winRate
-              ? `${randomness.actualOutcomes.winRate}%`
-              : "Loading..."
-          }
-        />
-      </div>
-      <div className="flex gap-4 ">
-        <GlobalStatCard
-          icon={<Coins size={24} />}
-          title="Heads Percentage"
-          value={
-            randomness?.userPredictions?.headsPercentage
-              ? `${randomness.userPredictions.headsPercentage}%`
-              : "Loading..."
-          }
-        />
-        <GlobalStatCard
-          icon={<Coins size={24} />}
-          title="Tails Percentage"
-          value={
-            randomness?.userPredictions?.tailsPercentage
-              ? `${randomness.userPredictions.tailsPercentage}%`
-              : "Loading..."
-          }
-        />
-        <GlobalStatCard
-          icon={<Sad size={24} />}
-          title="Mines Exploded"
-          value={minesExploded?.totalMinesExploded ?? "Loading..."}
-        />
-      </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <GlobalStatCard
+        icon={<Switch size={24} />}
+        title="Total Transactions"
+        value={transactions?.totalTransactions ?? "Loading..."}
+      />
+      <GlobalStatCard
+        icon={<PieChart size={24} />}
+        title="Pool Size"
+        value={
+          poolSize?.poolSize ? formatVolume(poolSize.poolSize) : "Loading..."
+        }
+      />
+      <GlobalStatCard
+        icon={<Stats size={24} />}
+        title="Total Volume"
+        value={
+          randomness?.actualOutcomes?.winRate
+            ? `${randomness.actualOutcomes.winRate}%`
+            : "Loading..."
+        }
+      />
+      <GlobalStatCard
+        icon={<Coins size={24} />}
+        title="Heads Percentage"
+        value={
+          randomness?.userPredictions?.headsPercentage
+            ? `${randomness.userPredictions.headsPercentage}%`
+            : "Loading..."
+        }
+      />
+      <GlobalStatCard
+        icon={<Coins size={24} />}
+        title="Tails Percentage"
+        value={
+          randomness?.userPredictions?.tailsPercentage
+            ? `${randomness.userPredictions.tailsPercentage}%`
+            : "Loading..."
+        }
+      />
+      <GlobalStatCard
+        icon={<Sad size={24} />}
+        title="Mines Exploded"
+        value={minesExploded?.totalMinesExploded ?? "Loading..."}
+      />
     </div>
   );
 };

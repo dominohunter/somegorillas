@@ -1,22 +1,25 @@
 "use client";
 
-import { useQuests, useReferral } from "@/lib/query-helper";
+import { useQuests } from "@/lib/query-helper";
 import { useClaimTask } from "@/lib/mutation-helper";
 import { useAccount } from "wagmi";
 import TaskCard from "@/components/cards/task-card";
-import { GlareButton } from "@/components/ui/glare-button";
-import AddFriend from "@/components/icons/add-friend";
+// import { GlareButton } from "@/components/ui/glare-button";
+// import AddFriend from "@/components/icons/add-friend";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 export default function Tasks() {
   const { address } = useAccount();
   const questsQuery = useQuests(address);
-  const referralQuery = useReferral();
+  // const referralQuery = useReferral();
   const claimTaskMutation = useClaimTask();
-  const [isCopied, setIsCopied] = useState(false);
+  // const [isCopied, setIsCopied] = useState(false);
   const [claimedTasks, setClaimedTasks] = useState<Set<string>>(new Set());
   const [claimingTaskId, setClaimingTaskId] = useState<string | null>(null);
+  const [activeFilter, setActiveFilter] = useState<"all" | "flip" | "mines">(
+    "all",
+  );
 
   const [timeUntilReset, setTimeUntilReset] = useState<string>("");
 
@@ -66,44 +69,94 @@ export default function Tasks() {
     scrollContainerRef.current.scrollLeft = scrollLeft - walk;
   };
 
-  const handleCopyReferralLink = async () => {
-    if (referralQuery.data?.referralCode) {
-      const referralLink = `${window.location.origin}?ref=${referralQuery.data.referralCode}`;
-      try {
-        await navigator.clipboard.writeText(referralLink);
-        setIsCopied(true);
-        // Success feedback for copying referral link
-        toast.success("Referral link copied!", {
-          description: "Share this link with friends to earn rewards.",
-        });
+  // const handleCopyReferralLink = async () => {
+  //   if (referralQuery.data?.referralCode) {
+  //     const referralLink = `${window.location.origin}?ref=${referralQuery.data.referralCode}`;
+  //     try {
+  //       await navigator.clipboard.writeText(referralLink);
+  //       setIsCopied(true);
+  //       // Success feedback for copying referral link
+  //       toast.success("Referral link copied!", {
+  //         description: "Share this link with friends to earn rewards.",
+  //       });
 
-        setTimeout(() => setIsCopied(false), 2000); // Reset after 2 seconds
-      } catch (err) {
-        console.error("Failed to copy: ", err);
+  //       setTimeout(() => setIsCopied(false), 2000); // Reset after 2 seconds
+  //     } catch (err) {
+  //       console.error("Failed to copy: ", err);
+  //     }
+  //   }
+  // };
+
+  // Filter tasks based on active filter
+  const filteredQuests =
+    questsQuery.data?.filter((quest) => {
+      if (activeFilter === "all") return true;
+
+      const [type] = quest.quest.condition.split(":");
+
+      if (activeFilter === "flip") {
+        return type === "flip" || type === "heads" || type === "tails";
+      } else if (activeFilter === "mines") {
+        return type.startsWith("mine_");
       }
-    }
-  };
+
+      return true;
+    }) || [];
 
   return (
     <div className="space-y-6">
       {/* Tasks Section */}
-      <div className="p-4 bg-translucent-dark-12 border-2 backdrop-blur-[60px] flex flex-col gap-3 rounded-3xl border-translucent-light-4">
+      <div className="p-4 bg-translucent-light-4 border-2 backdrop-blur-[60px] flex flex-col gap-3 rounded-3xl border-translucent-light-4 flex-1 min-h-0 overflow-y-auto">
         <div className="flex justify-between">
-          <h2 className="text-h5 font-[600] text-light-primary">Tasks</h2>
+          <h2 className="text-h5 font-[600] text-light-primary">Quests</h2>
           <p className="font-pally text-translucent-light-64">
             New task in {timeUntilReset}
           </p>
         </div>
-        {questsQuery.data && (
+
+        {/* Filter Buttons */}
+        <div className="flex gap-2">
+          <button
+            onClick={() => setActiveFilter("all")}
+            className={`px-4 py-2 rounded-xl text-button-40 transition-colors ${
+              activeFilter === "all"
+                ? "bg-light-primary px-4 py-3 text-dark-primary"
+                : "bg-translucent-light-4 text-translucent-light-64 hover:text-light-primary border border-translucent-light-4"
+            }`}
+          >
+            <p className="text-button-40 font-semibold">All</p>
+          </button>
+          <button
+            onClick={() => setActiveFilter("flip")}
+            className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+              activeFilter === "flip"
+                ? "bg-light-primary px-4 py-3 text-dark-primary"
+                : "bg-translucent-light-4 text-translucent-light-64 hover:text-light-primary border border-translucent-light-4"
+            }`}
+          >
+            <p className="text-button-40 font-semibold">Coin Flip</p>
+          </button>
+          <button
+            onClick={() => setActiveFilter("mines")}
+            className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+              activeFilter === "mines"
+                ? "bg-light-primary px-4 py-3 text-dark-primary"
+                : "bg-translucent-light-4 text-translucent-light-64 hover:text-light-primary border border-translucent-light-4"
+            }`}
+          >
+            <p className="text-button-40 font-semibold">Mines</p>
+          </button>
+        </div>
+        {filteredQuests.length > 0 && (
           <div
             ref={scrollContainerRef}
-            className="flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] cursor-grab active:cursor-grabbing select-none"
+            className="flex flex-col gap-3 overflow-y-auto flex-1 min-h-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] cursor-grab active:cursor-grabbing select-none"
             onMouseDown={handleMouseDown}
             onMouseLeave={handleMouseLeave}
             onMouseUp={handleMouseUp}
             onMouseMove={handleMouseMove}
           >
-            {questsQuery.data.map((quest) => {
+            {filteredQuests.map((quest) => {
               // Check if task is locally claimed or already claimed from backend
               const isTaskClaimed =
                 claimedTasks.has(quest.questId) || quest.claimed;
@@ -225,44 +278,6 @@ export default function Tasks() {
             })}
           </div>
         )}
-
-        <div className="p-4 bg-translucent-dark-12 border-2 backdrop-blur-[60px] flex flex-col gap-3 rounded-3xl border-translucent-light-4">
-          {referralQuery.data && (
-            <div className="space-y-3">
-              {/* Horizontal Referral Card */}
-              <div className="flex flex-col sm:flex-row items-center gap-4 p-4 bg-translucent-light-8 border-2 border-translucent-light-4 rounded-2xl">
-                {/* Add Friend Icon in Square Container */}
-                <div className="flex-shrink-0 bg-translucent-light-12 border-translucent-light-4 border-2 p-2 rounded-[12px] w-16 h-16 flex items-center justify-center">
-                  <AddFriend size={48} />
-                </div>
-
-                {/* Middle Text */}
-                <div className="flex-1 text-center sm:text-start">
-                  <p className="text-light-primary text-body1 font-semibold">
-                    Get 100 bananas for free
-                  </p>
-                  <p className="text-translucent-light-64 text-body2-medium font-pally">
-                    Invite your friend and get 100 bananas
-                  </p>
-                </div>
-
-                {/* Copy Button */}
-                <GlareButton
-                  onClick={handleCopyReferralLink}
-                  background={isCopied ? "#22C55E" : "#EAB308"}
-                  borderRadius="12px"
-                  borderColor="transparent"
-                  glareColor="#ffffff"
-                  glareOpacity={0.3}
-                  className="text-white py-3 px-4 sm:px-6 text-body-2-semibold font-pally font-semibold w-full sm:w-auto"
-                  disabled={isCopied}
-                >
-                  {isCopied ? "Copied!" : "Copy Link"}
-                </GlareButton>
-              </div>
-            </div>
-          )}
-        </div>
       </div>
     </div>
   );

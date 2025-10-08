@@ -7,6 +7,7 @@ import {
   FlipHistory,
   GlobalStats,
   LeaderboardEntry,
+  // PlatformStats,
   Referral,
   SystemStatus,
   UserQuest,
@@ -75,7 +76,9 @@ export const useStats = () => {
   // Handle auth errors
   useEffect(() => {
     if (query.isError && query.error) {
-      const error = query.error as unknown as { response?: { status?: number } };
+      const error = query.error as unknown as {
+        response?: { status?: number };
+      };
       if (
         error?.response?.status === 401 ||
         error?.response?.status === 403 ||
@@ -195,3 +198,51 @@ export function useSystemHealth() {
     error: healthQuery.error,
   };
 }
+
+// Platform stats hooks
+export const usePlatformTransactions = () => {
+  return usePublicQuery<{ totalTransactions: number }>(
+    ["platform", "stats", "transactions"],
+    "/platform/stats/transactions",
+  );
+};
+
+export const usePlatformVolume = () => {
+  return usePublicQuery<{ totalVolume: string; totalVolumeWei: string }>(
+    ["platform", "stats", "volume"],
+    "/platform/stats/volume",
+  );
+};
+
+export const usePlatformRandomness = () => {
+  return usePublicQuery<{
+    userPredictions: {
+      heads: number;
+      tails: number;
+      total: number;
+      headsPercentage: string;
+      tailsPercentage: string;
+    };
+    actualOutcomes: {
+      wins: number;
+      losses: number;
+      total: number;
+      winRate: string;
+      lossRate: string;
+    };
+  }>(["platform", "stats", "randomness"], "/platform/stats/randomness");
+};
+
+export const usePlatformMinesExploded = () => {
+  return usePublicQuery<{ totalMinesExploded: number }>(
+    ["platform", "stats", "mines"],
+    "/platform/stats/mines-exploded",
+  );
+};
+
+export const usePlatformPoolSize = () => {
+  return usePublicQuery<{ poolSize: string }>(
+    ["platform", "stats", "pool-size"],
+    "/platform/stats/pool-size",
+  );
+};

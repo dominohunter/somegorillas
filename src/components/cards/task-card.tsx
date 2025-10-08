@@ -2,7 +2,7 @@ import React from "react";
 import CoinHead from "../icons/coin-head";
 import CoinButt from "../icons/coin-butt";
 import Coin from "../icons/coin";
-import { GlareButton } from "../ui/glare-button";
+import { CartoonButton } from "../ui/cartoon-button";
 import { formatFlipSide } from "@/lib/utils";
 import { Quest } from "@/lib/types";
 import Mine from "../icons/mine";
@@ -35,13 +35,13 @@ const TaskCard: React.FC<TaskCardProps> = ({
   // Determine which icon to show based on quest condition
   const getTaskIcon = () => {
     if (type === "heads") {
-      return <CoinHead size={180} />;
+      return <CoinHead size={44} />;
     } else if (type === "tails") {
-      return <CoinButt size={180} />;
+      return <CoinButt size={44} />;
     } else if (type.startsWith("mine_")) {
-      return <Mine size={180} />;
+      return <Mine size={44} />;
     } else {
-      return <Coin size={180} />;
+      return <Coin size={44} />;
     }
   };
   // Format quest description
@@ -97,56 +97,62 @@ const TaskCard: React.FC<TaskCardProps> = ({
   };
 
   return (
-    <div className="border-2 border-translucent-light-4 bg-translucent-light-8 rounded-2xl p-4 flex flex-col items-center gap-4 cursor-grab active:cursor-grabbing select-none">
+    <div className="flex gap-4 p-4 border-2 justify-between border-translucent-light-4 bg-translucent-light-4 rounded-[12px] cursor-grab active:cursor-grabbing select-none min-w-[280px]">
       {/* Task Icon */}
-      <div className="flex-shrink-0 bg-translucent-light-12 border-translucent-light-4 border-2 p-10 rounded-[12px]">
-        {getTaskIcon()}
-      </div>
 
-      {/* Task Info */}
-      <div className="flex-1">
-        <p className="text-light-primary text-center text-stylized-body1 font-semibold ">
-          {getQuestDescription()}
-        </p>
-        <p className="text-translucent-light-64 text-center text-body2-medium font-pally">
-          {getSubtitleDescription()}
-        </p>
-      </div>
-
-      {/* Claim Button */}
-      <div className="flex items-center w-full">
-        {task.claimed ? (
-          <div className="flex items-center gap-2 py-3 px-5 bg-translucent-light-12 border border-translucent-light-4 rounded-[8px] w-full justify-center">
-            <span className="text-button48 font-semibold text-translucent-light-64">
-              Claimed {task.quest.rewardXp} bananas
-            </span>
+      <div className="flex items-center gap-5">
+        <div className="flex justify-center">
+          <div className="p-3 flex justify-center rounded-[8px] bg-translucent-light-8 border-2 border-translucent-light-8">
+            {getTaskIcon()}
           </div>
-        ) : task.completed ? (
-          <GlareButton
-            onClick={() => onClaim?.(task.questId)}
-            background="#FFD700"
-            borderRadius="8px"
-            borderColor="transparent"
-            glareColor="#ffffff"
-            glareOpacity={0.3}
-            width="100%"
-            className="text-dark-primary py-3 px-5 text-button48  font-semibold flex items-center justify-center gap-2"
-            disabled={isClaimPending}
+        </div>
+
+        {/* Task Info */}
+        <div className="flex flex-col gap-1">
+          <p className="font-pally text-body-1 font-semibold text-light-primary">
+            {getQuestDescription()}
+          </p>
+          <p className="font-pally text-translucent-light-80 text-body-2">
+            {getSubtitleDescription()}
+          </p>
+        </div>
+      </div>
+      {task.claimed ? (
+        <div className="flex justify-center py-3 px-5 rounded-[8px] bg-translucent-light-4 border-2 border-translucent-light-4">
+          <span className="text-translucent-light-64 text-button-48 font-semibold">
+            Completed
+          </span>
+        </div>
+      ) : task.completed ? (
+        <CartoonButton
+          onClick={() => onClaim?.(task.questId)}
+          disabled={isClaimPending}
+          variant="primary"
+          size="sm"
+          shadow="cartoon"
+          className="text-sm font-semibold"
+        >
+          {isClaimPending
+            ? "Claiming..."
+            : `Claim ${task.quest.rewardXp} Bananas`}
+        </CartoonButton>
+      ) : (
+        <div className="px-5 py-3 rounded-[8px] bg-translucent-light-8 flex items-center justify-center border-2 border-translucent-light-8">
+          {/*<div className="flex justify-center items-center">*/}
+          <span
+            className="text-button-48 font-semibold "
+            style={{
+              background: "linear-gradient(180deg, #FFEE61 0%, #FFCE3C 100%)",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
           >
-            {isClaimPending ? (
-              "Claiming..."
-            ) : (
-              <>Claim {task.quest.rewardXp} bananas</>
-            )}
-          </GlareButton>
-        ) : (
-          <div className="flex items-center gap-2 py-3 px-5 bg-translucent-light-12 border border-translucent-light-4 rounded-[8px] w-full justify-center">
-            <span className="text-accent-primary text-button48 font-semibold">
-              +{task.quest.rewardXp} bananas
-            </span>
-          </div>
-        )}
-      </div>
+            + {task.quest.rewardXp} Bananas
+          </span>
+          {/*</div>*/}
+        </div>
+      )}
     </div>
   );
 };

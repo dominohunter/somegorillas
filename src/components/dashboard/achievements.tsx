@@ -72,7 +72,6 @@ export default function Achievements() {
     },
   });
 
-
   // Filter and sort achievements
   const filteredAndSortedAchievements = useMemo(() => {
     if (!achievementsQuery.data) return [];
@@ -122,7 +121,7 @@ export default function Achievements() {
 
   if (achievementsQuery.isLoading) {
     return (
-      <div className="p-4 bg-translucent-dark-12 border-2 backdrop-blur-[60px] flex flex-col gap-3 rounded-3xl border-translucent-light-4">
+      <div className="p-4 bg-translucent-light-4 border-2 backdrop-blur-[60px] flex flex-col gap-3 rounded-3xl border-translucent-light-4">
         <div className="">
           {/* Header skeleton */}
           <div className="flex justify-between items-center mb-4">
@@ -135,7 +134,7 @@ export default function Achievements() {
             {[...Array(4)].map((_, i) => (
               <div
                 key={i}
-                className="text-center p-3 bg-translucent-light-8 rounded-xl"
+                className="text-center p-3 bg-translucent-light-4 rounded-xl"
               >
                 <div className="h-6 bg-translucent-light-16 rounded w-8 mx-auto mb-1"></div>
                 <div className="h-3 bg-translucent-light-16 rounded w-12 mx-auto"></div>
@@ -148,7 +147,7 @@ export default function Achievements() {
             {[...Array(4)].map((_, i) => (
               <div
                 key={i}
-                className="border-2 border-translucent-light-4 bg-translucent-light-8 rounded-[24px] p-4 flex items-center justify-center aspect-square w-[180px] h-[180px] md:w-auto md:h-auto min-w-[180px]"
+                className="border-2 border-translucent-light-4 bg-translucent-light-4 rounded-[24px] p-4 flex items-center justify-center aspect-square w-[180px] h-[180px] md:w-auto md:h-auto min-w-[180px]"
               >
                 {/* Achievement coin skeleton */}
                 <div className="w-[120px] h-[120px] bg-translucent-light-16 rounded-full"></div>
@@ -162,7 +161,7 @@ export default function Achievements() {
 
   if (!auth.isAuthenticated && !auth.isLoading) {
     return (
-      <div className="p-4 bg-translucent-dark-12 border-2 backdrop-blur-[60px] flex flex-col gap-3 rounded-3xl border-translucent-light-4">
+      <div className="p-4 bg-translucent-light-4 border-2 backdrop-blur-[60px] flex flex-col gap-3 rounded-3xl border-translucent-light-4">
         <div className="text-center text-translucent-light-64">
           <h2 className="text-h5 font-[600] mb-2 text-light-primary">
             Achievement
@@ -177,7 +176,7 @@ export default function Achievements() {
 
   if (achievementsQuery.error) {
     return (
-      <div className="p-4 bg-translucent-dark-12 border-2 backdrop-blur-[60px] flex flex-col gap-3 rounded-3xl border-translucent-light-4">
+      <div className="p-4 bg-translucent-light-4 border-2 backdrop-blur-[60px] flex flex-col gap-3 rounded-3xl border-translucent-light-4">
         <div className="text-center text-system-error-primary">
           <h2 className="text-h5 font-[600] mb-2">
             Error Loading Achievements
@@ -192,7 +191,7 @@ export default function Achievements() {
 
   //todo: achievement card arai deer haragddag bolgoh
   return (
-    <div className="p-5 bg-translucent-dark-12 border-2 backdrop-blur-[60px] flex flex-col gap-5 rounded-3xl border-translucent-light-4 lg:flex-1 lg:h-full lg:max-h-[600px]">
+    <div className="p-5 bg-translucent-light-4 border-2 backdrop-blur-[60px] flex flex-col gap-5 rounded-3xl border-translucent-light-4 h-screen overflow-y-auto">
       {/* Header */}
       <div className="flex justify-between items-center">
         <h2 className="text-h5 font-[600] text-light-primary">Achievement</h2>
@@ -211,7 +210,7 @@ export default function Achievements() {
           className={`px-4 py-2 rounded-xl text-button-40 transition-colors ${
             activeFilter === "all"
               ? "bg-light-primary px-4 py-3 text-dark-primary"
-              : "bg-translucent-light-8 text-translucent-light-64 hover:text-light-primary border border-translucent-light-4"
+              : "bg-translucent-light-4 text-translucent-light-64 hover:text-light-primary border border-translucent-light-4"
           }`}
         >
           <p className="text-button-40 font-semibold">All</p>
@@ -221,7 +220,7 @@ export default function Achievements() {
           className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
             activeFilter === "flip"
               ? "bg-light-primary px-4 py-3 text-dark-primary"
-              : "bg-translucent-light-8 text-translucent-light-64 hover:text-light-primary border border-translucent-light-4"
+              : "bg-translucent-light-4 text-translucent-light-64 hover:text-light-primary border border-translucent-light-4"
           }`}
         >
           <p className="text-button-40 font-semibold">Coin Flip</p>
@@ -231,7 +230,7 @@ export default function Achievements() {
           className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
             activeFilter === "mines"
               ? "bg-light-primary px-4 py-3 text-dark-primary"
-              : "bg-translucent-light-8 text-translucent-light-64 hover:text-light-primary border border-translucent-light-4"
+              : "bg-translucent-light-4 text-translucent-light-64 hover:text-light-primary border border-translucent-light-4"
           }`}
         >
           <p className="text-button-40 font-semibold">Mines</p>
@@ -240,7 +239,7 @@ export default function Achievements() {
 
       {/* Achievement Statistics */}
       {/*<div className="grid grid-cols-4 gap-2 mb-2">
-        <div className="text-center p-3 bg-translucent-light-8 rounded-xl border border-translucent-light-4">
+        <div className="text-center p-3 bg-translucent-light-4 rounded-xl border border-translucent-light-4">
           <div className="text-light-primary text-h6 font-semibold">
             {achievementStats.total}
           </div>
@@ -248,7 +247,7 @@ export default function Achievements() {
             Total
           </div>
         </div>
-        <div className="text-center p-3 bg-translucent-light-8 rounded-xl border border-translucent-light-4">
+        <div className="text-center p-3 bg-translucent-light-4 rounded-xl border border-translucent-light-4">
           <div className="text-light-primary text-h6 font-semibold">
             {achievementStats.completed}
           </div>
@@ -256,7 +255,7 @@ export default function Achievements() {
             Completed
           </div>
         </div>
-        <div className="text-center p-3 bg-translucent-light-8 rounded-xl border border-translucent-light-4">
+        <div className="text-center p-3 bg-translucent-light-4 rounded-xl border border-translucent-light-4">
           <div className="text-system-success-primary text-h6 font-semibold">
             {achievementStats.claimed}
           </div>
@@ -264,7 +263,7 @@ export default function Achievements() {
             Claimed
           </div>
         </div>
-        <div className="text-center p-3 bg-translucent-light-8 rounded-xl border border-translucent-light-4">
+        <div className="text-center p-3 bg-translucent-light-4 rounded-xl border border-translucent-light-4">
           <div className="text-accent-primary text-h6 font-semibold">
             {achievementStats.totalXP}
           </div>

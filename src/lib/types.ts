@@ -212,3 +212,17 @@ export interface UserRemainingFlip {
   remaining: number;
   maxFlip: number;
 }
+
+export interface PlatformStats {
+  transactions: number;
+  volume: {
+    eth: string;
+    wei: string;
+  };
+  randomness: {
+    userPredictionAccuracy: number;
+    headsPercentage: number;
+    tailsPercentage: number;
+  };
+  minesExploded: number;
+}

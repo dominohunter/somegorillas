@@ -145,12 +145,12 @@ export default function Header() {
                 Games
               </p>
             </Link>
-            {/* <Link href={"/slot-machine"} className="py-3 px-5 h-12">
+            <Link href={"/slot-machine"} className="py-3 px-5">
               <p className="text-button-48 text-light-primary font-semibold">
                 Slot Machine
               </p>
-            </Link> */}
-            <Link href={"/whitelist"} className="py-3 px-5 h-12 rounded-lg transition-all duration-300 hover:bg-white/10">
+            </Link>
+            <Link href={"/whitelist"} className="py-3 px-5">
               <p className="text-button-48 text-light-primary font-semibold">
                 Whitelist checker
               </p>
@@ -230,7 +230,7 @@ export default function Header() {
                     className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full flex items-center justify-center text-white text-xs font-medium"
                     style={{
                       backgroundColor: getAvatarColor(
-                        user?.walletAddress || ""
+                        user?.walletAddress || "",
                       ),
                     }}
                   ></div>
@@ -271,7 +271,7 @@ export default function Header() {
                   window.open(
                     "https://x.com/somegorillas",
                     "_blank",
-                    "noopener,noreferrer"
+                    "noopener,noreferrer",
                   )
                 }
                 className="p-2 sm:p-3 backdrop-blur-[40px] min-w-[40px] min-h-[40px] sm:min-w-[44px] sm:h-[48px] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_20px_rgba(29,161,242,0.4)] hover:scale-110"
@@ -292,7 +292,7 @@ export default function Header() {
                   window.open(
                     "https://discord.gg/3uGRW3kJd3",
                     "_blank",
-                    "noopener,noreferrer"
+                    "noopener,noreferrer",
                   )
                 }
                 className="p-2 sm:p-3 backdrop-blur-[40px] min-w-[40px] min-h-[40px] sm:min-w-[44px] sm:h-[48px] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_20px_rgba(88,101,242,0.4)] hover:scale-110"
@@ -421,7 +421,7 @@ export default function Header() {
               </button>
             </div>
           </div>,
-          document.body
+          document.body,
         )}
     </div>
   );

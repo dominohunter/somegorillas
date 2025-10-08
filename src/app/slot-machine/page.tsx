@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import SelectGorillaDialog from "@/components/slot-machine/selectGorillaDialog";
 import SuccessDialog from "@/components/slot-machine/successDialog";
 
-
 interface Gorilla {
   id: number;
   image: string;
@@ -31,10 +30,10 @@ export default function SlotMachine() {
   const [isPayButtonEnabled, setIsPayButtonEnabled] = useState(false);
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
   const [selectedDeposited, setSelectedDeposited] = useState<Gorilla | null>(
-    null
+    null,
   );
   const [selectedReceived, setSelectedReceived] = useState<Gorilla | null>(
-    null
+    null,
   );
 
   const handleConfirm = (gorilla: Gorilla) => {
@@ -293,7 +292,7 @@ export default function SlotMachine() {
 
                       // Randomly select a different gorilla as the received one
                       const availableGorillas = gorillas.filter(
-                        (g) => g.id !== selectedGorilla?.id
+                        (g) => g.id !== selectedGorilla?.id,
                       );
                       const randomGorilla =
                         availableGorillas[

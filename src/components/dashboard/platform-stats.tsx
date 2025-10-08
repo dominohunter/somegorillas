@@ -109,30 +109,20 @@ const PlatformStats = () => {
       />
       <GlobalStatCard
         icon={<Stats size={24} />}
-        title="Total Volume"
+        title="Total Volume(SOMI)"
         value={
-          randomness?.actualOutcomes?.winRate
-            ? `${randomness.actualOutcomes.winRate}%`
-            : "Loading..."
+          volume?.totalVolume ? formatVolume(volume.totalVolume) : "Loading..."
         }
       />
       <GlobalStatCard
         icon={<Coins size={24} />}
-        title="Heads Percentage"
-        value={
-          randomness?.userPredictions?.headsPercentage
-            ? `${randomness.userPredictions.headsPercentage}%`
-            : "Loading..."
-        }
+        title="Heads Predictions"
+        value={randomness?.userPredictions?.heads ?? "Loading..."}
       />
       <GlobalStatCard
         icon={<Coins size={24} />}
-        title="Tails Percentage"
-        value={
-          randomness?.userPredictions?.tailsPercentage
-            ? `${randomness.userPredictions.tailsPercentage}%`
-            : "Loading..."
-        }
+        title="Tails Predictions"
+        value={randomness?.userPredictions?.tails ?? "Loading..."}
       />
       <GlobalStatCard
         icon={<Sad size={24} />}

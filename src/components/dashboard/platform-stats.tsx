@@ -116,13 +116,13 @@ const PlatformStats = () => {
       />
       <GlobalStatCard
         icon={<Coins size={24} />}
-        title="Heads Predictions"
-        value={randomness?.userPredictions?.heads ?? "Loading..."}
+        title="Flipped on Heads"
+        value={randomness?.actualOutcomes?.wins ?? "Loading..."}
       />
       <GlobalStatCard
         icon={<Coins size={24} />}
-        title="Tails Predictions"
-        value={randomness?.userPredictions?.tails ?? "Loading..."}
+        title="Flipped on Butts"
+        value={randomness?.actualOutcomes?.losses ?? "Loading..."}
       />
       <GlobalStatCard
         icon={<Sad size={24} />}

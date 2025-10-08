@@ -9,22 +9,22 @@ const cartoonButtonVariants = cva(
     variants: {
       variant: {
         // Header nav button style (bg-light-primary with hover:text-accent-primary)
-        nav: "bg-[#fafafa] text-white hover:text-[#f5ba31] w-fit active:bg-[#e0e0e0] rounded ",
+        nav: "bg-[#fafafa] text-white hover:text-[#f5ba31] w-fit active:bg-[#e0e0e0] rounded-lg ",
 
         // Social media button style (square with icon)
         social:
-          "bg-[#fafafa] text-white hover:text-[#f5ba31] w-fit active:bg-[#e0e0e0] rounded flex items-center justify-center ",
+          "bg-[#fafafa] text-white hover:text-[#f5ba31] w-fit active:bg-[#e0e0e0] rounded-lg flex items-center justify-center ",
 
         // Hero CTA button style (gradient with cartoon shadow)
-        cta: "bg-gradient-to-b from-[#ffd700] to-[#f5ba31] w-fit text-[#0f1012] border-2 border-[#0f1012] active:from-[#e6c400] active:to-[#e0a728] rounded ",
+        cta: "bg-gradient-to-b from-[#ffd700] to-[#f5ba31] w-fit text-[#0f1012] border-2 border-[#0f1012] active:from-[#e6c400] active:to-[#e0a728] rounded-lg ",
 
         // Regular button with cartoon shadow
         primary:
-          "bg-gradient-to-b from-[#ffd700] to-[#f5ba31] w-fit text-[#0f1012] border-2 border-dark-primary active:from-[#e6c400] active:to-[#e0a728] rounded-2xl hover:scale-101 duration-400 transition-transform ",
+          "bg-gradient-to-b from-[#ffd700] to-[#f5ba31] w-fit text-[#0f1012] border-2 border-dark-primary active:from-[#e6c400] active:to-[#e0a728] rounded-lg hover:scale-101 duration-400 transition-transform ",
 
         // Light background button
         secondary:
-          "bg-[#fafafa] text-[#0f1012] border-2 border-[#0f1012] w-fit active:bg-[#e0e0e0] rounded-2xl disabled:cursor-not-allowed opacity-80 ",
+          "bg-[#fafafa] text-[#0f1012] border-2 border-[#0f1012] w-fit active:bg-[#e0e0e0] rounded-lg disabled:cursor-not-allowed opacity-80 ",
       },
       size: {
         sm: "h-12 px-3 text-sm",

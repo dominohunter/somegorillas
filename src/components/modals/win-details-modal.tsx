@@ -90,12 +90,12 @@ const WinDetailsModal: React.FC<WinDetailsModalProps> = ({
               {winDetails.actualResult.charAt(0).toUpperCase() +
                 winDetails.actualResult.slice(1)}
             </h3>
-            <p className="text-system-success-primary font-pally text-sm">
+            {/*<p className="text-system-success-primary font-pally text-sm">
               You predicted:{" "}
               {winDetails.userChoice.charAt(0).toUpperCase() +
                 winDetails.userChoice.slice(1)}{" "}
               ✓
-            </p>
+            </p>*/}
           </div>
 
           <div className="w-full space-y-4">

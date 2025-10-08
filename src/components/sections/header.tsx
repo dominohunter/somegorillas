@@ -150,7 +150,11 @@ export default function Header() {
                 Slot Machine
               </p>
             </Link>
-            <Link href={"/whitelist"} className="py-3 px-5">
+
+            <Link
+              href={"/whitelist"}
+              className="py-3 px-5 rounded-lg transition-all duration-300 hover:bg-white/10"
+            >
               <p className="text-button-48 text-light-primary font-semibold">
                 Whitelist checker
               </p>
@@ -295,7 +299,7 @@ export default function Header() {
                     "noopener,noreferrer",
                   )
                 }
-                className="p-2 sm:p-3 backdrop-blur-[40px] min-w-[40px] min-h-[40px] sm:min-w-[44px] sm:h-[48px] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_20px_rgba(88,101,242,0.4)] hover:scale-110"
+                className="p-2 sm:p-3 backdrop-blur-[40px] min-w-[40px] min-h-[40px] sm:min-w-[44px] sm:min-h-[44px] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_20px_rgba(88,101,242,0.4)] hover:scale-110"
               >
                 <Image
                   src="/Discord.svg"

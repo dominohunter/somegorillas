@@ -86,7 +86,7 @@ export default function Header() {
       ) {
         setIsDropdownOpen(false);
       }
-      
+
       if (
         mobileMenuRef.current &&
         !mobileMenuRef.current.contains(event.target as Node)
@@ -136,22 +136,38 @@ export default function Header() {
                 Games
               </p>
             </Link>
-
-            <Link href={"/whitelist"} className="py-3 px-5 rounded-lg transition-all duration-300 hover:bg-white/10">
+            <Link href={"/slot-machine"} className="py-3 px-5">
+              <p className="text-button-48 text-light-primary font-semibold">
+                Slot Machine
+              </p>
+            </Link>
+            <Link href={"/whitelist"} className="py-3 px-5">
               <p className="text-button-48 text-light-primary font-semibold">
                 Whitelist checker
               </p>
             </Link>
           </div>
-          
+
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 rounded-lg transition-all duration-300 hover:bg-white/10"
           >
-            <span className={`block w-6 h-0.5 bg-light-primary transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
-            <span className={`block w-6 h-0.5 bg-light-primary transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`}></span>
-            <span className={`block w-6 h-0.5 bg-light-primary transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+            <span
+              className={`block w-6 h-0.5 bg-light-primary transition-all duration-300 ${
+                isMobileMenuOpen ? "rotate-45 translate-y-2" : ""
+              }`}
+            ></span>
+            <span
+              className={`block w-6 h-0.5 bg-light-primary transition-all duration-300 ${
+                isMobileMenuOpen ? "opacity-0" : ""
+              }`}
+            ></span>
+            <span
+              className={`block w-6 h-0.5 bg-light-primary transition-all duration-300 ${
+                isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
+              }`}
+            ></span>
           </button>
         </div>
         <div className="flex flex-row gap-1.5 sm:gap-2 md:gap-3">
@@ -186,10 +202,10 @@ export default function Header() {
                   {user?.xp}
                 </p>
               </GlareButton>
-              
+
               {/* Chain Switcher */}
               <ChainSwitcher />
-              
+
               {/* Profile Dropdown */}
               <div className="relative z-[200]" ref={buttonRef}>
                 <GlareButton
@@ -205,7 +221,7 @@ export default function Header() {
                     className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full flex items-center justify-center text-white text-xs font-medium"
                     style={{
                       backgroundColor: getAvatarColor(
-                        user?.walletAddress || "",
+                        user?.walletAddress || ""
                       ),
                     }}
                   ></div>
@@ -246,7 +262,7 @@ export default function Header() {
                   window.open(
                     "https://x.com/somegorillas",
                     "_blank",
-                    "noopener,noreferrer",
+                    "noopener,noreferrer"
                   )
                 }
                 className="p-2 sm:p-3 backdrop-blur-[40px] min-w-[40px] min-h-[40px] sm:min-w-[44px] sm:min-h-[44px] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_20px_rgba(29,161,242,0.4)] hover:scale-110"
@@ -267,7 +283,7 @@ export default function Header() {
                   window.open(
                     "https://discord.gg/3uGRW3kJd3",
                     "_blank",
-                    "noopener,noreferrer",
+                    "noopener,noreferrer"
                   )
                 }
                 className="p-2 sm:p-3 backdrop-blur-[40px] min-w-[40px] min-h-[40px] sm:min-w-[44px] sm:min-h-[44px] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_20px_rgba(88,101,242,0.4)] hover:scale-110"
@@ -291,22 +307,29 @@ export default function Header() {
           className="md:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-xl border-t border-white/10 z-[98]"
         >
           <div className="flex flex-col p-4 space-y-2">
-            <Link 
-              href={"/stake"} 
+            <Link
+              href={"/stake"}
               className="py-3 px-4 text-light-primary font-semibold hover:bg-white/10 rounded-lg transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Stake
             </Link>
-            <Link 
-              href={"/games"} 
+            <Link
+              href={"/games"}
               className="py-3 px-4 text-light-primary font-semibold hover:bg-white/10 rounded-lg transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Games
             </Link>
-            <Link 
-              href={"/whitelist"} 
+            <Link
+              href={"/slot-machine"}
+              className="py-3 px-4 text-light-primary font-semibold hover:bg-white/10 rounded-lg transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Slot Machine
+            </Link>
+            <Link
+              href={"/whitelist"}
               className="py-3 px-4 text-light-primary font-semibold hover:bg-white/10 rounded-lg transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -389,7 +412,7 @@ export default function Header() {
               </button>
             </div>
           </div>,
-          document.body,
+          document.body
         )}
     </div>
   );

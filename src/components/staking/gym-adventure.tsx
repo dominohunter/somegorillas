@@ -83,7 +83,7 @@ export default function GymAdventure() {
                       className="object-cover aspect-square rounded-[8px]"
                     />
                     <h1 className="text-body-1-medium font-medium text-light-primary">
-                      Some Gorillas #1233
+                      Some Gorillas #5653
                     </h1>
                   </div>
 
@@ -117,7 +117,7 @@ export default function GymAdventure() {
                 <div className="border-[2px] border-translucent-light-4 bg-translucent-light-4 p-4 grid gap-5 rounded-[12px]">
                   <div className="flex items-center gap-5">
                     <Image
-                      src="/gorillas/g2.svg"
+                      src="/gorillas/g3.svg"
                       alt="mock image"
                       width={60}
                       height={60}
@@ -174,19 +174,19 @@ export default function GymAdventure() {
                 <div className="border-[2px] border-translucent-light-4 bg-translucent-light-4 p-4 grid gap-5 rounded-[12px]">
                   <div className="flex items-center gap-5">
                     <Image
-                      src="/gorillas/g4.svg"
+                      src="/gorillas/g1.svg"
                       alt="mock image"
                       width={60}
                       height={60}
                       className="object-cover aspect-square rounded-[8px]"
                     />
                     <h1 className="text-body-1-medium font-medium text-light-primary">
-                      Some Gorillas #1233
+                      Some Gorillas #3582
                     </h1>
                   </div>
 
                   <div className="flex gap-3">
-                    <InfoCard label="Start date" value="Sep 8, 2025" />
+                    <InfoCard label="Start date" value="Oct 9, 2025" />
                     <InfoCard label="Bananas per second" value="🍌 0.1" />
                     <InfoCard label="Total banana earned" value="🍌 120" />
                   </div>
@@ -194,16 +194,9 @@ export default function GymAdventure() {
                   <div className="grid grid-cols-2 w-full gap-3">
                     <Button
                       variant="outline"
-                      className="flex items-center justify-center gap-2 w-full border-[2px] border-translucent-light-4 text-button-48 font-semibold text-light-primary bg-translucent-light-4 px-5 py-3 h-12 hover:bg-translucent-light-4 hover:text-light-primary"
+                      className="w-full border-[2px] border-translucent-light-4 text-button-48 font-semibold text-light-primary bg-translucent-light-4 px-5 py-3 h-12 hover:bg-translucent-light-4 hover:text-light-primary"
                     >
-                      <Image
-                        src="/stake/lock.svg"
-                        alt="lock icon"
-                        height={20}
-                        width={20}
-                        className="w-5 h-5 object-cover"
-                      />
-                      <p>Unstake</p>
+                      Withdraw NFT
                     </Button>
 
                     <Button className="w-full border-[2px] cursor-pointer border-translucent-light-4 text-button-48 font-semibold text-dark-primary bg-light-primary px-5 py-3 h-12 hover:bg-light-primary">
@@ -248,6 +241,22 @@ export default function GymAdventure() {
                     </Button>
                   </div>
                 </div>
+
+                {/* You are not staking any gorilla on Adventure condition. */}
+                {/* <div className="h-[664px] border-2 border-translucent-light-4 bg-translucent-light-4 flex flex-col items-center justify-center gap-4 px-4 py-3 rounded-[12px]">
+                  <div className="border-2 h-[96px] w-[96px] border-translucent-light-4 rounded-[12px] bg-translucent-light-4 p-6 flex justify-center items-center">
+                    <Image
+                      src="/slot-machine/gorilla.svg"
+                      alt="stake image"
+                      height={48}
+                      width={48}
+                      className="w-12 h-12 object-cover drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]"
+                    />
+                  </div>
+                  <p className="text-translucent-light-64 text-body-2- medium font-medium ">
+                    You are not staking any gorilla on Adventure.
+                  </p>
+                </div> */}
               </div>
             </div>
           </div>

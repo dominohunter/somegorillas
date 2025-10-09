@@ -5,6 +5,8 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SelectGorillaDialog from "@/components/slot-machine/selectGorillaDialog";
+import SuccessDialog from "@/components/slot-machine/successDialog";
+
 
 interface Gorilla {
   id: number;
@@ -27,6 +29,13 @@ export default function SlotMachine() {
   const [selectedGorilla, setSelectedGorilla] = useState<Gorilla | null>(null);
   const [step, setStep] = useState<"initial" | "pending">("initial");
   const [isPayButtonEnabled, setIsPayButtonEnabled] = useState(false);
+  const [isSuccessOpen, setIsSuccessOpen] = useState(false);
+  const [selectedDeposited, setSelectedDeposited] = useState<Gorilla | null>(
+    null
+  );
+  const [selectedReceived, setSelectedReceived] = useState<Gorilla | null>(
+    null
+  );
 
   const handleConfirm = (gorilla: Gorilla) => {
     setSelectedGorilla(gorilla);
@@ -276,7 +285,26 @@ export default function SlotMachine() {
                   >
                     <p className="text-translucent-light-64">Cancel</p>
                   </Button>
-                  <Button className="h-12 cursor-pointer rounded-[8px] bg-light-primary px-5 py-3 text-dark-primary text-button-48 font-semibold hover:bg-light-primary">
+                  <Button
+                    className="h-12 cursor-pointer rounded-[8px] bg-light-primary px-5 py-3 text-dark-primary text-button-48 font-semibold hover:bg-light-primary"
+                    onClick={() => {
+                      // Set the deposited gorilla (the one user selected)
+                      setSelectedDeposited(selectedGorilla);
+
+                      // Randomly select a different gorilla as the received one
+                      const availableGorillas = gorillas.filter(
+                        (g) => g.id !== selectedGorilla?.id
+                      );
+                      const randomGorilla =
+                        availableGorillas[
+                          Math.floor(Math.random() * availableGorillas.length)
+                        ];
+                      setSelectedReceived(randomGorilla);
+
+                      // Open success dialog
+                      setIsSuccessOpen(true);
+                    }}
+                  >
                     Reveal NFT
                   </Button>
                 </>
@@ -363,6 +391,14 @@ export default function SlotMachine() {
         onClose={() => setDialogOpen(false)}
         onConfirm={handleConfirm}
         gorillas={gorillas}
+      />
+      <SuccessDialog
+        open={isSuccessOpen}
+        onClose={() => setIsSuccessOpen(false)}
+        deposited={selectedDeposited}
+        received={selectedReceived}
+        setStep={() => setStep("initial")}
+        setSelectedGorilla={setSelectedGorilla}
       />
     </>
   );

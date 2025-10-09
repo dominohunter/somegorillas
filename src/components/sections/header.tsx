@@ -110,14 +110,17 @@ export default function Header() {
   };
 
   return (
-    <div className="fixed top-0 w-full min-w-full bg-translucent-light-4 backdrop-blur-[20px] flex justify-center z-[100]">
+    <div className="fixed top-0 w-full min-w-full bg-translucent-light-4 border-2 border-translucent-light-4 backdrop-blur-[20px] flex justify-center z-[100]">
       <div className="max-w-[2500px] w-full flex justify-between items-center px-3 py-2 sm:px-6 sm:py-3 md:py-5">
         <div className="flex items-center gap-4 md:gap-8">
-          <Link href={"/dashboard"} className="transition-all duration-300 hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]">
+          <Link
+            href={"/dashboard"}
+            className="transition-all duration-300 hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]"
+          >
             <Image
               src="/logo/Logo.svg"
               alt="logo"
-              className="h-6 w-auto sm:h-8 md:h-12 md:w-[276px]"
+              className="h-6 w-auto sm:h-8 md:h-10 md:w-[276px]"
               width={200}
               height={100}
               onClick={handleIndexClick}
@@ -126,22 +129,28 @@ export default function Header() {
           </Link>
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center">
-            <Link href={"/stake"} className="py-3 px-5 rounded-lg transition-all duration-300 hover:bg-white/10">
+            <Link
+              href={"/stake"}
+              className="py-3 px-5 h-12 rounded-lg transition-all duration-300 hover:bg-white/10"
+            >
               <p className="text-button-48  text-light-primary font-semibold">
                 Stake
               </p>
             </Link>
-            <Link href={"/games"} className="py-3 px-5 rounded-lg transition-all duration-300 hover:bg-white/10">
+            <Link
+              href={"/games"}
+              className="py-3 px-5 h-12 rounded-lg transition-all duration-300 hover:bg-white/10"
+            >
               <p className="text-button-48 text-light-primary font-semibold">
                 Games
               </p>
             </Link>
-            <Link href={"/slot-machine"} className="py-3 px-5">
+            {/* <Link href={"/slot-machine"} className="py-3 px-5 h-12">
               <p className="text-button-48 text-light-primary font-semibold">
                 Slot Machine
               </p>
-            </Link>
-            <Link href={"/whitelist"} className="py-3 px-5">
+            </Link> */}
+            <Link href={"/whitelist"} className="py-3 px-5 h-12 rounded-lg transition-all duration-300 hover:bg-white/10">
               <p className="text-button-48 text-light-primary font-semibold">
                 Whitelist checker
               </p>
@@ -195,9 +204,9 @@ export default function Header() {
                 borderRadius="12px"
                 glareColor="#ffffff"
                 borderColor="rgba(255, 255, 255, 0.04)"
-                className="backdrop-blur-[40px] w-auto h-[40px] sm:h-[44px] md:h-[56px] py-2 sm:py-3 md:py-4 px-2 sm:px-3 md:px-4 flex items-center gap-1 sm:gap-2 transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,215,0,0.3)] hover:scale-105"
+                className="backdrop-blur-[40px] w-auto h-[40px] sm:h-[44px] md:h-[48px] py-2 sm:py-3 md:py-4 px-2 sm:px-3 md:px-4 flex items-center gap-1 sm:gap-2 transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,215,0,0.3)] hover:scale-105"
               >
-                <Banana size={20} />
+                <Banana size={28} />
                 <p className="text-light-primary font-pally text-[14px] sm:text-[16px]">
                   {user?.xp}
                 </p>
@@ -214,7 +223,7 @@ export default function Header() {
                   borderRadius="12px"
                   glareColor="#ffffff"
                   borderColor="rgba(255, 255, 255, 0.04)"
-                  className="backdrop-blur-[40px] w-auto h-[40px] sm:h-[44px] md:h-[56px] py-2 sm:py-3 md:py-4 px-2 sm:px-3 md:px-4 flex items-center gap-1 sm:gap-2 transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-105"
+                  className="backdrop-blur-[40px] w-auto h-[40px] sm:h-[44px] md:h-[48px] py-2 sm:py-3 md:py-4 px-2 sm:px-3 md:px-4 flex items-center gap-1 sm:gap-2 transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-105"
                 >
                   {/* Avatar */}
                   <div
@@ -265,7 +274,7 @@ export default function Header() {
                     "noopener,noreferrer"
                   )
                 }
-                className="p-2 sm:p-3 backdrop-blur-[40px] min-w-[40px] min-h-[40px] sm:min-w-[44px] sm:min-h-[44px] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_20px_rgba(29,161,242,0.4)] hover:scale-110"
+                className="p-2 sm:p-3 backdrop-blur-[40px] min-w-[40px] min-h-[40px] sm:min-w-[44px] sm:h-[48px] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_20px_rgba(29,161,242,0.4)] hover:scale-110"
               >
                 <Image
                   src="/Twitter.svg"
@@ -286,7 +295,7 @@ export default function Header() {
                     "noopener,noreferrer"
                   )
                 }
-                className="p-2 sm:p-3 backdrop-blur-[40px] min-w-[40px] min-h-[40px] sm:min-w-[44px] sm:min-h-[44px] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_20px_rgba(88,101,242,0.4)] hover:scale-110"
+                className="p-2 sm:p-3 backdrop-blur-[40px] min-w-[40px] min-h-[40px] sm:min-w-[44px] sm:h-[48px] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_20px_rgba(88,101,242,0.4)] hover:scale-110"
               >
                 <Image
                   src="/Discord.svg"

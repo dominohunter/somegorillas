@@ -27,7 +27,7 @@ const LeaderboardCard: React.FC<LeaderboardCardProps> = ({ user, rank, isCurrent
   };
   return (
     <div
-      className={`flex justify-between items-center p-3 rounded-xl transition-colors border-2 ${
+      className={`flex justify-between items-center p-3  rounded-xl transition-colors border-2 ${
         isCurrentUser
           ? "bg-gradient-to-r from-accent-primary/20 to-accent-primary/10 border-accent-primary"
           : isTopThree

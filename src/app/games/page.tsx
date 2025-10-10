@@ -152,7 +152,7 @@ export default function Games() {
       </div>
 
       {/* RIGHT SIDE - LEADERBOARD */}
-      <div className="w-full lg:w-[30%] h-auto p-3 grid gap-3 bg-translucent-light-4 rounded-2xl">
+      <div className="w-full lg:w-[453.33px] h-auto p-3 grid gap-3 bg-translucent-light-4 rounded-2xl">
         <div className="px-5 py-4 border-2 border-translucent-light-4 grid gap-[10px] rounded-[12px] bg-translucent-light-8 text-h6 md:text-h5 h-16 w-full text-light-primary font-semibold">
           Leaderboard
         </div>

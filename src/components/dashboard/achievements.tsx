@@ -121,7 +121,7 @@ export default function Achievements() {
 
   if (achievementsQuery.isLoading) {
     return (
-      <div className="p-4 bg-translucent-light-4 border-2 backdrop-blur-[60px] flex flex-col gap-3 rounded-3xl border-translucent-light-4">
+      <div className="p-5 bg-translucent-light-4 border-2 backdrop-blur-[60px] flex flex-col gap-3 rounded-3xl border-translucent-light-4">
         <div className="">
           {/* Header skeleton */}
           <div className="flex justify-between items-center mb-4">
@@ -191,7 +191,7 @@ export default function Achievements() {
 
   //todo: achievement card arai deer haragddag bolgoh
   return (
-    <div className="p-5 bg-translucent-light-4 border-2 backdrop-blur-[60px] flex flex-col gap-5 rounded-3xl border-translucent-light-4 h-full lg:h-screen overflow-y-auto">
+    <div className="p-5 bg-translucent-light-4 border-2 backdrop-blur-[60px] max-h-[736px] flex flex-col gap-5 rounded-3xl border-translucent-light-4 h-full lg:h-screen overflow-y-auto">
       {/* Header */}
       <div className="flex justify-between items-center">
         <h2 className="text-h5 font-[600] text-light-primary">Achievement</h2>

@@ -106,11 +106,11 @@ export default function Tasks() {
   return (
     <div className="space-y-6">
       {/* Tasks Section */}
-      <div className="p-4 bg-translucent-light-4 border-2 backdrop-blur-[60px] flex flex-col gap-3 rounded-3xl border-translucent-light-4 flex-1 min-h-0 overflow-y-auto">
+      <div className="p-5 bg-translucent-light-4 max-h-[736px] border-2 backdrop-blur-[60px] flex flex-col gap-5 rounded-3xl border-translucent-light-4 flex-1 min-h-0 overflow-y-auto">
         <div className="flex justify-between">
           <h2 className="text-h5 font-[600] text-light-primary">Quests</h2>
           <p className="font-pally text-translucent-light-64">
-            New task in {timeUntilReset}
+            New quest in {timeUntilReset}
           </p>
         </div>
 

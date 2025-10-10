@@ -29,7 +29,7 @@ const AchievementCard: React.FC<AchievementCardProps> = ({
     <div className="flex flex-col gap-4 p-4 border-2 border-translucent-light-4 bg-translucent-light-4 rounded-[12px] ">
       <div className="flex items-center gap-5 self-stretch">
         <div className="p-3 flex justify-center rounded-[8px] bg-translucent-light-8 border-2 border-translucent-light-8">
-          <Banana size={40} />
+          <Banana size={28} />
         </div>
         <div className="flex flex-col gap-1 flex-1 items-start">
           <p className="font-pally text-body-1 font-semibold text-light-primary">

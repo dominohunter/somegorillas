@@ -1,30 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import Achievements from "@/components/dashboard/achievements";
 import Tasks from "@/components/dashboard/tasks";
 import PlatformStats from "@/components/dashboard/platform-stats";
-import LoadingScreen from "@/components/screens/loading-screen";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import LeaderboardCard from "@/components/cards/leaderboard-card";
 import { useLeaderboard, useGlobalStats } from "@/lib/query-helper";
 import Banana from "@/components/icons/banana";
 import Head from "@/components/icons/head";
-import { getAvatarColor } from "@/components/sections/header";
 import { useAuth } from "@/contexts/auth-context";
 import Image from "next/image";
 
 export default function Dashboard() {
   const { isConnected } = useAccount();
-  const [isClient, setIsClient] = useState(false);
   const leaderboardQuery = useLeaderboard();
   const globalStatsQuery = useGlobalStats();
-  const { user, address } = useAuth();
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const { address } = useAuth();
 
   const currentUserIndex =
     leaderboardQuery.data?.findIndex(

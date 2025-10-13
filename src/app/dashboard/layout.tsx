@@ -9,7 +9,6 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   //     router.push("/");
   //   }
   // }, []);
-
   return <div>{children}</div>;
 };
 

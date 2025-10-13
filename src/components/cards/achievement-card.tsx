@@ -42,8 +42,8 @@ const AchievementCard: React.FC<AchievementCardProps> = ({
       </div>
 
       {!isCompleted && (
-        <div className="py-3 px-5 rounded-[8px] bg-translucent-light-8 border-2 border-translucent-light-8">
-          <div className="flex justify-between items-center">
+        <div className="py-3 px-5 rounded-[8px] h-12 bg-translucent-light-8 border-2 border-translucent-light-8">
+          <div className="flex justify-between  items-center">
             <div className="flex gap-2">
               <span className="text-translucent-light-64 text-body-2 font-pally">
                 Progress:
@@ -72,7 +72,7 @@ const AchievementCard: React.FC<AchievementCardProps> = ({
       )}
 
       {claimed && (
-        <div className="flex justify-center py-3 px-5 rounded-[8px] bg-translucent-light-4 border-2 border-translucent-light-4">
+        <div className="flex justify-center h-12 py-3 px-5 rounded-[8px] bg-translucent-light-4 border-2 border-translucent-light-4">
           <span className="text-translucent-light-64 text-button-48 font-semibold">
             Completed
           </span>

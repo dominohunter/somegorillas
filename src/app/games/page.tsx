@@ -37,7 +37,7 @@ export default function Games() {
           <div
             className="relative h-[300px] md:h-[436px] w-full rounded-xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-102"
             style={{
-              backgroundImage: "url('/coin-flip-poster.png')",
+              backgroundImage: "url('/1.png')",
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
@@ -60,7 +60,7 @@ export default function Games() {
           <div
             className="relative h-[300px] md:h-[436px] w-full rounded-xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-102"
             style={{
-              backgroundImage: "url('/mines-poster.png')",
+              backgroundImage: "url('/2.png')",
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
@@ -85,7 +85,7 @@ export default function Games() {
           <div
             className="relative h-[300px] md:h-[436px] w-auto rounded-xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-102"
             style={{
-              backgroundImage: "url('/plinko-poster.png')",
+              backgroundImage: "url('/3.png')",
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
@@ -107,7 +107,7 @@ export default function Games() {
           <div
             className="relative h-[300px] md:h-[436px] w-auto rounded-xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-102"
             style={{
-              backgroundImage: "url('/plane-poster.png')",
+              backgroundImage: "url('/4.png')",
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
@@ -129,7 +129,7 @@ export default function Games() {
           <div
             className="relative h-[300px] md:h-[436px] w-full rounded-xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-102"
             style={{
-              backgroundImage: "url('/limbo-poster.png')",
+              backgroundImage: "url('/5.png')",
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",

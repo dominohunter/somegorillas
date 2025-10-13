@@ -59,7 +59,7 @@ const GameCard: React.FC<GameCardProps> = ({
         </div>
         <div className="flex justify-between items-end">
           <button
-            className={`bg-light-primary text-button-56 font-[600] px-6 py-4 rounded-[12px] ${isComingSoon ? "cursor-not-allowed" : ""}`}
+            className={`bg-light-primary text-button-56 font-[600] px-6 py-4 rounded-[8px] ${isComingSoon ? "cursor-not-allowed" : ""}`}
             onClick={
               isComingSoon ? () => setShowComingSoonModal(true) : onPress
             }

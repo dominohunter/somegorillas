@@ -207,7 +207,7 @@ export default function Achievements() {
       <div className="flex gap-2">
         <button
           onClick={() => setActiveFilter("all")}
-          className={`px-4 py-2 rounded-xl text-button-40 transition-colors ${
+          className={`px-4 py-2 rounded-[8px] text-button-40 transition-colors ${
             activeFilter === "all"
               ? "bg-light-primary px-4 py-3 text-dark-primary"
               : "bg-translucent-light-4 text-translucent-light-64 hover:text-light-primary border border-translucent-light-4"
@@ -217,7 +217,7 @@ export default function Achievements() {
         </button>
         <button
           onClick={() => setActiveFilter("flip")}
-          className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+          className={`px-4 py-2 rounded-[8px] text-sm font-medium transition-colors ${
             activeFilter === "flip"
               ? "bg-light-primary px-4 py-3 text-dark-primary"
               : "bg-translucent-light-4 text-translucent-light-64 hover:text-light-primary border border-translucent-light-4"
@@ -227,7 +227,7 @@ export default function Achievements() {
         </button>
         <button
           onClick={() => setActiveFilter("mines")}
-          className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+          className={`px-4 py-2 rounded-[8px] text-sm font-medium transition-colors ${
             activeFilter === "mines"
               ? "bg-light-primary px-4 py-3 text-dark-primary"
               : "bg-translucent-light-4 text-translucent-light-64 hover:text-light-primary border border-translucent-light-4"

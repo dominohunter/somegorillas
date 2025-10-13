@@ -85,7 +85,7 @@ const AchievementCard: React.FC<AchievementCardProps> = ({
           disabled={isClaimPending}
           borderRadius="8px"
           borderColor="rgba(255, 255, 255, 0.04)"
-          className="w-full flex justify-center text-button-48 bg-light-primary disabled:opacity-50 disabled:cursor-not-allowed text-dark-primary font-semibold py-3 px-5 rounded-lg transition-colors"
+          className="w-full flex justify-center text-button-48 bg-light-primary disabled:opacity-50 disabled:cursor-not-allowed text-dark-primary font-semibold py-3 px-5 rounded-[8px] transition-colors"
         >
           {isClaimPending
             ? "Claiming..."

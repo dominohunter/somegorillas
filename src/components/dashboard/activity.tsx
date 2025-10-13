@@ -76,38 +76,42 @@ export default function Activity() {
   };
 
   return (
-    <div className=" p-4 bg-translucent-dark-12 h-full border-2 backdrop-blur-[60px] flex flex-col gap-3 overflow-hidden rounded-3xl border-translucent-light-4">
-      <div className="flex flex-col space-y-3 max-h-[600px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+    <div className="h-[380px] sm:h-[480px] md:h-[560px] lg:h-[600px] xl:h-[600px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <div className="space-y-2">
         {globalFlipsQuery.data && globalFlipsQuery.data.length > 0 ? (
           globalFlipsQuery.data.map((flip) => (
             <div
               key={flip.id}
-              className="flex items-center justify-between p-3 bg-translucent-light-8 border border-translucent-light-4 rounded-lg"
+              className="flex justify-between items-center p-3 rounded-xl transition-colors border-2 bg-translucent-light-4 border-translucent-light-8"
             >
-              <div className="flex flex-col space-y-1 min-w-0 flex-1">
-                <span className="text-body-2-medium font-pally text-light-primary font-semibold truncate">
-                  {formatWalletAddress(flip.userAddress)}
-                </span>
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-light-primary text-body-2 font-pally truncate max-w-32">
+                    {formatWalletAddress(flip.userAddress)}
+                  </span>
+                </div>
                 <div className="flex items-center space-x-2">
                   <span className="text-body2-medium font-pally text-translucent-light-64">
-                    flipped a
+                    flipped
                   </span>
                   <span className="text-body2-medium font-pally text-light-primary font-semibold">
                     {formatFlipSide(flip.result.toLowerCase())}
                   </span>
-                  {getWinIndicator(flip.isWin)}
                 </div>
               </div>
-              <span className="text-caption-1-medium font-pally text-translucent-light-64 ml-2 flex-shrink-0">
-                {formatTimeAgo(flip.createdAt)}
-              </span>
+              <div className="flex items-center gap-2">
+                {getWinIndicator(flip.isWin)}
+                <span className="text-caption-1-medium font-pally text-translucent-light-64 ml-2">
+                  {formatTimeAgo(flip.createdAt)}
+                </span>
+              </div>
             </div>
           ))
         ) : (
-          <div className="text-center py-8">
-            <span className="text-body-2-medium font-pally text-translucent-light-64">
+          <div className="text-center p-4">
+            <p className="text-translucent-light-64 text-body-2 font-pally">
               No recent activity
-            </span>
+            </p>
           </div>
         )}
       </div>

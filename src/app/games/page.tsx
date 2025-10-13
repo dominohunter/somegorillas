@@ -20,7 +20,7 @@ export default function Games() {
           <div
             className="relative h-[300px] md:h-[420px] w-full rounded-xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-105"
             style={{
-              backgroundImage: "url('/1.png')",
+              backgroundImage: "url('games/coin-flip.png')",
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
@@ -44,7 +44,7 @@ export default function Games() {
           <div
             className="relative h-[300px] md:h-[420px] w-full rounded-xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-105"
             style={{
-              backgroundImage: "url('/2.png')",
+              backgroundImage: "url('/games/mines.png')",
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
@@ -71,7 +71,7 @@ export default function Games() {
           <div
             className="relative h-[300px] md:h-[400px] w-full rounded-xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-105"
             style={{
-              backgroundImage: "url('/3.png')",
+              backgroundImage: "url('/games/flinko.png')",
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
@@ -94,7 +94,7 @@ export default function Games() {
           <div
             className="relative h-[300px] md:h-[400px] w-full rounded-xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-105"
             style={{
-              backgroundImage: "url('/4.png')",
+              backgroundImage: "url('/games/rock.png')",
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
@@ -102,7 +102,7 @@ export default function Games() {
             <div className="absolute inset-0 gradient-dark-vertical"></div>
             <div className="relative flex flex-col md:flex-row justify-between items-start md:items-end h-full p-4 md:px-6 z-10">
               <h1 className="text-h6 md:text-h5 font-semibold text-light-primary">
-                Rock, Paper, Scissors
+                Rock
               </h1>
               <Button
                 variant="secondary"
@@ -117,7 +117,7 @@ export default function Games() {
           <div
             className="relative h-[300px] md:h-[400px] w-full rounded-xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-105"
             style={{
-              backgroundImage: "url('/5.png')",
+              backgroundImage: "url('/games/limbo.png')",
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}

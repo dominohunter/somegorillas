@@ -47,13 +47,13 @@ export default function Stake() {
             {selected === "staking" && (
               <Dialog>
                 <DialogTrigger 
-                // disabled
+                disabled
                 >
                   <GlareButton
                     background="rgba(255, 255, 255, 1)"
                     borderRadius="8px"
                     className="pr-4 pl-5 py-3 flex items-center justify-center gap-[10px] border border-translucent-light-4"
-                    // disabled
+                    disabled
                   >
                     <span className="text-button-48 font-semibold text-dark-primary">
                       Stake Gorilla

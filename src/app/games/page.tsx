@@ -131,7 +131,7 @@ export default function Games() {
       </div>
 
       {/* RIGHT SIDE - ACTIVITY */}
-      <div className="w-full xl:w-[420px] 2xl:w-[460px] lg:h-[956px] flex-shrink-0 bg-translucent-light-4 backdrop-blur-2xl rounded-2xl p-4 grid gap-3">
+      <div className="w-full flex flex-col gap-3 xl:w-[420px] 2xl:w-[460px] flex-shrink-0 bg-translucent-light-4 backdrop-blur-2xl rounded-2xl p-4 ">
         {/* Header */}
         <div className="px-5 py-4 border-2 border-translucent-light-4 grid gap-[10px] rounded-[12px] bg-translucent-light-8 text-h6 md:text-h5 h-16 w-full text-light-primary font-semibold">
           Activity
@@ -161,7 +161,7 @@ export default function Games() {
         </div>
 
         {/* Activity Content */}
-        <div className="flex-1 min-h-0">
+        <div className="flex-1">
           <Activity />
         </div>
       </div>

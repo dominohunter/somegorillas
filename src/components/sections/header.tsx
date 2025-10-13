@@ -145,14 +145,14 @@ export default function Header() {
                 Games
               </p>
             </Link>
-            <Link
+            {/*<Link
               href={"/slot-machine"}
               className="py-3 px-5 h-12 rounded-lg transition-all duration-300 hover:bg-white/10"
             >
               <p className="text-button-48 text-light-primary font-semibold">
                 Slot Machine
               </p>
-            </Link>
+            </Link>*/}
 
             <Link
               href={"/whitelist"}
@@ -337,13 +337,13 @@ export default function Header() {
             >
               Games
             </Link>
-            <Link
+            {/*<Link
               href={"/slot-machine"}
               className="py-3 px-4 text-light-primary font-semibold hover:bg-white/10 rounded-lg transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Slot Machine
-            </Link>
+            </Link>*/}
             <Link
               href={"/whitelist"}
               className="py-3 px-4 text-light-primary font-semibold hover:bg-white/10 rounded-lg transition-colors"

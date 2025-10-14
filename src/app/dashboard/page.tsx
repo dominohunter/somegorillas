@@ -50,7 +50,7 @@ export default function Dashboard() {
             </div>
 
             {/* Leaderboard */}
-            <div className="w-full xl:w-[420px] 2xl:w-[460px] lg:h-[956px] flex-shrink-0 bg-translucent-light-4 backdrop-blur-2xl rounded-2xl p-4 grid gap-3">
+            <div className="w-full xl:w-[420px] 2xl:w-[460px] lg:h-[956px] border-2 border-translucent-light-4 flex-shrink-0 bg-translucent-light-4 backdrop-blur-2xl rounded-2xl p-4 grid gap-3">
               {/* Header */}
               <div className="px-4 py-3 flex items-center border-2 border-translucent-light-4 rounded-[12px] bg-translucent-light-8 text-h6 md:text-h5 text-light-primary font-semibold text-center sm:text-left">
                 Leaderboard

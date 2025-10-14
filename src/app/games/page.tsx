@@ -11,7 +11,6 @@ export default function Games() {
 
   return (
     <section className="w-full flex flex-col xl:flex-row m-0 items-start h-auto overflow-y-hidden gap-4 px-4 lg:px-6">
-
       {/* LEFT SIDE - GAME CARDS */}
       <div className="grid w-full xl:w-[70%] h-auto gap-4">
         {/* Top row */}
@@ -139,7 +138,7 @@ export default function Games() {
       </div>
 
       {/* RIGHT SIDE - ACTIVITY */}
-      <div className="w-full flex flex-col gap-3 lg:w-[90%] xl:w-[420px] 2xl:w-[460px] flex-shrink-0 bg-translucent-light-4 backdrop-blur-2xl rounded-2xl p-4">
+      <div className="w-full flex flex-col gap-3 lg:w-[90%] xl:w-[420px] 2xl:w-[460px] flex-shrink-0 bg-translucent-light-4 backdrop-blur-2xl border-2 border-translucent-light-4 rounded-2xl p-4">
         <div className="px-5 py-4 border-2 border-translucent-light-4 grid gap-[10px] rounded-[12px] bg-translucent-light-8 text-h6 md:text-h5 h-16 w-full text-light-primary font-semibold">
           Activity
         </div>

@@ -697,7 +697,7 @@ export default function SlotMachine() {
                 </p>
                 <h1 className="w-full text-body-2-medium font-medium text-light-primary">
                   {playFee ? ethers.formatEther(playFee as bigint) : "0.0001"}{" "}
-                  ETH
+                  SOMI
                 </h1>
               </div>
               <div className="bg-translucent-light-4 border-2 border-translucent-light-4 rounded-[12px] px-4 py-3 grid gap-1">

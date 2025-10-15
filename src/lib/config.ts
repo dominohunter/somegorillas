@@ -61,132 +61,113 @@ export const COINFLIP_ABI = [
 export { COINFLIP_BETTING_ABI } from "./flip-bet-abi";
 
 // Slot Machine Configuration
-export const SLOT_MACHINE_CONTRACT = "0x549bD51F0E53Ad1B7c4A1aECD71000462adcda09";
+export const SLOT_MACHINE_CONTRACT =
+  "0x549bD51F0E53Ad1B7c4A1aECD71000462adcda09";
 
 export const SLOT_MACHINE_ABI = [
   {
-    "inputs": [
-      { "name": "tokenId", "type": "uint256" },
-      { "name": "rarity", "type": "uint8" },
-      { "name": "secret", "type": "uint256" }
+    inputs: [
+      { name: "tokenId", type: "uint256" },
+      { name: "rarity", type: "uint8" },
+      { name: "secret", type: "uint256" },
     ],
-    "name": "commit",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
+    name: "commit",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
   },
   {
-    "inputs": [
-      { "name": "secret", "type": "uint256" }
-    ],
-    "name": "reveal",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    inputs: [{ name: "secret", type: "uint256" }],
+    name: "reveal",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "cancelCommitment",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    inputs: [],
+    name: "cancelCommitment",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
-      { "name": "user", "type": "address" }
+    inputs: [{ name: "user", type: "address" }],
+    name: "getCommitment",
+    outputs: [
+      { name: "commitBlock", type: "uint256" },
+      { name: "depositTokenId", type: "uint256" },
+      { name: "depositRarity", type: "uint8" },
     ],
-    "name": "getCommitment",
-    "outputs": [
-      { "name": "commitBlock", "type": "uint256" },
-      { "name": "depositTokenId", "type": "uint256" },
-      { "name": "depositRarity", "type": "uint8" }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "playFee",
-    "outputs": [
-      { "name": "", "type": "uint256" }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+    inputs: [],
+    name: "playFee",
+    outputs: [{ name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "getPoolSize",
-    "outputs": [
-      { "name": "", "type": "uint256" }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+    inputs: [],
+    name: "getPoolSize",
+    outputs: [{ name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "nftCollection",
-    "outputs": [
-      { "name": "", "type": "address" }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+    inputs: [],
+    name: "nftCollection",
+    outputs: [{ name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "anonymous": false,
-    "inputs": [
-      { "indexed": true, "name": "player", "type": "address" },
-      { "indexed": false, "name": "depositedTokenId", "type": "uint256" },
-      { "indexed": false, "name": "receivedTokenId", "type": "uint256" },
-      { "indexed": false, "name": "receivedRarity", "type": "uint8" }
+    anonymous: false,
+    inputs: [
+      { indexed: true, name: "player", type: "address" },
+      { indexed: false, name: "depositedTokenId", type: "uint256" },
+      { indexed: false, name: "receivedTokenId", type: "uint256" },
+      { indexed: false, name: "receivedRarity", type: "uint8" },
     ],
-    "name": "GameRevealed",
-    "type": "event"
-  }
+    name: "GameRevealed",
+    type: "event",
+  },
 ];
 
 export const NFT_ABI = [
   {
-    "inputs": [
-      { "name": "owner", "type": "address" }
-    ],
-    "name": "balanceOf",
-    "outputs": [
-      { "name": "", "type": "uint256" }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+    inputs: [{ name: "owner", type: "address" }],
+    name: "balanceOf",
+    outputs: [{ name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
-      { "name": "owner", "type": "address" },
-      { "name": "index", "type": "uint256" }
+    inputs: [
+      { name: "owner", type: "address" },
+      { name: "index", type: "uint256" },
     ],
-    "name": "tokenOfOwnerByIndex",
-    "outputs": [
-      { "name": "", "type": "uint256" }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+    name: "tokenOfOwnerByIndex",
+    outputs: [{ name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
-      { "name": "tokenId", "type": "uint256" }
-    ],
-    "name": "getApproved",
-    "outputs": [
-      { "name": "", "type": "address" }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+    inputs: [{ name: "tokenId", type: "uint256" }],
+    name: "getApproved",
+    outputs: [{ name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
-      { "name": "to", "type": "address" },
-      { "name": "tokenId", "type": "uint256" }
+    inputs: [
+      { name: "to", type: "address" },
+      { name: "tokenId", type: "uint256" },
     ],
-    "name": "approve",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  }
+    name: "approve",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
 ];

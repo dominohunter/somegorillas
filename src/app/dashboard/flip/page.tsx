@@ -777,7 +777,7 @@ export default function FlipPage() {
             {/* Bet Amount Selection */}
             <div className="flex flex-col gap-6">
               <div className="grid grid-cols-3 gap-3">
-                {["0.1", "0.3", "0.5", "1", "1.5", "2"].map((amount) => (
+                {["1", "2", "5", "10", "25", "50"].map((amount) => (
                   <CartoonButton
                     key={amount}
                     variant={betAmount === amount ? "primary" : "secondary"}
@@ -818,8 +818,8 @@ export default function FlipPage() {
                   : isFlipping
                     ? "Flipping..."
                     : !isOnCorrectChain
-                    ? "Switch to Somnia"
-                    : "Flip"}
+                      ? "Switch to Somnia"
+                      : "Flip"}
               </CartoonButton>
             </div>
           </div>

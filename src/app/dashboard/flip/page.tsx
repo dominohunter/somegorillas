@@ -87,7 +87,7 @@ export default function FlipPage() {
   // Chain validation
   const { isOnCorrectChain, switchToCorrectChain } = useChainValidation();
 
-  const [betAmount, setBetAmount] = useState("0.1");
+  const [betAmount, setBetAmount] = useState("1");
   const [multiplier] = useState(20000); // 2x
   const [userChoice, setUserChoice] = useState<"heads" | "tails">("heads");
   const [loading, setLoading] = useState(false);

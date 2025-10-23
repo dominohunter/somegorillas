@@ -154,14 +154,14 @@ export default function Header() {
               </p>
             </Link>*/}
 
-            <Link
+            {/* <Link
               href={"/whitelist"}
               className="py-3 px-5 rounded-lg transition-all duration-300 hover:bg-white/10"
             >
               <p className="text-button-48 text-light-primary font-semibold">
                 Whitelist checker
               </p>
-            </Link>
+            </Link> */}
           </div>
 
           {/* Mobile Menu Button */}

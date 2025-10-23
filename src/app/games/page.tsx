@@ -17,7 +17,8 @@ export default function Games() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Coin Flip */}
           <div
-            className="relative h-[300px] md:h-[420px] w-full rounded-xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-105"
+            // className="relative h-[300px] md:h-[420px] w-full rounded-xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-105"
+            className="relative h-[300px] md:h-[420px] w-full rounded-xl overflow-hidden cursor-pointer"
             style={{
               backgroundImage: "url('games/coin-flip.png')",
               backgroundSize: "cover",
@@ -41,7 +42,8 @@ export default function Games() {
 
           {/* Mines */}
           <div
-            className="relative h-[300px] md:h-[420px] w-full rounded-xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-105"
+            // className="relative h-[300px] md:h-[420px] w-full rounded-xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-105"
+            className="relative h-[300px] md:h-[420px] w-full rounded-xl overflow-hidden cursor-pointer"
             style={{
               backgroundImage: "url('/games/mines.png')",
               backgroundSize: "cover",
@@ -68,7 +70,8 @@ export default function Games() {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {/* Flinko */}
           <div
-            className="relative h-[300px] md:h-[400px] w-full rounded-xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-105"
+            // className="relative h-[300px] md:h-[400px] w-full rounded-xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-105"
+            className="relative h-[300px] md:h-[400px] w-full rounded-xl overflow-hidden cursor-pointer"
             style={{
               backgroundImage: "url('/games/flinko.png')",
               backgroundSize: "cover",
@@ -91,7 +94,8 @@ export default function Games() {
 
           {/* Rock Paper Scissors */}
           <div
-            className="relative h-[300px] md:h-[400px] w-full rounded-xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-105"
+            // className="relative h-[300px] md:h-[400px] w-full rounded-xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-105"
+            className="relative h-[300px] md:h-[400px] w-full rounded-xl overflow-hidden cursor-pointer"
             style={{
               backgroundImage: "url('/games/rock.png')",
               backgroundSize: "cover",
@@ -114,7 +118,8 @@ export default function Games() {
 
           {/* Limbo */}
           <div
-            className="relative h-[300px] md:h-[400px] w-full rounded-xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-105"
+            // className="relative h-[300px] md:h-[400px] w-full rounded-xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-105"
+            className="relative h-[300px] md:h-[400px] w-full rounded-xl overflow-hidden cursor-pointer"
             style={{
               backgroundImage: "url('/games/limbo.png')",
               backgroundSize: "cover",

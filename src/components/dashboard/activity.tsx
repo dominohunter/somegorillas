@@ -76,7 +76,7 @@ export default function Activity() {
   };
 
   return (
-    <div className="h-[380px] sm:h-[480px] md:h-[560px] lg:h-[600px] xl:h-[600px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+    <div className="h-[380px] sm:h-[480px] md:h-[560px] lg:h-[600px] xl:h-[520px] w-full overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
       <div className="space-y-2">
         {globalFlipsQuery.data && globalFlipsQuery.data.length > 0 ? (
           globalFlipsQuery.data.map((flip) => (

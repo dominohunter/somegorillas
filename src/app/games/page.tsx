@@ -5,9 +5,17 @@ import Activity from "@/components/dashboard/activity";
 import { CartoonButton } from "@/components/ui/cartoon-button";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 
 export default function Games() {
   const router = useRouter();
+  const handleClick = () => {
+    window.open(
+      "https://docs.somegorillas.com/sustainability/fairness-technical-architecture-and-pools",
+      "_blank",
+      "noopener,noreferrer"
+    );
+  };
 
   return (
     <section className="w-full flex flex-col xl:flex-row m-0 items-start h-auto overflow-y-hidden gap-4 px-4 lg:px-6">
@@ -143,35 +151,61 @@ export default function Games() {
       </div>
 
       {/* RIGHT SIDE - ACTIVITY */}
-      <div className="w-full flex flex-col gap-3 lg:w-[90%] xl:w-[420px] 2xl:w-[460px] flex-shrink-0 bg-translucent-light-4 backdrop-blur-2xl border-2 border-translucent-light-4 rounded-2xl p-4">
-        <div className="px-5 py-4 border-2 border-translucent-light-4 grid gap-[10px] rounded-[12px] bg-translucent-light-8 text-h6 md:text-h5 h-16 w-full text-light-primary font-semibold">
-          Activity
-        </div>
+      <div className="w-full xl:w-1/3 flex flex-col gap-4">
+        <div className="flex flex-col gap-3 bg-translucent-light-4 backdrop-blur-2xl border-2 border-translucent-light-4 rounded-2xl p-4">
+          <div className="px-5 py-4 border-2 border-translucent-light-4 rounded-[12px] bg-translucent-light-8 text-h6 md:text-h5 h-16 w-full text-light-primary font-semibold flex items-center">
+            Activity
+          </div>
 
-        <div className="p-4 border-2 border-translucent-light-4 flex items-center bg-translucent-light-4 rounded-[12px]">
-          <div className="flex flex-col sm:flex-row items-center gap-4">
-            <div className="p-3 border-2 bg-translucent-light-4 border-translucent-light-4 h-[52px] w-[52px] flex items-center justify-center rounded-[8px]">
-              <Image
-                src="/chart.svg"
-                alt="activity chart"
-                height={28}
-                width={28}
-                className="object-cover h-7 w-7"
-              />
+          <div className="p-4 border-2 border-translucent-light-4 flex items-center bg-translucent-light-4 rounded-[12px]">
+            <div className="flex flex-col sm:flex-row items-start gap-4">
+              <div className="p-3 border-2 bg-translucent-light-4 border-translucent-light-4 h-[52px] w-[52px] flex items-center justify-center rounded-[8px]">
+                <Image
+                  src="/chart.svg"
+                  alt="activity chart"
+                  height={28}
+                  width={28}
+                  className="object-cover h-7 w-7"
+                />
+              </div>
+              <div className="grid gap-1 text-start sm:text-left">
+                <h1 className="text-caption-1-medium font-medium text-translucent-light-80">
+                  Live Activity
+                </h1>
+                <p className="text-body-1-medium font-medium text-light-primary">
+                  Recent games
+                </p>
+              </div>
             </div>
-            <div className="grid gap-1">
-              <h1 className="text-caption-1-medium font-medium text-translucent-light-80">
-                Live Activity
-              </h1>
-              <p className="text-body-1-medium font-medium text-light-primary">
-                Recent games
-              </p>
-            </div>
+          </div>
+
+          <div className="flex-1">
+            <Activity />
           </div>
         </div>
 
-        <div className="flex-1">
-          <Activity />
+        <div className="border-2 border-translucent-light-4 backdrop-blur-2xl p-4 flex items-center justify-between rounded-2xl">
+          <div className="flex items-center gap-4">
+            <div className="flex h-12 w-12 rounded-[8px] border-2 p-3 border-translucent-light-4 bg-translucent-light-8">
+              <Image
+                src="/games/check-circle.svg"
+                alt="games docs check"
+                height={24}
+                width={24}
+                className="w-full h-auto object-cover"
+              />
+            </div>
+            <p className="text-light-primary text-body-1-medium font-medium">
+              Provable Fairness
+            </p>
+          </div>
+          <Button
+            variant="secondary"
+            className="h-12 w-12 cursor-pointer"
+            onClick={handleClick}
+          >
+            <ArrowRight className="h-6 w-6" />
+          </Button>
         </div>
       </div>
     </section>

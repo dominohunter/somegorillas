@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { GlareButton } from "@/components/ui/glare-button";
 import { ArrowRight } from "lucide-react";
@@ -16,10 +16,19 @@ import StakingDialog from "@/components/staking/staking-dialog";
 import GymDialog from "@/components/staking/gym-dialog";
 import AdventureDialog from "@/components/staking/adventure-dialog";
 
+import { getEthersObjects } from "@/lib/contract-helpers"
+import { useAccount } from "wagmi";
+import { useRouter } from "next/navigation";
+
 export default function Stake() {
-  const [selected, setSelected] = useState<
-    "staking" | "gym" | "adventure" | null
-  >("staking");
+  const account = useAccount()
+  const router = useRouter();
+
+  const [selected, setSelected] = useState<"staking" | "gym" | "adventure" | null>("staking");
+
+  useEffect(() => {
+    checkHasAnyStake()
+  }, []);
 
   return (
     <section className="w-full flex items-center justify-center overflow-y-hidden px-4">
@@ -46,14 +55,12 @@ export default function Stake() {
 
             {selected === "staking" && (
               <Dialog>
-                <DialogTrigger 
-                disabled
+                <DialogTrigger
                 >
                   <GlareButton
                     background="rgba(255, 255, 255, 1)"
                     borderRadius="8px"
-                    className="pr-4 pl-5 py-3 flex items-center justify-center gap-[10px] border border-translucent-light-4"
-                    disabled
+                    className="hidden! pr-4 pl-5 py-3 flex items-center justify-center gap-[10px] border border-translucent-light-4"
                   >
                     <span className="text-button-48 font-semibold text-dark-primary">
                       Stake Gorilla
@@ -97,4 +104,14 @@ export default function Stake() {
       </div>
     </section>
   );
+
+  async function checkHasAnyStake() {
+    if (account.address == undefined) return;
+
+    const { stakingContract } = await getEthersObjects()
+    const stakeBalance = parseInt((await stakingContract.getUserStakes(account.address)).length)
+    if (stakeBalance > 0) {
+      router.push("/stake/gym-adventure")
+    }
+  }
 }

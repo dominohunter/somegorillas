@@ -88,6 +88,7 @@ export default function StakingDialog({ onChoose }: StakingDialogProps) {
               variant="secondary"
               className="h-12 w-full px-5 py-3 rounded-[8px] bg-light-primary text-dark-primary"
               onClick={() => onChoose(option.key as "gym" | "adventure")}
+              disabled={option.key == "adventure"}
             >
               Choose
             </Button>

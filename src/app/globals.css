@@ -922,3 +922,7 @@ body {
     height: -webkit-fill-available;
   }
 }
+
+.btn { 
+  @apply bg-light-primary font-semibold text-dark-primary cursor-pointer transition-all duration-200 hover:text-light-primary hover:bg-dark-primary;
+}

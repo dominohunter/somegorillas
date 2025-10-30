@@ -2,8 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { GlareButton } from "../ui/glare-button";
 import { ArrowRight } from "lucide-react";
-import { Button } from "../ui/button";
-import Image from "next/image";
 import HelpPopup from "./help-popup";
 import GymDialog from "./gym-dialog";
 import SingleStake from "./single-stake";
@@ -78,18 +76,5 @@ export default function GymAdventure() {
         </div>
       </section>
     </>
-  );
-}
-
-function InfoCard({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="border-[2px] min-w-[192px] min-h-[72px] border-translucent-light-4 bg-translucent-light-4 rounded-[8px] py-3 px-4 grid gap-1">
-      <p className="text-caption-1-medium text-translucent-light-80 font-medium">
-        {label}
-      </p>
-      <h1 className="text-body-2-medium text-light-primary font-medium h-6">
-        {value}
-      </h1>
-    </div>
   );
 }

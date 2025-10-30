@@ -57,17 +57,12 @@ export default function Stake() {
               <Dialog>
                 <DialogTrigger
                 >
-                  <GlareButton
-                    background="rgba(255, 255, 255, 1)"
-                    borderRadius="8px"
-                    className="hidden! pr-4 pl-5 py-3 flex items-center justify-center gap-[10px] border border-translucent-light-4"
-                  >
-                    <span className="text-button-48 font-semibold text-dark-primary">
-                      Stake Gorilla
-                    </span>
-                    <ArrowRight className="h-5 w-5" />
-                  </GlareButton>
+                  <div className="hidden! btn py-2 px-4 rounded items-center gap-x-2">
+                    <p className="text-xl">Stake Gorilla</p>
+                    <ArrowRight className="size-5" />
+                  </div>
                 </DialogTrigger>
+
 
                 <DialogContent className="h-auto min-w-[960px] overflow-y-hidden border border-translucent-light-4 bg-translucent-light-4 backdrop-blur-[80px] rounded-[20px] p-6">
                   <DialogHeader className="grid gap-5">

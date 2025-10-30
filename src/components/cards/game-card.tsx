@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
 
 interface GameCardProps {
@@ -41,9 +42,11 @@ const GameCard: React.FC<GameCardProps> = ({
             </svg>
           </div>
         ) : (
-          <img
-            src={image}
-            alt={name}
+          <Image
+            src={image || ""}
+            alt="game-card"
+            width={160}
+            height={160}
             className="w-[160px] h-[160px] object-contain"
           />
         )}

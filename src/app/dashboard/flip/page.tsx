@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { ethers } from "ethers";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -740,7 +741,7 @@ export default function FlipPage() {
               isFlipping={isFlipping}
               result={null}
               prediction={userChoice}
-              onAnimationComplete={() => {}}
+              onAnimationComplete={() => { }}
               size={240}
             />
 
@@ -753,11 +754,10 @@ export default function FlipPage() {
                     size="md"
                     shadow="cartoon"
                     onClick={() => setUserChoice(choice)}
-                    className={`flex items-center justify-center gap-2 font-bold transition-all duration-300 ease-in-out w-full transform ${
-                      userChoice === choice
-                        ? "!bg-white !text-black !border-[#0f1012] scale-105"
-                        : "!text-black !border-translucent-light-4 hover:bg-accent-primary hover:text-light-primary scale-100"
-                    }`}
+                    className={`flex items-center justify-center gap-2 font-bold transition-all duration-300 ease-in-out w-full transform ${userChoice === choice
+                      ? "!bg-white !text-black !border-[#0f1012] scale-105"
+                      : "!text-black !border-translucent-light-4 hover:bg-accent-primary hover:text-light-primary scale-100"
+                      }`}
                   >
                     {choice === "heads" ? (
                       <Head size={24} />
@@ -784,11 +784,10 @@ export default function FlipPage() {
                     size="sm"
                     shadow="cartoon"
                     onClick={() => setBetAmount(amount)}
-                    className={`text-center font-bold transition-all duration-300 ease-in-out w-full transform ${
-                      betAmount === amount
-                        ? "!text-black !border-[#0f1012] scale-105"
-                        : "!text-black !border-translucent-light-4 hover:bg-accent-primary hover:text-light-primary scale-100"
-                    }`}
+                    className={`text-center font-bold transition-all duration-300 ease-in-out w-full transform ${betAmount === amount
+                      ? "!text-black !border-[#0f1012] scale-105"
+                      : "!text-black !border-translucent-light-4 hover:bg-accent-primary hover:text-light-primary scale-100"
+                      }`}
                   >
                     {amount} SOMI
                   </CartoonButton>
@@ -812,7 +811,7 @@ export default function FlipPage() {
                 size={"md"}
                 variant={"secondary"}
               >
-                <img src={"/coin/idle.svg"} alt="Coin" className="w-6 h-6" />
+                <Image src={"/coin/idle.svg"} alt="Coin" width={24} height={24} />
                 {loading
                   ? "Processing..."
                   : isFlipping
@@ -837,7 +836,7 @@ export default function FlipPage() {
               <div className="text-center py-8">
                 <p className="text-translucent-light-64 font-pally mb-2">
                   {typeof window !== "undefined" &&
-                  !localStorage.getItem("gorillaz_token")
+                    !localStorage.getItem("gorillaz_token")
                     ? "Please login to view your bet history"
                     : "No bets placed yet"}
                 </p>
@@ -856,11 +855,10 @@ export default function FlipPage() {
                           borderColor="transparent"
                           glareColor="#ffffff"
                           glareOpacity={0.3}
-                          className={`px-6 py-2 text-sm font-semibold ${
-                            isLoginLoading
-                              ? "text-gray-200 cursor-not-allowed"
-                              : "text-white"
-                          }`}
+                          className={`px-6 py-2 text-sm font-semibold ${isLoginLoading
+                            ? "text-gray-200 cursor-not-allowed"
+                            : "text-white"
+                            }`}
                         >
                           {isLoginLoading
                             ? "Signing..."
@@ -888,9 +886,8 @@ export default function FlipPage() {
                   </div>
                   <div className="text-right flex items-center gap-2">
                     <p
-                      className={`font-bold font-pally ${
-                        bet.isWin ? "text-green-400" : "text-red-400"
-                      }`}
+                      className={`font-bold font-pally ${bet.isWin ? "text-green-400" : "text-red-400"
+                        }`}
                     >
                       {bet.isWin ? "WIN" : "LOSS"}
                     </p>

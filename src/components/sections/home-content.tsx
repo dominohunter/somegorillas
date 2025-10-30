@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useAuth } from "@/contexts/auth-context";
 import { useAudio } from "@/contexts/audio-context";
 import LoadingScreen from "@/components/screens/loading-screen";
@@ -57,7 +58,7 @@ export default function HomeContent() {
   const handleWalletConnect = async (connector: Connector) => {
     try {
       // Connect the wallet first
-      connect({ 
+      connect({
         connector,
         chainId: REQUIRED_CHAIN_ID // Force connection to Somnia network
       });
@@ -169,7 +170,7 @@ export default function HomeContent() {
       </div>
 
       {/* Authentication Modal */}
-      <Dialog open={showModal} onOpenChange={() => {}}>
+      <Dialog open={showModal} onOpenChange={() => { }}>
         <DialogContent className="sm:max-w-md bg-translucent-dark-12 border-translucent-light-4 backdrop-blur-3xl rounded-3xl p-5">
           <DialogHeader>
             {/*<DialogTitle className="text-h5 text-light-primary text-center">
@@ -204,11 +205,10 @@ export default function HomeContent() {
             /* Sliding Steps Container */
             <div className="relative overflow-hidden">
               <div
-                className={`flex transition-transform duration-300 ease-out ${
-                  currentStep === "wallet"
+                className={`flex transition-transform duration-300 ease-out ${currentStep === "wallet"
                     ? "translate-x-0"
                     : "-translate-x-1/2"
-                }`}
+                  }`}
                 style={{ width: "200%" }}
               >
                 {/* Step 1: Wallet Connection */}
@@ -224,9 +224,10 @@ export default function HomeContent() {
 
                   <div className="px-8 pt-12 pb-8 rounded-2xl border-translucent-light-8 gap-8 bg-translucent-light-8 flex flex-col items-center justify-center">
                     <div className=" p-6 rounded-2xl border-2 border-translucent-light-8 bg-translucent-light-8">
-                      <img
+                      <Image
                         src={"/icons/logo-gradient.svg"}
                         alt="Logo"
+                        layout="fill"
                         className="drop-shadow-[0_0_20px_rgba(255,215,0,0.6)]"
                         style={{
                           filter:
@@ -326,16 +327,16 @@ export default function HomeContent() {
 
           {/* Reset Button - Only show on sign step */}
           {!showAllSet && currentStep === "sign" && (
-              <div className="flex justify-center pt-4 border-t border-translucent-light-8">
-                <button
-                  onClick={handleReset}
-                  className="text-gray-400 hover:text-white text-sm px-4 py-2 rounded transition-colors"
-                  title="Reset and start over"
-                >
-                  Reset
-                </button>
-              </div>
-            )}
+            <div className="flex justify-center pt-4 border-t border-translucent-light-8">
+              <button
+                onClick={handleReset}
+                className="text-gray-400 hover:text-white text-sm px-4 py-2 rounded transition-colors"
+                title="Reset and start over"
+              >
+                Reset
+              </button>
+            </div>
+          )}
         </DialogContent>
       </Dialog>
 

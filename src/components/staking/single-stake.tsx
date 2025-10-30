@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { getEthersObjects } from "@/lib/contract-helpers"
 import { useAccount } from "wagmi";
 import { formatEther } from "ethers";
-import { GlareButton } from "../ui/glare-button";
 import { Dialog, DialogContent, DialogTitle } from "@radix-ui/react-dialog";
 import { DialogHeader } from "../ui/dialog";
 

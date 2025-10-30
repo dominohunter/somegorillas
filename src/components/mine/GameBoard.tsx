@@ -89,7 +89,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
                   className="text-white font-bold"
                   style={{ fontSize: "32px" }}
                 >
-                  <img src={"/mine.svg"} alt="Mine" />
+                  <Image src={"/mine.svg"} layout="fill" alt="Mine" />
                 </div>
               </div>
             ) : (

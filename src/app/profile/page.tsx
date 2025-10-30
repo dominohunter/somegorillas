@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useAuth } from "@/contexts/auth-context";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -383,11 +384,10 @@ export default function Profile() {
                 key={tab.id}
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`flex-1 p-2 sm:p-3 rounded-lg text-xs sm:text-sm font-medium transition-all flex items-center justify-center gap-1 sm:gap-2 ${
-                  activeTab === tab.id
-                    ? "bg-white/20 text-white"
-                    : "text-translucent-light-64 hover:text-white hover:bg-white/10"
-                }`}
+                className={`flex-1 p-2 sm:p-3 rounded-lg text-xs sm:text-sm font-medium transition-all flex items-center justify-center gap-1 sm:gap-2 ${activeTab === tab.id
+                  ? "bg-white/20 text-white"
+                  : "text-translucent-light-64 hover:text-white hover:bg-white/10"
+                  }`}
               >
                 <span className="flex-shrink-0">{tab.icon}</span>
                 <span className="hidden xs:inline sm:inline">{tab.label}</span>
@@ -477,9 +477,10 @@ export default function Profile() {
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-4 bg-translucent-dark-12 rounded-xl border border-white/10">
                   <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-600 flex-shrink-0">
                     {discordStatus.discordUser.avatar ? (
-                      <img
+                      <Image
                         src={`https://cdn.discordapp.com/avatars/${discordStatus.discordUser.id}/${discordStatus.discordUser.avatar}.png`}
                         alt="Discord Avatar"
+                        layout="fill"
                         className="w-full h-full object-cover"
                       />
                     ) : (

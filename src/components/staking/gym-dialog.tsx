@@ -37,7 +37,7 @@ interface GymDialogProps {
 export default function GymDialog({ onClose }: GymDialogProps) {
   const account = useAccount()
 
-  const [selected, _setSelected] = useState<Gorilla | null>(null);
+  const [selected,] = useState<Gorilla | null>(null);
   const [step, setStep] = useState<"select" | "success">("select");
 
   const [nftId, setNftId] = useState(0)
@@ -52,11 +52,11 @@ export default function GymDialog({ onClose }: GymDialogProps) {
     }
   };
 
-  const handleConfirmDialogChange = (open: boolean) => {
-    if (!open) {
-      setStep("select");
-    }
-  };
+  // const handleConfirmDialogChange = (open: boolean) => {
+  //   if (!open) {
+  //     setStep("select");
+  //   }
+  // };
 
   const handleSuccessDialogChange = (open: boolean) => {
     if (!open && onClose) {
@@ -151,7 +151,7 @@ export default function GymDialog({ onClose }: GymDialogProps) {
               <div className="border-[2px] border-translucent-light-4 bg-translucent-light-4 rounded-2xl overflow-hidden">
                 <div className="p-4 text-white flex flex-col md:flex-row mx-auto text-center gap-4 items-center w-full">
                   <p className="grow uppercase">NFT Id</p>
-                  <input type="number" onChange={(e: any) => { setNftId(e.target.value) }} placeholder="0" className="pl-2 text-center border border-white rounded-xl appearance-none" />
+                  <input type="number" onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setNftId(parseInt(e.target.value)) }} placeholder="0" className="pl-2 text-center border border-white rounded-xl appearance-none" />
                   <Button onClick={() => checkNftOwnership(nftId)} className="btn w-full md:w-3/12" >
                     Check
                   </Button>
@@ -161,7 +161,7 @@ export default function GymDialog({ onClose }: GymDialogProps) {
 
               {nftState === "idle" && (
                 <div className="border-[2px] border-translucent-light-4 bg-translucent-light-4 rounded-2xl overflow-hidden h-20 flex items-center justify-center">
-                  <a href={`https://explorer.somnia.network/address/${account.address}?tab=tokens_nfts`} className="hover:text-gray-300 text-green-200" target="_blank">View your NFT's</a>
+                  <a href={`https://explorer.somnia.network/address/${account.address}?tab=tokens_nfts`} className="hover:text-gray-300 text-green-200" target="_blank">View your NFT&apos;s</a>
                 </div>
               )}
 
@@ -174,7 +174,7 @@ export default function GymDialog({ onClose }: GymDialogProps) {
               {nftState === "not_owner" && (
                 <div className="border-[2px] border-translucent-light-4 bg-translucent-light-4 rounded-2xl overflow-hidden h-20 flex flex-col items-center justify-center">
                   <p className="text-white">Not Owner</p>
-                  <a href={`https://explorer.somnia.network/address/${account.address}?tab=tokens_nfts`} className="hover:text-gray-300 text-green-200 block" target="_blank">View your NFT's</a>
+                  <a href={`https://explorer.somnia.network/address/${account.address}?tab=tokens_nfts`} className="hover:text-gray-300 text-green-200 block" target="_blank">View your NFT&apos;s</a>
                 </div>
               )}
 

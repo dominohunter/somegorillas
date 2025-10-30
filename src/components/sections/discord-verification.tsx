@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import api from "@/lib/axios";
 import axios from "axios";
 import { API_BASE_URL } from "@/lib/config";
@@ -80,8 +81,8 @@ export default function DiscordVerificationSection() {
     } catch (error) {
       console.error("Failed to start Discord verification:", error);
       setError(
-        axios.isAxiosError(error) && error.response?.data?.error 
-          ? error.response.data.error 
+        axios.isAxiosError(error) && error.response?.data?.error
+          ? error.response.data.error
           : "Failed to start Discord verification",
       );
       setIsVerifying(false);
@@ -112,8 +113,8 @@ export default function DiscordVerificationSection() {
     } catch (error) {
       console.error("Failed to unlink Discord:", error);
       setError(
-        axios.isAxiosError(error) && error.response?.data?.error 
-          ? error.response.data.error 
+        axios.isAxiosError(error) && error.response?.data?.error
+          ? error.response.data.error
           : "Failed to unlink Discord account",
       );
     } finally {
@@ -148,9 +149,11 @@ export default function DiscordVerificationSection() {
               {discordStatus?.verified && discordStatus.discordUser && (
                 <div className="flex items-center gap-2 mt-2">
                   {discordStatus.discordUser.avatar && (
-                    <img
+                    <Image
                       src={`https://cdn.discordapp.com/avatars/${discordStatus.discordUser.id}/${discordStatus.discordUser.avatar}.png?size=32`}
                       alt="Discord Avatar"
+                      width={24}
+                      height={24}
                       className="w-6 h-6 rounded-full"
                     />
                   )}

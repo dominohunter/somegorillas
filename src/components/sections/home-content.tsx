@@ -206,8 +206,8 @@ export default function HomeContent() {
             <div className="relative overflow-hidden">
               <div
                 className={`flex transition-transform duration-300 ease-out ${currentStep === "wallet"
-                    ? "translate-x-0"
-                    : "-translate-x-1/2"
+                  ? "translate-x-0"
+                  : "-translate-x-1/2"
                   }`}
                 style={{ width: "200%" }}
               >
@@ -227,7 +227,8 @@ export default function HomeContent() {
                       <Image
                         src={"/icons/logo-gradient.svg"}
                         alt="Logo"
-                        layout="fill"
+                        width={40}
+                        height={40}
                         className="drop-shadow-[0_0_20px_rgba(255,215,0,0.6)]"
                         style={{
                           filter:

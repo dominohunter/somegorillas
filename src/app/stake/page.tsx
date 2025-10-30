@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { GlareButton } from "@/components/ui/glare-button";
 import { ArrowRight } from "lucide-react";
 import {
   Dialog,

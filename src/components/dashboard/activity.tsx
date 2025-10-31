@@ -54,6 +54,8 @@ export default function Activity() {
     return `${diffSecs}s ago`;
   };
   const getWinIndicator = (isWin: boolean) => {
+    // NOTE: soft patch
+    return ""
     if (isWin) {
       return (
         <div className="flex items-center space-x-1">

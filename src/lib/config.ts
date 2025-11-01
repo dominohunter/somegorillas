@@ -3,7 +3,7 @@
 export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://gorillaz-backend-43c2e114d9b4.herokuapp.com/api";
 
 export const COINFLIP_ADDRESS = "0x6D95d0879da470305Af2418E8d34C6D12d23C7ea";
-export const COINFLIP_BETTING_ADDRESS = "0xDa0e3EEF276797E2C09D28a46898aBB3De44B191";
+export const COINFLIP_BETTING_ADDRESS = "0xc36C0E2497b832b1bf993F5574D702c6a2DEAf97";
 export const REQUIRED_CHAIN_ID = 5031;
 //heeeloooo
 export const COINFLIP_FEE = "0.0001";

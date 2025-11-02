@@ -17,7 +17,7 @@ export default function Tasks() {
   // const [isCopied, setIsCopied] = useState(false);
   const [claimedTasks, setClaimedTasks] = useState<Set<string>>(new Set());
   const [claimingTaskId, setClaimingTaskId] = useState<string | null>(null);
-  const [activeFilter, setActiveFilter] = useState<"all" | "flip" | "mines">(
+  const [activeFilter, setActiveFilter] = useState<"all" | "flip" | "mines" | "weekly">(
     "all",
   );
 
@@ -89,6 +89,7 @@ export default function Tasks() {
 
   // Filter tasks based on active filter
   const filteredQuests =
+
     questsQuery.data?.filter((quest) => {
       if (activeFilter === "all") return true;
 
@@ -98,6 +99,12 @@ export default function Tasks() {
         return type === "flip" || type === "heads" || type === "tails";
       } else if (activeFilter === "mines") {
         return type.startsWith("mine_");
+      }
+
+      if (activeFilter === "weekly") {
+        if (!quest.quest.type) return false
+
+        return quest.quest.type === "WEEKLY" ? true : false;
       }
 
       return true;
@@ -118,33 +125,39 @@ export default function Tasks() {
         <div className="flex gap-2">
           <button
             onClick={() => setActiveFilter("all")}
-            className={`px-4 py-2 rounded-[8px] text-button-40 transition-colors ${
-              activeFilter === "all"
-                ? "bg-light-primary px-4 py-3 text-dark-primary"
-                : "bg-translucent-light-4 text-translucent-light-64 hover:text-light-primary border border-translucent-light-4"
-            }`}
+            className={`px-4 py-2 rounded-[8px] text-button-40 transition-colors ${activeFilter === "all"
+              ? "bg-light-primary px-4 py-3 text-dark-primary"
+              : "bg-translucent-light-4 text-translucent-light-64 hover:text-light-primary border border-translucent-light-4"
+              }`}
           >
             <p className="text-button-40 font-semibold">All</p>
           </button>
           <button
             onClick={() => setActiveFilter("flip")}
-            className={`px-4 py-2 rounded-[8px] text-sm font-medium transition-colors ${
-              activeFilter === "flip"
-                ? "bg-light-primary px-4 py-3 text-dark-primary"
-                : "bg-translucent-light-4 text-translucent-light-64 hover:text-light-primary border border-translucent-light-4"
-            }`}
+            className={`px-4 py-2 rounded-[8px] text-sm font-medium transition-colors ${activeFilter === "flip"
+              ? "bg-light-primary px-4 py-3 text-dark-primary"
+              : "bg-translucent-light-4 text-translucent-light-64 hover:text-light-primary border border-translucent-light-4"
+              }`}
           >
             <p className="text-button-40 font-semibold">Coin Flip</p>
           </button>
           <button
             onClick={() => setActiveFilter("mines")}
-            className={`px-4 py-2 rounded-[8px] text-sm font-medium transition-colors ${
-              activeFilter === "mines"
-                ? "bg-light-primary px-4 py-3 text-dark-primary"
-                : "bg-translucent-light-4 text-translucent-light-64 hover:text-light-primary border border-translucent-light-4"
-            }`}
+            className={`px-4 py-2 rounded-[8px] text-sm font-medium transition-colors ${activeFilter === "mines"
+              ? "bg-light-primary px-4 py-3 text-dark-primary"
+              : "bg-translucent-light-4 text-translucent-light-64 hover:text-light-primary border border-translucent-light-4"
+              }`}
           >
             <p className="text-button-40 font-semibold">Mines</p>
+          </button>
+          <button
+            onClick={() => setActiveFilter("weekly")}
+            className={`px-4 py-2 rounded-[8px] text-sm font-medium transition-colors ${activeFilter === "weekly"
+              ? "bg-light-primary px-4 py-3 text-dark-primary"
+              : "bg-translucent-light-4 text-translucent-light-64 hover:text-light-primary border border-translucent-light-4"
+              }`}
+          >
+            <p className="text-button-40 font-semibold">Weekly</p>
           </button>
         </div>
         {filteredQuests.length > 0 && (

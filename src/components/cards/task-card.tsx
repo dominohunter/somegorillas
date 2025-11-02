@@ -141,9 +141,13 @@ const TaskCard: React.FC<TaskCardProps> = ({
               </CartoonButton>
             ) : (
               <div
-                className="px-3 py-2 sm:px-4 sm:py-3 w-full
-               rounded-[8px] bg-translucent-light-8 flex items-center justify-center border-2 border-translucent-light-8"
+                className="px-3 py-2 sm:px-4 text-white sm:py-3 w-full rounded-[8px] bg-translucent-light-8 flex items-center justify-center border-2 border-translucent-light-8"
               >
+                <div className="flex gap-x-2">
+                  <span className="text-translucent-light-64 text-body-2 font-pally">Progress</span>
+                  <span className="text-light-primary text-body-2 font-pally font-medium">{task.progressCount}/{task.quest.condition.split(":")[1]}</span>
+                </div>
+                <span className="grow"></span>
                 <span
                   className="text-xs sm:text-sm font-semibold"
                   style={{

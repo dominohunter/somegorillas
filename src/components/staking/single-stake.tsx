@@ -67,7 +67,7 @@ export default function SingleStake({ nftId }: { nftId: number }) {
             await api.post("/staking/gym/claim", { nftId: parseInt(nftId.toString()) });
             await refetchUserData()
             setEarnedBanana(`🍌 ${0}`)
-            toast.success("NFT Claim Complete!");
+            toast.success("Banana Claim Complete!");
         } catch (error) {
             console.log(error)
             toast.error("There was an issue!");

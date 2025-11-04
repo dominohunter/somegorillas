@@ -64,6 +64,8 @@ const TaskCard: React.FC<TaskCardProps> = ({
       return `Late cashout ${target} times`;
     } else if (type === "mine_cashout_early") {
       return `Early cashout ${target} times`;
+    } else if (type === "mine_games_played") {
+      return `Play mines ${target} times`;
     } else {
       return `Get ${target} ${type} results`;
     }
@@ -91,6 +93,8 @@ const TaskCard: React.FC<TaskCardProps> = ({
       return `Cash out after revealing 15+ tiles`;
     } else if (type === "mine_cashout_early") {
       return `Cash out after revealing ≤5 tiles`;
+    } else if (type === "mine_games_played") {
+      return `Completed after playing mines ${target} times`;
     } else {
       return `Complete ${type} tasks`;
     }

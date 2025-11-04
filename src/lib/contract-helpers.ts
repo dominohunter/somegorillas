@@ -46,7 +46,7 @@ async function getEthersObjects() {
 
 	const signer = await provider.getSigner();
 	const nftContract = new ethers.Contract("0x8769ce9d2e1997061e629e9ca0b18b648db5e3a6", nftAbi, signer);
-	const stakingContract = new ethers.Contract("0x5DC3c44122fe7c428B30E319E6094A6e05C83cED", stakingAbi, signer);
+	const stakingContract = new ethers.Contract("0x8310e2F3C08c13a942F21a5c3bc6e6cE7dE5a4fD", stakingAbi, signer);
 
 	return { provider, signer, nftContract, stakingContract };
 }

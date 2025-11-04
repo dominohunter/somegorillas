@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -54,11 +53,9 @@ export default function Stake() {
 
             {selected === "staking" && (
               <Dialog>
-                <DialogTrigger
-                >
-                  <div className="hidden! btn py-2 px-4 rounded items-center gap-x-2">
-                    <p className="text-xl">Stake Gorilla</p>
-                    <ArrowRight className="size-5" />
+                <DialogTrigger>
+                  <div className="btn py-2 px-4 rounded items-center gap-x-2">
+                    <p className="text-lg">Stake Gorilla</p>
                   </div>
                 </DialogTrigger>
 

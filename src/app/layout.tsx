@@ -54,7 +54,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body className="bg-black" suppressHydrationWarning={true}>
         <OptimizedBackground backgroundName={background} />
-        <div className="relative z-10 min-h-screen min-h-[-webkit-fill-available] w-full">
+        <div className="relative z-10 min-h-screen w-full">
           <Providers>
             <AudioProvider>
               <AuthProvider>

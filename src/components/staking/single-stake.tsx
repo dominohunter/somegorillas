@@ -6,13 +6,21 @@ import { useAccount } from "wagmi";
 import { formatEther } from "ethers";
 import { Dialog, DialogContent, DialogTitle } from "@radix-ui/react-dialog";
 import { DialogHeader } from "../ui/dialog";
+import api from "@/lib/axios";
+import { toast } from "sonner";
+import { useStats } from "@/lib/query-helper";
+import { useRouter } from "next/navigation";
 
 export default function SingleStake({ nftId }: { nftId: number }) {
+    const { refetch: refetchUserData } = useStats();
     const account = useAccount()
+    const router = useRouter();
     // const [state, setState] = useState<"idle" | "loading">("idle")
     const [stakeDate, setStakeDate] = useState<string>("...")
     const [earnedBanana, setEarnedBanana] = useState<string>("...")
     const [dialogState, setDialogState] = useState<"idle" | "no_staking">("idle")
+    const [claimStatus, setClaimStatus] = useState<"idle" | "loading" | "done">("idle")
+    const [unstakeStatus, setUnstakeStatus] = useState<"idle" | "loading" | "done">("idle")
 
     useEffect(() => {
         getNftState(nftId)
@@ -28,6 +36,45 @@ export default function SingleStake({ nftId }: { nftId: number }) {
             clearInterval(intervalId);
         };
     }, [])
+
+    async function handleUnstake() {
+        if (account.address == undefined) return;
+        setUnstakeStatus("loading")
+
+        try {
+            await api.post("/staking/gym/unstake", { nftId: parseInt(nftId.toString()) });
+            await refetchUserData()
+            toast.success("NFT Unstake Complete!");
+            setTimeout(() => { router.push("/stake") }, 1500);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+            if (error?.response.data?.error == "LOCKED_TIME") {
+                toast.error("NFT is still in locked period!");
+            } else {
+                toast.error("There was an issue!");
+                console.log(error.response.data.error)
+            }
+        }
+
+        setUnstakeStatus("done")
+    }
+
+    async function handleClaim() {
+        if (account.address == undefined) return;
+        setClaimStatus("loading")
+
+        try {
+            await api.post("/staking/gym/claim", { nftId: parseInt(nftId.toString()) });
+            await refetchUserData()
+            setEarnedBanana(`🍌 ${0}`)
+            toast.success("NFT Claim Complete!");
+        } catch (error) {
+            console.log(error)
+            toast.error("There was an issue!");
+        }
+
+        setClaimStatus("done")
+    }
 
     return (
         <div className="border-[2px] border-translucent-light-4 bg-translucent-light-4 p-4 grid gap-5 rounded-[12px]">
@@ -64,13 +111,13 @@ export default function SingleStake({ nftId }: { nftId: number }) {
                 <InfoCard label="Total banana earned" value={earnedBanana} />
             </div>
 
-            <div className="grid grid-cols-2 w-full gap-3">
-                <Button className="w-full border-[2px] cursor-not-allowed border-translucent-light-4 text-button-48 font-semibold hover:bg-translucent-light-4 bg-translucent-light-4 px-5 py-3 h-12 rounded-[8px] text-translucent-light-64">
-                    Unstake will be available soon
+            <div className="grid grid-cols-2 w-full gap-3 h-12">
+                <Button className="btn h-full" onClick={() => handleUnstake()} disabled={unstakeStatus === "loading"}>
+                    {unstakeStatus === "loading" ? "..." : "Unstake"}
                 </Button>
 
-                <Button className="w-full border-[2px] cursor-not-allowed border-translucent-light-4 text-button-48 font-semibold hover:bg-translucent-light-4 bg-translucent-light-4 px-5 py-3 h-12 rounded-[8px] text-translucent-light-64">
-                    Claim will be available soon
+                <Button className="btn h-full" onClick={() => handleClaim()} disabled={claimStatus === "loading"}>
+                    {claimStatus === "loading" ? "..." : "Claim"}
                 </Button>
             </div>
         </div>

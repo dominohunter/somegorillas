@@ -9,7 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAccount } from "wagmi";
 import { GlareButton } from "../ui/glare-button";
 
@@ -45,6 +45,7 @@ export default function GymDialog({ onClose }: GymDialogProps) {
   const [writeState, setWriteState] = useState<"idle" | "approving" | "staking" | "done">("idle")
 
   const router = useRouter();
+  const currentPath = usePathname()
 
   const handleSelectDialogChange = (open: boolean) => {
     if (!open && onClose) {
@@ -244,7 +245,7 @@ export default function GymDialog({ onClose }: GymDialogProps) {
             </div>
           )}
           <Button
-            onClick={() => router.push("/stake/gym-adventure")}
+            onClick={() => currentPath !== "/stake/gym-adventure" ? router.push("/stake/gym-adventure") : router.push("/stake")}
             className="w-full border-[2px] border-translucent-light-4 text-button-48 font-semibold text-dark-primary bg-light-primary px-5 py-3 h-12 hover:bg-light-primary"
           >
             Okay

@@ -3,7 +3,6 @@ import { Button } from "../ui/button";
 import { useEffect, useState } from "react";
 import { getEthersObjects } from "@/lib/contract-helpers"
 import { useAccount } from "wagmi";
-import { formatEther } from "ethers";
 import { Dialog, DialogContent, DialogTitle } from "@radix-ui/react-dialog";
 import { DialogHeader } from "../ui/dialog";
 import api from "@/lib/axios";
@@ -17,6 +16,7 @@ export default function SingleStake({ nftId }: { nftId: number }) {
     const router = useRouter();
     // const [state, setState] = useState<"idle" | "loading">("idle")
     const [stakeDate, setStakeDate] = useState<string>("...")
+    const [stakeEndDate, setStakeEndDate] = useState<string>("...")
     const [earnedBanana, setEarnedBanana] = useState<string>("...")
     const [dialogState, setDialogState] = useState<"idle" | "no_staking">("idle")
     const [claimStatus, setClaimStatus] = useState<"idle" | "loading" | "done">("idle")
@@ -107,6 +107,7 @@ export default function SingleStake({ nftId }: { nftId: number }) {
 
             <div className="flex w-full gap-3">
                 <InfoCard label="Start date" value={stakeDate} />
+                <InfoCard label="End date" value={stakeEndDate} />
                 <InfoCard label="Bananas per day" value="🍌 2200" />
                 <InfoCard label="Total banana earned" value={earnedBanana} />
             </div>
@@ -135,15 +136,26 @@ export default function SingleStake({ nftId }: { nftId: number }) {
             timeZone: 'UTC'
         });
 
+        const endDateMilliseconds = parseInt(stake[2]) * 1000
+        const endDate = new Date(endDateMilliseconds)
+        const endFormattedDate = endDate.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            timeZone: 'UTC'
+        });
+
         setStakeDate(formattedDate)
+        setStakeEndDate(endFormattedDate)
     }
 
     async function checkBananaReward(id: number) {
-        if (account.address == undefined) return;
-        const { stakingContract } = await getEthersObjects()
+        const result = await api.get(`/staking/gym/banana/${id}`);
 
-        const bananaPendingReward = await stakingContract.bananaPending(BigInt(id))
-        setEarnedBanana(`🍌 ${formatEther(bananaPendingReward)}`)
+        if (result.data.success) {
+            const banana = result.data.data.banana
+            setEarnedBanana(`🍌 ${banana}`)
+        }
     }
 
 }

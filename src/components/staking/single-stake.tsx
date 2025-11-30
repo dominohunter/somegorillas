@@ -107,7 +107,7 @@ export default function SingleStake({ nftId }: { nftId: number }) {
 
             <div className="flex w-full gap-3">
                 <InfoCard label="Start date" value={stakeDate} />
-                <InfoCard label="End date" value={stakeEndDate} />
+                <InfoCard label="Unlock date" value={stakeEndDate} />
                 <InfoCard label="Bananas per day" value="🍌 2200" />
                 <InfoCard label="Total banana earned" value={earnedBanana} />
             </div>
